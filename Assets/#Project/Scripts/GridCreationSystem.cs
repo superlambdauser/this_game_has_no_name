@@ -14,17 +14,16 @@ public class GridCreationSystem : MonoBehaviour
         }
     }
 
-    public int width, height;
-    [SerializeField] private GridLayout gridLayout;
-    [SerializeField] private Tilemap mainTilemap;
-    [SerializeField] private Tilemap tempTilemap;
+    public int rows, columns;
+    private GridLayout gridLayout;
+    private Tilemap mainTilemap;
+    private Tilemap tempTilemap;
     public TileBase tilePrefab;
     private List<TileBase> tileBasesArray;
 
 
     #region Unity Methods
-
-    void Awake()
+    private void Awake()
     {
         if (instance == null) // Is there already an instance of this object ?
         {
@@ -37,21 +36,28 @@ public class GridCreationSystem : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         GenerateGrid();
     }
-
     #endregion
 
 
     #region  Custom Methods
+    public void Initialize(GridLayout gridLayout, TileBase tilePrefab, int rows, int columns)
+    {
+        this.gridLayout = gridLayout;
+        this.tilePrefab = tilePrefab;
+        this.rows = rows;
+        this.columns = columns;
+    }
+
     private void GenerateGrid()
     {
         Debug.Log("Generating grid...");
-        for (int x = 0;  x < width; x++)
+        for (int x = 0;  x < rows; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < columns; y++)
             {
                 Vector3Int tilePosition = new Vector3Int(x, y, 0);
 
@@ -60,6 +66,4 @@ public class GridCreationSystem : MonoBehaviour
         }
     }
     #endregion
-
-
 }
