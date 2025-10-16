@@ -44,12 +44,17 @@ public class GridCreationSystem : MonoBehaviour
 
 
     #region  Custom Methods
-    public void Initialize(GridLayout gridLayout, TileBase tilePrefab, int rows, int columns)
+    public void Initialize(GridLayout gridLayout, Tilemap mainTilemap, Tilemap tempTilemap, TileBase tilePrefab, int rows, int columns)
     {
         this.gridLayout = gridLayout;
+        this.mainTilemap = mainTilemap;
+        this.tempTilemap = tempTilemap;
         this.tilePrefab = tilePrefab;
         this.rows = rows;
         this.columns = columns;
+
+        mainTilemap.transform.SetParent(transform);
+        tempTilemap.transform.SetParent(transform);
     }
 
     private void GenerateGrid()

@@ -20,39 +20,38 @@ public class GameInitializer : MonoBehaviour
     [Header("Grid creation data :")]
     [SerializeField] GridCreationSystem grid;
     [SerializeField] private GridLayout gridLayout;
-    [SerializeField] private TileBase tilePrefab;
+    [SerializeField] private Tilemap mainTilemap;
+    [SerializeField] private Tilemap tempTilemap;
+    [SerializeField] private Transform tilePrefab;
     [SerializeField] private int rows;
     [SerializeField] private int columns;
 
-    #region Unity Events
-    private void Awake()
-    {
-        if (instance == null) // Is there already an instance of this object ?
-        {
-            DontDestroyOnLoad(gameObject); // Keeping the same object between scenes
-            instance = this; // Instantiate the gameManager as one and only gameManager
-        }
-        else if (instance != this) // If so, destroy unnecessary gameManager
-        {
-            Destroy(gameObject);
-        }
-    }
+    [SerializeField] private GridGenerator gridGenerator;
 
+    #region Unity Events
     private void Start()
     {
         InstatiateObjects();
         InitializeObjects();
+
+        gridGenerator.GenerateGrid();
+
+        Destroy(gameObject);
     }
     #endregion
 
     #region Custom methods
     private void InstatiateObjects()
     {
-        grid = Instantiate(grid);
+        // grid = Instantiate(grid);
+        // mainTilemap = Instantiate(mainTilemap);
+        // tempTilemap = Instantiate(tempTilemap);
+        gridGenerator = Instantiate(gridGenerator);
     }
     private void InitializeObjects()
     {
-        grid.Initialize(gridLayout, tilePrefab, rows, columns);
+        // grid.Initialize(gridLayout, mainTilemap, tempTilemap, tilePrefab, rows, columns);
+        gridGenerator.Initialize(rows, columns, tilePrefab);
     }
     #endregion
 }
