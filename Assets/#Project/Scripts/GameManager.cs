@@ -2,43 +2,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-        // Singleton pattern
-    private static GameManager instance;
-    public static GameManager Instance
+    // Singleton
+    private GameplayEngine gameplayEngine;
+
+    private void Update()
     {
-        get
-        {
-            return instance;
-        }
+        gameplayEngine?.Update(Time.deltaTime); // Update() if gameplayEngine != null
     }
 
 
-        #region Unity Methods
-    void Awake()
+    public void Initiate(GameplayEngine gameplayEngine)
     {
-        if (instance == null) // Is there already an instance of gameManager ?
-        {
-            DontDestroyOnLoad(gameObject); // Keeping the same object between scenes
-            instance = this; // Instantiate the gameManager as one and only gameManager
-        }
-        else if (instance != this) // If so, destroy unnecessary gameManager
-        {
-            Destroy(gameObject);
-        }
+        this.gameplayEngine = gameplayEngine;
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-        #endregion
-
-    
-        #region Custom Methods
-        #endregion
 }
