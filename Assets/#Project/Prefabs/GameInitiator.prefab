@@ -50,7 +50,7 @@ MonoBehaviour:
   gameManager: {fileID: 8275040858889687894, guid: 67cb9c1b604350140ab834ff46fa6a95, type: 3}
   gridControl: {fileID: 3724693456807463634, guid: da6fdd6344480e34f953b014b9a850d4, type: 3}
   mainCamera: {fileID: 6718472776401959001, guid: a9433a066dcf06e4bb479770c350ec1b, type: 3}
-  gridView: {fileID: 5975983658989622260, guid: 03734390d150a874d998f3405e8cca52, type: 3}
+  gridView: {fileID: 1553148219518730184, guid: 25c33ef0cf683a64b8e41f9d09e1b68b, type: 3}
   mainTilemap: {fileID: 8993005714311195545, guid: 008275ab93d4dda44afdfa90eaa652c9, type: 3}
   highlightMap: {fileID: 1356721467091944863, guid: a0eb819483c57254ba38930ed7197c0b, type: 3}
   basicTile: {fileID: 11400000, guid: 5324aadb621cc2e49a52ac606875ecfb, type: 2}
