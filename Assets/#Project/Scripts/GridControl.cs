@@ -10,7 +10,7 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     private InputActionAsset actions;
     private InputActionMap actionMap;
     private InputAction selectAction;
-    private const string INPUT_ACTION_MAP = "InGameActions";
+    private const string INPUT_ACTION_MAP = "InGame";
     private const string INPUT_SELECT_ACTION = "Select";
 
 
@@ -18,51 +18,16 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     private int range = 3;
     private Color color = Color.red;
 
-
     #region  Unity events :
-    private void Awake()
-    {
-        // selectAction = actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION);
-        actionMap = actions.FindActionMap(INPUT_ACTION_MAP);
-        selectAction = actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION);
 
-        actionMap.Enable(); 
-        selectAction.performed += Select;
-    }
     private void OnEnable()
     {
-        // --- Debugging ---
-        if (actionMap == null)
-        {
-            Debug.Log("Action map missing.");
-            return;
-        }
-        if (selectAction == null)
-        {
-            Debug.Log("Action missing.");
-            return;
-        }
-        // ---
-
         actions.FindActionMap(INPUT_ACTION_MAP).Enable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed += Select;
     }
 
     private void OnDisable()
     {
-        // --- Debugging ---
-        if (actionMap == null)
-        {
-            Debug.Log("Action map missing.");
-            return;
-        }
-        if (selectAction == null)
-        {
-            Debug.Log("Action missing.");
-            return;
-        }
-        // ---
-
         actions.FindActionMap(INPUT_ACTION_MAP).Disable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed -= Select;
     }
@@ -82,22 +47,11 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
         Debug.Log("gridData: " + gridData);
         Debug.Log("actions: " + actions);
 
-        if (actionMap == null)
-        {
-            Debug.Log("Action map missing.");
-            return;
-        }
-        if (selectAction == null)
-        {
-            Debug.Log("Action missing.");
-            return;
-        }
-
         actionMap = actions.FindActionMap(INPUT_ACTION_MAP);
+        Debug.Log("actionmap: " + actionMap);
         selectAction = actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION);
 
         actionMap.Enable(); 
-        selectAction.performed += Select;
     }
     public void Process(GameplayEngine engine, float dt)
     {

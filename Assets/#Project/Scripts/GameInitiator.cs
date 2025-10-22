@@ -69,7 +69,7 @@ public class GameInitiator : MonoBehaviour
 
         // --- Controllers ---
         gridControl.Initiate(mainCamera, gridView, gridData, actions);
-
+        gridControl.gameObject.SetActive(true);
         // --- Game Manager ---
         gameManager.Initiate(gameplayEngine);
 
