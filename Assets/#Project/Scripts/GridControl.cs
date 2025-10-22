@@ -10,6 +10,7 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     private InputActionAsset actions;
     private InputActionMap actionMap;
     private InputAction selectAction;
+    TileData currentTile;
     private const string INPUT_ACTION_MAP = "InGame";
     private const string INPUT_SELECT_ACTION = "Select";
 
@@ -18,8 +19,8 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     private int range = 3;
     private Color color = Color.red;
 
-    #region  Unity events :
 
+    #region  Unity events :
     private void OnEnable()
     {
         actions.FindActionMap(INPUT_ACTION_MAP).Enable();
@@ -41,17 +42,17 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
         this.gridData = gridData;
         this.actions = actions;
 
-        Debug.Log("cam: " + cam);
-        Debug.Log("gridView: " + gridView);
-        Debug.Log("gridView.tilemap: " + (gridView != null ? gridView.MainTilemap : "gridView null"));
-        Debug.Log("gridData: " + gridData);
-        Debug.Log("actions: " + actions);
+        // Debug.Log("cam: " + cam);
+        // Debug.Log("gridView: " + gridView);
+        // Debug.Log("gridView.tilemap: " + (gridView != null ? gridView.MainTilemap : "gridView null"));
+        // Debug.Log("gridData: " + gridData);
+        // Debug.Log("actions: " + actions);
 
         actionMap = actions.FindActionMap(INPUT_ACTION_MAP);
-        Debug.Log("actionmap: " + actionMap);
+        // Debug.Log("actionmap: " + actionMap);
         selectAction = actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION);
 
-        actionMap.Enable(); 
+        actionMap.Enable();
     }
     public void Process(GameplayEngine engine, float dt)
     {
@@ -60,24 +61,38 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
 
     private void Select(InputAction.CallbackContext context)
     {
-        Vector2Int mousePos = ScreenToGridPos(context.ReadValue<Vector2>()); // Getting the mouse position from the context
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue(); // Read mouse position on screen
+        Vector2Int mousePos = ScreenToGridPos(mouseScreenPos); // convert it to grid position
+
+        Debug.Log($"Mouse on cell : {mousePos}");
 
         HandleClick(mousePos);
     }
 
     private Vector2Int ScreenToGridPos(Vector3 mousePos)
     {
-        Vector3 worldPos = cam.ScreenToWorldPoint(mousePos); // convert mouse position in world position
-        Vector3Int cellPos = gridView.MainTilemap.WorldToCell(worldPos); // convert it again to a cell from the tilemap
+        Debug.Log($"Mouse screen: {mousePos}");
+        Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Mathf.Abs(cam.transform.position.z))); // convert mouse position to world position
+        Debug.Log($"World pos: {worldPos}");
 
-        return new Vector2Int(cellPos.x, cellPos.y); // return a Vector2Int that 
+        GridLayout gridLayout = gridView.GetComponentInParent<GridLayout>();
+        Vector3Int cellPos = gridLayout.WorldToCell(worldPos); // convert it again to a cell from the tilemap
+        Debug.Log($"Cell pos: {cellPos}");
+
+        return new Vector2Int(cellPos.x, cellPos.y); // return a Vector2Int that represents the cell
     }
 
     private void HandleClick(Vector2Int position)
     {
-        TileData tile = gridData.GetTile(position);
+        currentTile = gridData.GetTile(position);
 
-        if (tile == null) return; //Handle out-of-grid clicks
+        if (currentTile == null)
+
+        {
+            Debug.Log("Tile is missing");
+            return; //Handle out-of-grid clicks
+        }
+        
 
         // things to do when clicked (ex : change color to begin with)
         List<Vector2Int> area = GetArea(position, range);
@@ -88,6 +103,8 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     {
         List<Vector2Int> area = new(); // check if correct way to write it 
 
+        foreach (Vector2Int v in area) Debug.Log($"cell : {v}");
+        
         for (int x = -range; x <= range; x++)
         {
             for (int y = -range; y <= range; y++)

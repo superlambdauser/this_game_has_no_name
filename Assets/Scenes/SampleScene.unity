@@ -211,6 +211,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1918142778760547068, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
+      propertyPath: highlightTile
+      value: 
+      objectReference: {fileID: 11400000, guid: 8edb2ee4392cb3c41a7b7bdc95f7296e, type: 2}
     - target: {fileID: 2387648310482863491, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
       propertyPath: m_Name
       value: GameInitiator

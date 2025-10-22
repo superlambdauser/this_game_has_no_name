@@ -17,11 +17,12 @@ public class GridView : MonoBehaviour
     private TileBase highlightTile;
 
 
-    public void Initiate(GridData gridData, Tilemap mainTilemap, Tilemap highlightMap, TileBase tile)
+    public void Initiate(GridData gridData, Tilemap mainTilemap, Tilemap highlightMap, TileBase tile, TileBase highlightTile)
     {
         this.mainTilemap = mainTilemap;
         this.highlightMap = highlightMap;
         this.tile = tile;
+        this.highlightTile = highlightTile;
 
         if (mainTilemap == null || tile == null)
         {
@@ -47,11 +48,18 @@ public class GridView : MonoBehaviour
             return;
         }
 
-        highlightMap.ClearAllTiles();
+        if (highlightTile == null)
+        {
+            Debug.Log("HighlightTile missing.");
+        }
 
+        highlightMap.ClearAllTiles();
+        
         foreach (Vector2Int cellPosition in cellsPositions)
         {
-            highlightMap.SetTile((Vector3Int)cellPosition, tile); //(Vector3Int)nameOfVector2Int is the same as nameOfVector2Int.Vector3Int method
+            Vector3Int pos = new Vector3Int(cellPosition.x, cellPosition.y, 0);
+            highlightMap.SetTile(pos, highlightTile); // Set a visible tile
+            highlightMap.SetColor(pos, color);       // Then color it
         }
     }
 }

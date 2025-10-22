@@ -40,6 +40,7 @@ public class GameInitiator : MonoBehaviour
     [SerializeField] private Tilemap mainTilemap;
     [SerializeField] private Tilemap highlightMap;
     [SerializeField] private TileBase basicTile;
+    [SerializeField] private TileBase highlightTile;
 
 
     #region Unity events
@@ -65,11 +66,12 @@ public class GameInitiator : MonoBehaviour
         gameplayEngine.RegisterSystem(gridControl);
 
         // --- View ---
-        gridView.Initiate(gridData, mainTilemap, highlightMap, basicTile);
+        gridView.Initiate(gridData, mainTilemap, highlightMap, basicTile, highlightTile);
 
         // --- Controllers ---
         gridControl.Initiate(mainCamera, gridView, gridData, actions);
         gridControl.gameObject.SetActive(true);
+
         // --- Game Manager ---
         gameManager.Initiate(gameplayEngine);
 
