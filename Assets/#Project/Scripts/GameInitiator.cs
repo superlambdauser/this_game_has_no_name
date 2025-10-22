@@ -54,6 +54,8 @@ public class GameInitiator : MonoBehaviour
     #region Custom methods
     private void BuildGame()
     {
+        InstantiateGameObjects();
+
         // --- Data ---
         gridData = new GridData(gridRows, gridColumns);
 

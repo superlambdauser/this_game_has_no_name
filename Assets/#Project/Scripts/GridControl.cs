@@ -8,6 +8,7 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     private GridView gridView;
     private GridData gridData;
     private InputActionAsset actions;
+    private InputActionMap actionMap;
     private InputAction selectAction;
     private const string INPUT_ACTION_MAP = "InGameActions";
     private const string INPUT_SELECT_ACTION = "Select";
@@ -19,14 +20,49 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
 
 
     #region  Unity events :
+    private void Awake()
+    {
+        // selectAction = actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION);
+        actionMap = actions.FindActionMap(INPUT_ACTION_MAP);
+        selectAction = actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION);
+
+        actionMap.Enable(); 
+        selectAction.performed += Select;
+    }
     private void OnEnable()
     {
+        // --- Debugging ---
+        if (actionMap == null)
+        {
+            Debug.Log("Action map missing.");
+            return;
+        }
+        if (selectAction == null)
+        {
+            Debug.Log("Action missing.");
+            return;
+        }
+        // ---
+
         actions.FindActionMap(INPUT_ACTION_MAP).Enable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed += Select;
     }
 
-    private void Disable()
+    private void OnDisable()
     {
+        // --- Debugging ---
+        if (actionMap == null)
+        {
+            Debug.Log("Action map missing.");
+            return;
+        }
+        if (selectAction == null)
+        {
+            Debug.Log("Action missing.");
+            return;
+        }
+        // ---
+
         actions.FindActionMap(INPUT_ACTION_MAP).Disable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed -= Select;
     }
@@ -39,14 +75,29 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
         this.gridView = gridView;
         this.gridData = gridData;
         this.actions = actions;
-        
-        // Debug.Log("cam: " + cam);
-        // Debug.Log("gridView: " + gridView);
-        // Debug.Log("gridView.tilemap: " + (gridView != null ? gridView.MainTilemap : "gridView null"));
-        // Debug.Log("gridData: " + gridData);
-        // Debug.Log("actions: " + actions);
 
+        Debug.Log("cam: " + cam);
+        Debug.Log("gridView: " + gridView);
+        Debug.Log("gridView.tilemap: " + (gridView != null ? gridView.MainTilemap : "gridView null"));
+        Debug.Log("gridData: " + gridData);
+        Debug.Log("actions: " + actions);
+
+        if (actionMap == null)
+        {
+            Debug.Log("Action map missing.");
+            return;
+        }
+        if (selectAction == null)
+        {
+            Debug.Log("Action missing.");
+            return;
+        }
+
+        actionMap = actions.FindActionMap(INPUT_ACTION_MAP);
         selectAction = actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION);
+
+        actionMap.Enable(); 
+        selectAction.performed += Select;
     }
     public void Process(GameplayEngine engine, float dt)
     {

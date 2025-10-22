@@ -25,7 +25,7 @@ public class GridView : MonoBehaviour
 
         if (mainTilemap == null || tile == null)
         {
-            Debug.LogError("GridView is missing Tilemap or Tile assignment!");
+            Debug.LogError("Tilemap or Tile missing.");
             return;
         }
 
@@ -41,6 +41,12 @@ public class GridView : MonoBehaviour
 
     public void Highlight(IEnumerable<Vector2Int> cellsPositions, Color color) // Ideally, add a IEnumerator of Vector2Int argument that represents the area of action and contains all the cells inside the area
     {
+        if (highlightMap == null)
+        {
+            Debug.LogError("HighlightMap missing.");
+            return;
+        }
+
         highlightMap.ClearAllTiles();
 
         foreach (Vector2Int cellPosition in cellsPositions)
