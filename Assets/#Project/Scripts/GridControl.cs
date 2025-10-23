@@ -5,14 +5,18 @@ using UnityEngine.InputSystem;
 public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
 {
     private Camera cam;
+
     private GridView gridView;
     private GridData gridData;
+    TileData currentTile;
+
+    private const string INPUT_ACTION_MAP = "InGame";
+    private const string INPUT_SELECT_ACTION = "Select";
     private InputActionAsset actions;
     private InputActionMap actionMap;
     private InputAction selectAction;
-    TileData currentTile;
-    private const string INPUT_ACTION_MAP = "InGame";
-    private const string INPUT_SELECT_ACTION = "Select";
+
+
 
 
     // --- HARDCODED VARS THAT DEPEND ON THE CARDS ---
@@ -23,12 +27,14 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     #region  Unity events :
     private void OnEnable()
     {
+        Debug.Log("Enabled");
         actions.FindActionMap(INPUT_ACTION_MAP).Enable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed += Select;
     }
 
     private void OnDisable()
     {
+        Debug.Log("Disabled");
         actions.FindActionMap(INPUT_ACTION_MAP).Disable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed -= Select;
     }
@@ -92,7 +98,9 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
             Debug.Log("Tile is missing");
             return; //Handle out-of-grid clicks
         }
-        
+
+        Debug.Log("Force highlight test");
+        gridView.Highlight(new List<Vector2Int>() { new Vector2Int(0, 0) }, Color.red);
 
         // things to do when clicked (ex : change color to begin with)
         List<Vector2Int> area = GetArea(position, range);
@@ -103,8 +111,6 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     {
         List<Vector2Int> area = new(); // check if correct way to write it 
 
-        foreach (Vector2Int v in area) Debug.Log($"cell : {v}");
-        
         for (int x = -range; x <= range; x++)
         {
             for (int y = -range; y <= range; y++)
@@ -118,6 +124,8 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
                 }
             }
         }
+
+        foreach (Vector2Int v in area) Debug.Log($"cell : {v}");
 
         return area;
     }

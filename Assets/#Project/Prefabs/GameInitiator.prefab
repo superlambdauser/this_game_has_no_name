@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2387648310482863491}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.10475, y: -1.44301, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50,8 +50,8 @@ MonoBehaviour:
   gameManager: {fileID: 8275040858889687894, guid: 67cb9c1b604350140ab834ff46fa6a95, type: 3}
   gridControl: {fileID: 3724693456807463634, guid: da6fdd6344480e34f953b014b9a850d4, type: 3}
   mainCamera: {fileID: 6718472776401959001, guid: a9433a066dcf06e4bb479770c350ec1b, type: 3}
-  gridView: {fileID: 1553148219518730184, guid: 25c33ef0cf683a64b8e41f9d09e1b68b, type: 3}
-  mainTilemap: {fileID: 4851612998232558907, guid: 8a3246085c2200e4596d1322e1fd8af9, type: 3}
-  highlightMap: {fileID: 5424880030391624711, guid: bdc6d6d593f9ec644b7ecf9cbdbde64c, type: 3}
+  gridView: {fileID: -3798799507593578675, guid: 25c33ef0cf683a64b8e41f9d09e1b68b, type: 3}
+  mainTilemap: {fileID: 8937753407473668092, guid: 47938845838468f45bcf71b4544a672a, type: 3}
+  highlightMap: {fileID: 222114721488699633, guid: 983bbabe371413041b3c623ee10bc46a, type: 3}
   basicTile: {fileID: 11400000, guid: 5324aadb621cc2e49a52ac606875ecfb, type: 2}
-  highlightTile: {fileID: 11400000, guid: 5324aadb621cc2e49a52ac606875ecfb, type: 2}
+  highlightTile: {fileID: 11400000, guid: 5b8dcd95cbc71cc449edcd4f41cc4fb3, type: 2}

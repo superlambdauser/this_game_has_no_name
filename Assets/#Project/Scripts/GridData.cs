@@ -35,6 +35,6 @@ public class GridData
             return null; // out of grid
         }
 
-        return tiles[position.x, position.y];
+        return tiles[position.x, position.y]; // returns (row, column)
     }
 }
