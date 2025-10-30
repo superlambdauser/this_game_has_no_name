@@ -3,16 +3,16 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // Singleton
-    private GameplayEngine gameplayEngine;
+    private GameplayEngine instance;
 
     private void Update()
     {
-        gameplayEngine?.Update(Time.deltaTime); // Update() if gameplayEngine != null
+        instance?.Update(Time.deltaTime); // Update() if gameplayEngine != null
     }
 
 
     public void Initiate(GameplayEngine gameplayEngine)
     {
-        this.gameplayEngine = gameplayEngine;
+        instance = gameplayEngine;
     }
 }
