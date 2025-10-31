@@ -9,6 +9,6 @@ public class MovementCard : Card
 
     private void Move(Movable figure, Vector2Int targetPosition)
     {
-        figure.transform.position = targetPosition;
+        figure.transform.position = (Vector2)targetPosition;
     }
 }
