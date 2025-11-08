@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New card", menuName = "Card")]
+
 public abstract class Card : ScriptableObject
 {
-    public string CardName { get; private set; }
-    public List<CardType> CardTypes { get; private set; }
-    public List<CardRarity> CardRarities { get; private set; }
+    [Header("Basic Cards Traits :")]
+    [SerializeField] private string cardName;
+    public string CardName => cardName;
+    [SerializeField] private CardRarity cardRarityLevel;
+    public CardRarity CardRarityLevel => cardRarityLevel;
+    [SerializeField] private List<CardType> cardTypes;
+    public List<CardType> CardTypes => cardTypes;
 
 
     public enum CardType
