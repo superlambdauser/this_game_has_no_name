@@ -11,6 +11,11 @@ public class Movable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    }
+    
+    public void MoveTo(Vector2Int position)
+    {
         
     }
 }

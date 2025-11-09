@@ -34,12 +34,30 @@ public class CardDisplay : MonoBehaviour
     {
         Debug.Log($"Updating card {cardData?.name ?? "NULL"}");
 
-        // Update frame image color based on the first card rarity level :
-        rarityLevelFrameImage.color = rarityColors[(int)cardData.CardRarityLevel];
-
+        //Update title
         cardNameText.text = cardData.CardName;
-        
+
+        // Update frame color & displayed rarity level based on card's rarity level enum index
         cardRarityLevel = (int)cardData.CardRarityLevel;
+
+        rarityLevelFrameImage.color = rarityColors[cardRarityLevel];
+
         cardRarityLevelText.text = cardRarityLevel.ToString();
+
+        // Resetting all icons to inactive
+        foreach (Image icon in typeIconImages)
+        {
+            if (icon != null) icon.gameObject.SetActive(false);
+        }
+        
+        // Activate only the icons that match card's type(s)
+        foreach (Card.CardType cardType in cardData.CardTypes) // For each given type 
+        {
+            int index = (int)cardType; // Getting enum index in my card's list of active type(s)
+            if (typeIconImages[index] != null && index >= 0 && index < typeIconImages.Length) // Safety check
+            {
+                typeIconImages[index].gameObject.SetActive(true); 
+            }
+        }
     }
 }

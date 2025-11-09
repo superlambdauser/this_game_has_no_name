@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using SerializeReferenceEditor;
 
 
 public abstract class Card : ScriptableObject
@@ -12,6 +13,7 @@ public abstract class Card : ScriptableObject
     [SerializeField] private List<CardType> cardTypes;
     public List<CardType> CardTypes => cardTypes;
 
+    // Optional behaviours -> SerializeReference (protected for children to access)
 
     public enum CardType
     {
@@ -29,6 +31,6 @@ public abstract class Card : ScriptableObject
         Unique
     }
 
-
     public abstract void Play();
+
 }

@@ -1,25 +1,28 @@
+using SerializeReferenceEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New card", menuName = "Card/Attack Card")]
+[RequireComponent(typeof(IAttackBehaviour))]
 public class AttackCard : Card
 {
-    private HealthSystem target; // Probably need to make it a public var since target changes every turn ?
-    public HealthSystem Target => target;
-
     [Header("Attack Cards Traits :")]
-    [SerializeField] private uint damages;
-    public uint Damages => damages;
-    [SerializeField] private uint range;
-    public uint Range => range;
+    [SerializeReference][SR] protected IAttackBehaviour attackBehaviour;
+    [SerializeReference][SR] protected ISpecialAbility specialAbility;
 
 
     public override void Play()
     {
-        Attack(target);
+        attackBehaviour.Attack();
+        specialAbility?.Perform();
     }
 
-    private void Attack(HealthSystem target)
+    #if UNITY_EDITOR // Wrapping my OnValidate() method for safety
+    private void OnValidate() // Checking that my mandatory element is assigned
     {
-        target.LooseHP(damages);
+        if (attackBehaviour == null)
+        {
+            Debug.LogWarning($"{name}: Movement behaviour is missing!", this);
+        }
     }
+    #endif
 }
