@@ -13,13 +13,18 @@ public class HandManager : MonoBehaviour
 
     // Temp for testing
     [SerializeField] private int numOfCardsInHand = 8;
-    
+
     public void Start()
     {
         for (int _ = 0; _ < numOfCardsInHand; _++)
         {
             AddCardToHand();
         }
+    }
+
+    public void Update()
+    {
+        UpdateHandDisplay();
     }
 
     public void AddCardToHand()
@@ -49,7 +54,7 @@ public class HandManager : MonoBehaviour
 
             // Apply result 
             cardsInHand[x].transform.localRotation = Quaternion.Euler(0f, 0f, -rotationAngle); 
-            cardsInHand[x].transform.localPosition = new Vector3(horizontalOffset, verticalOffset, 0f);
+            cardsInHand[x].transform.localPosition = new Vector3(horizontalOffset * cardsInHand[x].transform.localScale.x, verticalOffset * cardsInHand[x].transform.localScale.x, 0f);
         }
     }
 }
