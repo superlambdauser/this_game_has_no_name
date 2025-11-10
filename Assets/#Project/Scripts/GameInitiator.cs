@@ -57,16 +57,16 @@ public class GameInitiator : MonoBehaviour
         // --- Data ---
         gridData = new GridData(gridRows, gridColumns);
 
-        // --- Systems ---
-        gameplayEngine = new GameplayEngine(gridData);
-        // later : register all systems viar RegisterSystem(new ...System()) method
-        gameplayEngine.RegisterSystem(gridControl);
-
         // --- View ---
         gridView.Initiate(gridData, mainTilemap, highlightMap, basicTile);
 
         // --- Controllers ---
         gridControl.Initiate(mainCamera, gridView, gridData, actions);
+
+        // --- Systems ---
+        gameplayEngine = new GameplayEngine(gridData);
+        // later : register all systems viar RegisterSystem(new ...System()) method
+        gameplayEngine.RegisterSystem(gridControl);
 
         // --- Game Manager ---
         gameManager.Initiate(gameplayEngine);

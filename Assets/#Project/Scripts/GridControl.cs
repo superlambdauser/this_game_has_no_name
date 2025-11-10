@@ -25,7 +25,7 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed += Select;
     }
 
-    private void Disable()
+    private void OnDisable()
     {
         actions.FindActionMap(INPUT_ACTION_MAP).Disable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed -= Select;
@@ -40,11 +40,11 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
         this.gridData = gridData;
         this.actions = actions;
         
-        // Debug.Log("cam: " + cam);
-        // Debug.Log("gridView: " + gridView);
-        // Debug.Log("gridView.tilemap: " + (gridView != null ? gridView.MainTilemap : "gridView null"));
-        // Debug.Log("gridData: " + gridData);
-        // Debug.Log("actions: " + actions);
+        Debug.Log("cam: " + cam);
+        Debug.Log("gridView: " + gridView);
+        Debug.Log("gridView.tilemap: " + (gridView != null ? gridView.MainTilemap : "gridView null"));
+        Debug.Log("gridData: " + gridData);
+        Debug.Log("actions: " + actions);
 
         selectAction = actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION);
     }

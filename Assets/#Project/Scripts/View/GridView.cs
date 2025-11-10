@@ -14,7 +14,7 @@ public class GridView : MonoBehaviour
     }
     private Tilemap highlightMap;
     private TileBase tile;
-    private TileBase highlightTile;
+    private TileBase highlightTile; // tbd
 
 
     public void Initiate(GridData gridData, Tilemap mainTilemap, Tilemap highlightMap, TileBase tile)
