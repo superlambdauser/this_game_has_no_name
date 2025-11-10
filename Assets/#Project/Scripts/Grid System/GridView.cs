@@ -25,6 +25,9 @@ public class GridView : MonoBehaviour
         this.tile = tile;
         this.highlightTile = highlightTile;
 
+        mainTilemap.transform.SetParent(transform);
+        highlightMap.transform.SetParent(transform);
+
         Debug.Log($"GridView.Initiate -> mainTilemap: {(mainTilemap != null ? mainTilemap.gameObject.name : "null")}, highlightMap: {(highlightMap != null ? highlightMap.gameObject.name : "null")}, tile: {(tile != null)}, highlightTile: {(highlightTile != null)}");
 
 

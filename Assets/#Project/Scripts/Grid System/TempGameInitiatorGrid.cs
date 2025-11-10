@@ -84,6 +84,8 @@ public class GameInitiator : MonoBehaviour
         gridView = Instantiate(gridView);
         gridControl = Instantiate(gridControl);
         gameManager = Instantiate(gameManager);
+        mainTilemap = Instantiate(mainTilemap);
+        highlightMap = Instantiate(highlightMap);
     }
     #endregion
 }
