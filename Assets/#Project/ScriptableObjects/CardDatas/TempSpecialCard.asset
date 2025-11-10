@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d5ed7dc4d4104488fc0ecb92d381b5, type: 3}
+  m_Name: TempSpecialCard
+  m_EditorClassIdentifier: Assembly-CSharp::SpecialCard
+  cardName: Special card
+  cardRarityLevel: 2
+  cardTypes: 000000000100000002000000
+  movementBehaviour:
+    rid: 6566286954860118310
+  attackBehaviour:
+    rid: 6566286954860118311
+  specialAbility:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6566286954860118310
+      type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
+      data:
+        movementRange: 2
+    - rid: 6566286954860118311
+      type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
+      data:
+        damages: 3
+        attackRange: 3
