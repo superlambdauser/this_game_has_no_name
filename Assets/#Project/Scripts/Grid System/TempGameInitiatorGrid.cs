@@ -60,17 +60,17 @@ public class GameInitiator : MonoBehaviour
         // --- Data ---
         gridData = new GridData(gridRows, gridColumns);
 
-        // --- Systems ---
-        gameplayEngine = new GameplayEngine(gridData);
-        // later : register all systems viar RegisterSystem(new ...System()) method
-        gameplayEngine.RegisterSystem(gridControl);
-
         // --- View ---
         gridView.Initiate(gridData, mainTilemap, highlightMap, basicTile, highlightTile);
         
         // --- Controllers ---
         gridControl.Initiate(mainCamera, gridView, gridData, actions);
         gridControl.gameObject.SetActive(true); // Forcing the OnEnable() of the GridControl to access inputs
+
+        // --- Systems ---
+        gameplayEngine = new GameplayEngine(gridData);
+        // later : register all systems viar RegisterSystem(new ...System()) method
+        gameplayEngine.RegisterSystem(gridControl);
 
         // --- Game Manager ---
         gameManager.Initiate(gameplayEngine);
@@ -84,6 +84,8 @@ public class GameInitiator : MonoBehaviour
         gridView = Instantiate(gridView);
         gridControl = Instantiate(gridControl);
         gameManager = Instantiate(gameManager);
+        mainTilemap = Instantiate(mainTilemap);
+        highlightMap = Instantiate(highlightMap);
     }
     #endregion
 }

@@ -15,13 +15,16 @@ MonoBehaviour:
   cardName: Movement
   cardRarityLevel: 3
   cardTypes: 01000000
-  attackBehaviour:
-    rid: -2
   movementBehaviour:
+    rid: 2909491620187734084
+  specialAbility:
     rid: -2
-  movementRange: 2
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2909491620187734084
+      type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
+      data:
+        movementRange: 0

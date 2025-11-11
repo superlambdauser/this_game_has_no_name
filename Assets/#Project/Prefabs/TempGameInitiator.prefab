@@ -47,10 +47,10 @@ MonoBehaviour:
   gridRows: 10
   gridColumns: 10
   actions: {fileID: -944628639613478452, guid: 9f08fbc486ae66d4eb5125320da43da7, type: 3}
-  gameManager: {fileID: 8275040858889687894, guid: 67cb9c1b604350140ab834ff46fa6a95, type: 3}
+  gameManager: {fileID: 9218477947236984909, guid: 291e5311a58724e4586b628ac7233e62, type: 3}
   gridControl: {fileID: 3724693456807463634, guid: da6fdd6344480e34f953b014b9a850d4, type: 3}
   mainCamera: {fileID: 6718472776401959001, guid: a9433a066dcf06e4bb479770c350ec1b, type: 3}
-  gridView: {fileID: -3798799507593578675, guid: 25c33ef0cf683a64b8e41f9d09e1b68b, type: 3}
+  gridView: {fileID: 6308061552549922827, guid: 25c33ef0cf683a64b8e41f9d09e1b68b, type: 3}
   mainTilemap: {fileID: 8937753407473668092, guid: 47938845838468f45bcf71b4544a672a, type: 3}
   highlightMap: {fileID: 222114721488699633, guid: 983bbabe371413041b3c623ee10bc46a, type: 3}
   basicTile: {fileID: 11400000, guid: 5324aadb621cc2e49a52ac606875ecfb, type: 2}
