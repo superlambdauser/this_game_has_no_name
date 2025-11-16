@@ -4,7 +4,6 @@ using UnityEngine;
 public class DeckManager : MonoBehaviour
 {
     [SerializeField] List<Card> allCards = new List<Card>();
-
     private int currentIndex = 0;
 
     public void Start()
