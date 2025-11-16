@@ -4,22 +4,21 @@ using UnityEngine;
 public class HandManager : MonoBehaviour
 {
     [SerializeField] private CardDisplay cardPrefab;
-    [SerializeField] private List<CardDisplay> cardsInHand = new List<CardDisplay>();
-    [SerializeField] private Transform handPosition; // Center of the hand
-    [SerializeField] private float fanRotationDelta = 5f;
-    [SerializeField] private float cardsHorizontalSpacing = 5f;
-    [SerializeField] private float cardsVerticalalSpacing = 5f;
+    private List<CardDisplay> cardsInHand = new List<CardDisplay>();
+    [SerializeField] private Transform handPosition; // Center of the CIRCLE shape that will determine our the fan shape used to display our hand (not the center of the hand itself)
+    [SerializeField] private int numOfCardsInHand = 8; // Temp for testing
+    [SerializeField, Range(0f, 1f)] private float fanStrength = 0.5f; // 0 = flat shape, 1 = wide arc
+    [SerializeField, Range(0f, 180f)] private float maxAngle = 80f; // I'm putting a [Range()] attribute to make clear to the person who tweaks the angle in the inspector that we are working on the upper half of a circle but the formula below already safely sets boundaries : startAngle = -arcAnlge/2 & endAngle = arcAngle/2
+    [SerializeField] private float radius = 300f; // Depth of the curve (and radius of the circle shape)
 
 
-    // Temp for testing
-    [SerializeField] private int numOfCardsInHand = 8;
 
     public void Start()
     {
         for (int _ = 0; _ < numOfCardsInHand; _++)
         {
             AddCardToHand();
-        }
+        }        
     }
 
     public void Update()
@@ -40,21 +39,26 @@ public class HandManager : MonoBehaviour
     private void UpdateHandDisplay()
     {
         int cardsCount = cardsInHand.Count;
-        float midpoint = (cardsCount - 1f) / 2f;
+        if (cardsCount == 0) return;
 
-        for (int x = 0; x < cardsCount; x++)
+
+        float arcAngle = fanStrength * maxAngle;
+        float startAngle = -arcAngle / 2;
+        float angleStep = (cardsCount > 1) ? arcAngle / (cardsCount - 1f) : 0f; // (count - 1) because for N cards there will always be (N-1) steps between 1st and last card
+
+        for (int i = 0; i < cardsCount; i++)
         {
-            float rotationAngle = fanRotationDelta * (x - midpoint); // Get an even spread rotation depending on the number of cards in hand
+            float angleInDegrees = startAngle + (i * angleStep); // Get current card's angle in the circle
 
-            float horizontalOffset = cardsHorizontalSpacing * (x - midpoint);
+            // Circle coordinates :
+            float angleInRadians = angleInDegrees * Mathf.Deg2Rad; // We need radians to work with Mathf.Sin() and Mathf.Cos();
 
-            // Set card horizontal position between -1, 1
-            float normalizedPosition = (2f * x / (cardsCount - 1f) - 1f);
-            float verticalOffset = cardsVerticalalSpacing * (1 - normalizedPosition * normalizedPosition);
+            float x = radius * Mathf.Sin(angleInRadians);
+            float y = radius * Mathf.Cos(angleInRadians);
 
-            // Apply result 
-            cardsInHand[x].transform.localRotation = Quaternion.Euler(0f, 0f, -rotationAngle); 
-            cardsInHand[x].transform.localPosition = new Vector3(horizontalOffset * cardsInHand[x].transform.localScale.x, verticalOffset * cardsInHand[x].transform.localScale.x, 0f);
+            // Set current card's position & rotation :
+            cardsInHand[i].transform.localPosition = new Vector3(x, y, 0f); // Could maybe make it a Vector2 instead ?
+            cardsInHand[i].transform.localRotation = Quaternion.Euler(0, 0, -angleInDegrees);
         }
     }
 }

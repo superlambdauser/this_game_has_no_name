@@ -681,11 +681,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
   cardPrefab: {fileID: -1993109365048656754, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-  cardsInHand: []
   handPosition: {fileID: 1628606213}
-  fanRotationDelta: 5
-  cardsSpacing: 5
-  numOfCardsInHand: 8
+  numOfCardsInHand: 5
+  fanStrength: 0.5
+  maxAngle: 80
+  radius: 300
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
