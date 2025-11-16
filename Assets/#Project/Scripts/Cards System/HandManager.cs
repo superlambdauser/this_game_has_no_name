@@ -3,22 +3,24 @@ using UnityEngine;
 
 public class HandManager : MonoBehaviour
 {
+    [SerializeField] private DeckManager deckManager;
     [SerializeField] private CardDisplay cardPrefab;
     private List<CardDisplay> cardsInHand = new List<CardDisplay>();
     [SerializeField] private Transform handPosition; // Center of the CIRCLE shape that will determine our the fan shape used to display our hand (not the center of the hand itself)
-    [SerializeField] private int numOfCardsInHand = 8; // Temp for testing
+    // NB : I think later in development this should be given by the GameInitiator
+    public int numOfCardsInHand = 8; // Temp for testing
+    public int maxHandSize = 5;
+
+    [Header("Circle for fan shape settings :")]
     [SerializeField, Range(0f, 1f)] private float fanStrength = 0.5f; // 0 = flat shape, 1 = wide arc
-    [SerializeField, Range(0f, 180f)] private float maxAngle = 80f; // I'm putting a [Range()] attribute to make clear to the person who tweaks the angle in the inspector that we are working on the upper half of a circle but the formula below already safely sets boundaries : startAngle = -arcAnlge/2 & endAngle = arcAngle/2
+    [SerializeField, Range(0f, 180f)] private float maxAngle = 80f; // startAngle = -arcAnlge/2 (& endAngle = arcAngle/2) already set correct boundaries if the given angle is bigger than 180°, I clamp it in the inspector for clarity.
     [SerializeField] private float radius = 300f; // Depth of the curve (and radius of the circle shape)
 
 
 
     public void Start()
     {
-        for (int _ = 0; _ < numOfCardsInHand; _++)
-        {
-            AddCardToHand();
-        }        
+    
     }
 
     public void Update()
@@ -26,16 +28,21 @@ public class HandManager : MonoBehaviour
         UpdateHandDisplay();
     }
 
-    public void AddCardToHand()
+    public void AddCardToHand(Card cardData)
     {
-        // Card instantiation :
-        CardDisplay newCard = Instantiate(cardPrefab, handPosition.position, Quaternion.identity, handPosition);
+        if (cardsInHand.Count < maxHandSize)
+        {
+            // Card instantiation :
+            CardDisplay newCard = Instantiate(cardPrefab, handPosition.position, Quaternion.identity, handPosition);
 
-        cardsInHand.Add(newCard);
+            cardsInHand.Add(newCard);
+
+            newCard.GetComponent<CardDisplay>().cardData = cardData; // Set the given cardData to instantiated card
+        }
 
         UpdateHandDisplay();
     }
-    
+
     private void UpdateHandDisplay()
     {
         int cardsCount = cardsInHand.Count;

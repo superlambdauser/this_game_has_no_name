@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 public class CardDisplay : MonoBehaviour
 {
+    public Card cardData;
     [SerializeField] private Image cardImage;
     [SerializeField] private Image rarityLevelFrameImage;
     [SerializeField] private Image[] typeIconImages;
     [SerializeField] private TMP_Text cardNameText;
     [SerializeField] private TMP_Text cardRarityLevelText;
-    [SerializeField] private Card cardData;
     private int cardRarityLevel;
 
 
@@ -34,14 +34,12 @@ public class CardDisplay : MonoBehaviour
     {
         Debug.Log($"Updating card {cardData?.name ?? "NULL"}");
 
-        //Update title
-        cardNameText.text = cardData.CardName;
+        cardNameText.text = cardData.CardName; // Update title
 
-        // Update frame color & displayed rarity level based on card's rarity level enum index
+        // Update frame color & displayed rarity level based on card's rarity level enum index :
         cardRarityLevel = (int)cardData.CardRarityLevel;
 
         rarityLevelFrameImage.color = rarityColors[cardRarityLevel];
-
         cardRarityLevelText.text = cardRarityLevel.ToString();
 
         // Resetting all icons to inactive
