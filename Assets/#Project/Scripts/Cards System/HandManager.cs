@@ -18,7 +18,7 @@ public class HandManager : MonoBehaviour
 
 
 
-    public void Start()
+    private void Start()
     {
         for (int i = 0;  i < numOfCardsInHand; i++)
         {
@@ -26,7 +26,7 @@ public class HandManager : MonoBehaviour
         }
     }
 
-    public void Update()
+    private void Update()
     {
         UpdateHandDisplay();
     }

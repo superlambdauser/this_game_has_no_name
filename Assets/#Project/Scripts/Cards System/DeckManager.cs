@@ -6,7 +6,7 @@ public class DeckManager : MonoBehaviour
     [SerializeField] List<Card> allCards = new List<Card>();
     private int currentIndex = 0;
 
-    public void Start()
+    private void Start()
     {
         // Load all card assets from Ressources folder :
         Card[] cards = Resources.LoadAll<Card>("CardDatas"); // !!! The given path must be within a folder named "Resources" 

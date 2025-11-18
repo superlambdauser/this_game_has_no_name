@@ -78,7 +78,7 @@ public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
     private Vector2Int ScreenToGridPos(Vector3 mousePos)
     {
         Debug.Log($"Mouse screen: {mousePos}");
-        Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Mathf.Abs(cam.transform.position.z))); // convert mouse position to world position
+        Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10f)); // convert mouse position to world position
         Debug.Log($"World pos: {worldPos}");
 
         GridLayout gridLayout = gridView.GetComponentInParent<GridLayout>();
