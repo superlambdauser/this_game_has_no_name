@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
-    [SerializeField] List<Card> allCards = new List<Card>();
+    [SerializeField] List<Card> allCards = new List<Card>(); // TEMP. All existing objects of Card type 
     private int currentIndex = 0;
 
     private void Start()
