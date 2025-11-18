@@ -294,7 +294,6 @@ RectTransform:
   m_Children:
   - {fileID: 1764779310}
   - {fileID: 1628606213}
-  - {fileID: 975672126}
   - {fileID: 1187476505}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -440,80 +439,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &704336814
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 626292885}
-    m_Modifications:
-    - target: {fileID: 1059601621649204696, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_Name
-      value: CardPrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -9.766151
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -12.265099
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
---- !u!4 &975672126 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5896700797890787111, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-  m_PrefabInstance: {fileID: 704336814}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1187476504
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +604,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1764779309
@@ -734,8 +659,8 @@ MonoBehaviour:
   cardPrefab: {fileID: -1993109365048656754, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
   handPosition: {fileID: 1628606213}
   numOfCardsInHand: 12
-  maxHandSize: 5
-  fanStrength: 0.5
+  maxHandSize: 8
+  fanStrength: 1
   maxAngle: 80
   radius: 300
 --- !u!1660057539 &9223372036854775807

@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ebdd1708068484db67dd8dd9cd4c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
+  cardData: {fileID: 11400000, guid: b94c064250459924481b2e953b2ec156, type: 2}
   cardImage: {fileID: 7670395706798146313}
   rarityLevelFrameImage: {fileID: 7712610845647778459}
   typeIconImages:
@@ -377,7 +378,6 @@ MonoBehaviour:
   - {fileID: 5555344141902435789}
   cardNameText: {fileID: 438586462604428975}
   cardRarityLevelText: {fileID: 125751758248262635}
-  cardData: {fileID: 11400000, guid: c32967bc847987d4fb3904319aefc33b, type: 2}
 --- !u!1 &1060314224513301299
 GameObject:
   m_ObjectHideFlags: 0

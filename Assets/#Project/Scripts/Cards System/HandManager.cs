@@ -20,7 +20,10 @@ public class HandManager : MonoBehaviour
 
     public void Start()
     {
-    
+        for (int i = 0;  i < numOfCardsInHand; i++)
+        {
+            deckManager.DrawCard(this);
+        }
     }
 
     public void Update()
