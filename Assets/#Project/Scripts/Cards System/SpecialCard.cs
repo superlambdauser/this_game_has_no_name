@@ -8,7 +8,10 @@ public class SpecialCard : Card
     [Header("Special Card Traits :")]
     [SerializeReference] [SR] protected IMovementBehaviour movementBehaviour;
     [SerializeReference] [SR] protected IAttackBehaviour attackBehaviour;
-    [SerializeReference] [SR] protected ISpecialAbility specialAbility;
+    [SerializeReference][SR] protected ISpecialAbility specialAbility;
+
+    public override uint AttackRange => attackRange;
+    public override uint MovementRange => movementRange;
 
 
     public override void Play()

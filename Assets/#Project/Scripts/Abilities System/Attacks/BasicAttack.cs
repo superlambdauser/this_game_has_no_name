@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class BasicAttack : IAttackBehaviour
+public class BasicAttack : IAttackBehaviour // NB : All attacks have to inherit from BasicAttack !
 {
     private HealthSystem target; // Probably need to make it a public var since target changes every turn ?
     public HealthSystem Target => target;
@@ -11,6 +11,7 @@ public class BasicAttack : IAttackBehaviour
 
     [SerializeField] private uint attackRange;
     public uint AttackRange => attackRange;
+
 
     public void Attack()
     {

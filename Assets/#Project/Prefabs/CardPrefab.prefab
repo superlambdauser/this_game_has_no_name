@@ -340,23 +340,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5896700797890787111
-Transform:
+--- !u!224 &5896700797890787111
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059601621649204696}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6002490364514108068}
   - {fileID: 3694196109029461091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 24, y: 32}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &-1993109365048656754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +382,8 @@ MonoBehaviour:
   - {fileID: 5555344141902435789}
   cardNameText: {fileID: 438586462604428975}
   cardRarityLevelText: {fileID: 125751758248262635}
+  cardAttackRangeText: {fileID: 1734185225924778997}
+  cardMovementRangeText: {fileID: 5393149895278196401}
 --- !u!1 &1060314224513301299
 GameObject:
   m_ObjectHideFlags: 0

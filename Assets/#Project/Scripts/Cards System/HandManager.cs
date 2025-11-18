@@ -51,7 +51,6 @@ public class HandManager : MonoBehaviour
         int cardsCount = cardsInHand.Count;
         if (cardsCount == 0) return;
 
-
         float arcAngle = fanStrength * maxAngle;
         float startAngle = -arcAngle / 2;
         float angleStep = (cardsCount > 1) ? arcAngle / (cardsCount - 1f) : 0f; // (count - 1) because for N cards there will always be (N-1) steps between 1st and last card

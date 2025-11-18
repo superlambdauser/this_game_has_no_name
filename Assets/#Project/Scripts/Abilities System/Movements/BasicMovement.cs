@@ -14,7 +14,9 @@ public class BasicMovement : IMovementBehaviour
 
     public void Move()
     {
+        // TO DO : Check if in range
+
+        // Then :
         target.MoveTo(position);
     }
-
 }

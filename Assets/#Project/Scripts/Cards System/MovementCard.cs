@@ -6,14 +6,9 @@ public class MovementCard : Card
 {
     [Header("Movement Cards Traits :")]
     [SerializeReference] [SR] protected IMovementBehaviour movementBehaviour;
-    [SerializeReference] [SR] protected ISpecialAbility specialAbility;
+    [SerializeReference][SR] protected ISpecialAbility specialAbility;
+    public override uint MovementRange => movementRange;
 
-
-    public override void Play()
-    {
-        movementBehaviour.Move();
-        specialAbility?.Perform();
-    }
 
     #if UNITY_EDITOR // Wrapping my OnValidate() method for safety
     private void OnValidate() // Checking that my mandatory element is assigned
@@ -24,4 +19,10 @@ public class MovementCard : Card
         }
     }
     #endif
+
+    public override void Play()
+    {
+        movementBehaviour.Move();
+        specialAbility?.Perform();
+    }
 }

@@ -10,8 +10,9 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private Image[] typeIconImages;
     [SerializeField] private TMP_Text cardNameText;
     [SerializeField] private TMP_Text cardRarityLevelText;
+    [SerializeField] private TMP_Text cardAttackRangeText;
+    [SerializeField] private TMP_Text cardMovementRangeText;
     private int cardRarityLevel;
-
 
 
     private Color[] rarityColors =
@@ -41,6 +42,10 @@ public class CardDisplay : MonoBehaviour
 
         rarityLevelFrameImage.color = rarityColors[cardRarityLevel];
         cardRarityLevelText.text = cardRarityLevel.ToString();
+
+        // Update range :
+        cardAttackRangeText.text = cardData.AttackRange.ToString();
+        cardMovementRangeText.text = cardData.MovementRange.ToString();
 
         // Resetting all icons to inactive
         foreach (Image icon in typeIconImages)
