@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90e1cf984ac34724ba6d333e69abc786, type: 3}
   m_Name: TempAttackCard
@@ -15,8 +15,8 @@ MonoBehaviour:
   cardName: Attack
   cardRarityLevel: 1
   cardTypes: 00000000
-  attackBehaviour:
-    rid: 6566286954860118309
+  basicAttack:
+    rid: 2909491801231458370
   specialAbility:
     rid: -2
   references:
@@ -24,8 +24,8 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6566286954860118309
+    - rid: 2909491801231458370
       type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
       data:
-        damages: 3
-        attackRange: 2
+        damages: 0
+        attackRange: 0
