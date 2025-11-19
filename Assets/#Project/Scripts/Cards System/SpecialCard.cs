@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using SerializeReferenceEditor;
 using UnityEngine;
 
@@ -9,9 +8,6 @@ public class SpecialCard : Card
     [SerializeReference] [SR] protected IMovementBehaviour movementBehaviour;
     [SerializeReference] [SR] protected IAttackBehaviour attackBehaviour;
     [SerializeReference][SR] protected ISpecialAbility specialAbility;
-
-    public override uint AttackRange => attackRange;
-    public override uint MovementRange => movementRange;
 
 
     public override void Play()

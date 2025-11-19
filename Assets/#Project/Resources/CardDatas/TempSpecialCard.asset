@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpecialCard
   cardName: Special card
   cardRarityLevel: 2
-  cardTypes: 000000000100000002000000
+  cardTypes: 00000000
   movementBehaviour:
     rid: 2909491620187734085
   attackBehaviour:
@@ -37,4 +37,3 @@ MonoBehaviour:
       type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
       data:
         healAmount: 2
-        TargetToHeal: {fileID: 0}

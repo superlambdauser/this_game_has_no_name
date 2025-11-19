@@ -1,5 +1,4 @@
 using SerializeReferenceEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New card", menuName = "Card/Attack Card")]
@@ -8,7 +7,8 @@ public class AttackCard : Card
     [Header("Attack Cards Traits :")]
     [SerializeReference][SR] protected BasicAttack basicAttack;
     [SerializeReference][SR] protected ISpecialAbility specialAbility;
-    public override uint AttackRange => attackRange;
+    [SerializeField] private uint attackRange;
+    public uint AttackRange => attackRange;
 
 
 #if UNITY_EDITOR // Wrapping my OnValidate() method for safety

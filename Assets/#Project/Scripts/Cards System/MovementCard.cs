@@ -7,7 +7,8 @@ public class MovementCard : Card
     [Header("Movement Cards Traits :")]
     [SerializeReference] [SR] protected IMovementBehaviour movementBehaviour;
     [SerializeReference][SR] protected ISpecialAbility specialAbility;
-    public override uint MovementRange => movementRange;
+    private uint movementRange;
+    public uint MovementRange => movementRange;
 
 
     #if UNITY_EDITOR // Wrapping my OnValidate() method for safety

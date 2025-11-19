@@ -44,8 +44,7 @@ public class CardDisplay : MonoBehaviour
         cardRarityLevelText.text = cardRarityLevel.ToString();
 
         // Update range :
-        cardAttackRangeText.text = cardData.AttackRange.ToString();
-        cardMovementRangeText.text = cardData.MovementRange.ToString();
+
 
         // Resetting all icons to inactive
         foreach (Image icon in typeIconImages)

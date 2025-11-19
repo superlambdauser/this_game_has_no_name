@@ -19,6 +19,7 @@ MonoBehaviour:
     rid: 2909491801231458370
   specialAbility:
     rid: -2
+  attackRange: 0
   references:
     version: 2
     RefIds:
