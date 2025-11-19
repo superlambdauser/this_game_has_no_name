@@ -12,19 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de627cdec72304a4eaec55a59efcaf13, type: 3}
   m_Name: TempMovementCard
   m_EditorClassIdentifier: Assembly-CSharp::MovementCard
-  cardName: Movement
-  cardRarityLevel: 3
-  cardTypes: 01000000
+  cardName: 
+  cardRarityLevel: 0
+  cardTypes: 
   movementBehaviour:
-    rid: 2909491620187734084
+    rid: -2
   specialAbility:
     rid: -2
+  movementRange: 0
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 2909491620187734084
-      type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
-      data:
-        movementRange: 0

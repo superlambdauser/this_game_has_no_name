@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class BasicHealing : ISpecialAbility
+[System.Serializable]
+public class BasicHealing : SpecialAbility
 {
     [SerializeField] private uint healAmount;
     public uint HealAmount => healAmount;
@@ -8,7 +9,7 @@ public class BasicHealing : ISpecialAbility
     public HealthSystem TargetToHeal => targetToHeal;
 
 
-    public void Perform()
+    public override void Perform()
     {
         Heal(targetToHeal);
     }

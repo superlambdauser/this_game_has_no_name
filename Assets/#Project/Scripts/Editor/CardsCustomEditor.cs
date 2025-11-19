@@ -1,78 +1,107 @@
+using System;
+using System.Linq;
 using UnityEditor;
+using UnityEngine;
 
-// Draw a custom Editor for Card objects letting you enter data depending on the type(s) assigned to the card :
-[CustomEditor(typeof(Card), true)] // Draws a custom Editor for Card objects letting you enter data depending on the type(s) assigned to the card. NB : Default value of the bool overload is FALSE which doesn't show the custom inspector for children of the inspected type (in this case, Card is an abstract class so we must set it to true !)
-public class CardsCustomEditor : Editor // !!! Script must be place in a directory "Editor" anywhere inside the "Assets" folder.
+[CustomEditor(typeof(Card), true)]
+public class CardsCustomEditor : Editor
 {
     private SerializedProperty cardTypes;
     private SerializedProperty attackBehaviour;
     private SerializedProperty movementBehaviour;
-    private SerializedProperty specialAbility;
+    private SerializedProperty specialAbilities;
 
-    private void OnEnable() // Called every time the inspector opens
+    private void OnEnable()
     {
-        // NB : serializedObject = Unity's wrapper around selected Card instance
-
-        cardTypes = serializedObject.FindProperty("cardTypes"); // Returns an array that contains all the card types entered for the card
+        cardTypes = serializedObject.FindProperty("cardTypes");
         attackBehaviour = serializedObject.FindProperty("attackBehaviour");
         movementBehaviour = serializedObject.FindProperty("movementBehaviour");
-        specialAbility = serializedObject.FindProperty("specialAbility");
+        specialAbilities = serializedObject.FindProperty("specialAbilities");
     }
 
-    public override void OnInspectorGUI() // Called every time Unity draws the inspector -> Updates every frame while the inspector is visible + every time a value is changed or the layout updates
+    public override void OnInspectorGUI()
     {
-        serializedObject.Update(); // Sync SerializedObject with current values
+        serializedObject.Update();
 
-        // Draw everything normally except for behaviours :
-        DrawPropertiesExcluding(serializedObject, "attackBehaviour", "movementBehaviour", "specialAbility");
+        // Draw all default properties except the custom ones
+        DrawPropertiesExcluding(serializedObject, "m_Script", "attackBehaviour", "movementBehaviour", "specialAbilities", "cardTypes");
 
-        // Determine which card types are attributed :
-        bool hasAttack = HasCardType("Attack");
-        bool hasMovement = HasCardType("Movement");
-        bool hasSpecial = HasCardType("Special");
+        Card inspectedCard = (Card)target;
 
-        // Editor visual settings for clarity :
-        EditorGUILayout.Space(); // Make space in the inspector
-        EditorGUILayout.LabelField("Custom card traits :", EditorStyles.boldLabel); // LabelField() is required here because [Header("")] is ignored in custom inspectors
-
-        // Draw behaviour fields only if ther are in the card types list :
-        if (hasAttack)
+        // Determine allowed types
+        string[] allowedTypes = inspectedCard switch
         {
+            AttackCard => new string[] { "Attack", "Special" },
+            MovementCard => new string[] { "Movement", "Special" },
+            SpecialCard => new string[] { "Attack", "Movement", "Special" },
+            _ => Array.Empty<string>()
+        };
+
+        string mandatoryType = inspectedCard switch
+        {
+            AttackCard => "Attack",
+            MovementCard => "Movement",
+            SpecialCard => null,
+            _ => null
+        };
+
+        // Clean up invalid card types
+        for (int i = inspectedCard.CardTypes.Count - 1; i >= 0; i--)
+        {
+            string typeString = inspectedCard.CardTypes[i].ToString();
+            if (typeString != mandatoryType && !allowedTypes.Contains(typeString))
+            {
+                inspectedCard.CardTypes.RemoveAt(i);
+            }
+        }
+
+        // Ensure mandatory type is present
+        if (mandatoryType != null && !inspectedCard.CardTypes.Contains(Enum.Parse<Card.CardType>(mandatoryType)))
+        {
+            inspectedCard.CardTypes.Insert(0, Enum.Parse<Card.CardType>(mandatoryType));
+        }
+
+        // Draw card types
+        EditorGUILayout.LabelField("Card Types:", EditorStyles.boldLabel);
+        if (mandatoryType != null)
+        {
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.LabelField($"{mandatoryType} (Mandatory)");
+            EditorGUI.EndDisabledGroup();
+        }
+
+        foreach (var type in inspectedCard.CardTypes)
+        {
+            string typeStr = type.ToString();
+            if (typeStr == mandatoryType) continue;
+            EditorGUILayout.LabelField(typeStr);
+        }
+
+        // Draw behaviours based on allowed types safely
+        if (allowedTypes.Contains("Attack") && attackBehaviour != null)
+        {
+            if (attackBehaviour.managedReferenceValue == null)
+                EditorGUILayout.HelpBox("Attack Behaviour is required when Attack type is assigned.", MessageType.Error);
+
             EditorGUILayout.PropertyField(attackBehaviour);
-
-            if (attackBehaviour.objectReferenceValue == null) EditorGUILayout.HelpBox("Attack Behaviour is required when Attack type is assigned.", MessageType.Error);
         }
 
-        if (hasMovement)
+        if (allowedTypes.Contains("Movement") && movementBehaviour != null)
         {
+            if (movementBehaviour.managedReferenceValue == null)
+                EditorGUILayout.HelpBox("Movement Behaviour is required when Movement type is assigned.", MessageType.Error);
+
             EditorGUILayout.PropertyField(movementBehaviour);
-
-            if (movementBehaviour.objectReferenceValue == null) EditorGUILayout.HelpBox("Movement Behaviour is required when Movement type is assigned.", MessageType.Error);
-
         }
 
-        if (hasSpecial) 
+        if (allowedTypes.Contains("Special") && specialAbilities != null)
         {
-            EditorGUILayout.PropertyField(specialAbility);
+            if (specialAbilities.arraySize == 0)
+                EditorGUILayout.HelpBox("Special Ability might be required when Special type is assigned.", MessageType.Warning);
 
-            if (specialAbility.objectReferenceValue == null) EditorGUILayout.HelpBox("Special Ability is required when Movement type is assigned.", MessageType.Error);
-
+            EditorGUILayout.PropertyField(specialAbilities, new GUIContent("Special Abilities"), true);
         }
 
-        // Apply changes to the SerializedObject
         serializedObject.ApplyModifiedProperties();
-    }
-
-    private bool HasCardType(string typeName) // Where typeName must exactly match the enum name
-    {
-        for (int i = 0; i < cardTypes.arraySize; i++)
-        {
-            SerializedProperty element = cardTypes.GetArrayElementAtIndex(i);
-
-            // Compare element to enum name :
-            if (element.enumDisplayNames[element.enumValueIndex] == typeName) return true;
-        }
-
-        return false;
     }
 }

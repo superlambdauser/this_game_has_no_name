@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class BasicMovement : IMovementBehaviour
+public  class BasicMovement : IMovementBehaviour
 {
     private Movable target; // Temp to not forget we need this
     public Movable Target => target;
@@ -11,6 +11,12 @@ public class BasicMovement : IMovementBehaviour
 
     [SerializeField] private uint movementRange;
     public uint MovementRange => movementRange;
+
+
+    public void Perform()
+    {
+        Move();
+    }
 
     public void Move()
     {

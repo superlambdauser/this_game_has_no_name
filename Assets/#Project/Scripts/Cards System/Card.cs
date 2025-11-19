@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SerializeReferenceEditor;
 using UnityEngine;
 
 
@@ -9,10 +10,11 @@ public abstract class Card : ScriptableObject
     public string CardName => cardName;
     [SerializeField] private CardRarity cardRarityLevel;
     public CardRarity CardRarityLevel => cardRarityLevel;
-    [SerializeField] private List<CardType> cardTypes;
+    [SerializeField] private List<CardType> cardTypes = new List<CardType>();
     public List<CardType> CardTypes => cardTypes;
+    [SerializeReference] [SR] protected List<SpecialAbility> specialAbilities = new List<SpecialAbility>();
+    public List<SpecialAbility> SpecialAbilities => specialAbilities;
 
-    // Optional behaviours -> SerializeReference (protected for children to access)
 
 
     public enum CardType

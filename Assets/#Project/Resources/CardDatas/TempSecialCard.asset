@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90d5ed7dc4d4104488fc0ecb92d381b5, type: 3}
-  m_Name: TempSpecialCard
+  m_Name: TempSecialCard
   m_EditorClassIdentifier: Assembly-CSharp::SpecialCard
-  cardName: Special card
-  cardRarityLevel: 2
-  cardTypes: 00000000
+  cardName: Temp Basic Attack
+  cardRarityLevel: 1
+  cardTypes: 000000000100000002000000
   movementBehaviour:
-    rid: 2909491620187734085
+    rid: 6566287178993762415
   attackBehaviour:
-    rid: 2909491620187734086
+    rid: 6566287178993762418
   specialAbility:
-    rid: 2909491620187734087
+    rid: 6566287178993762416
   references:
     version: 2
     RefIds:
-    - rid: 2909491620187734085
+    - rid: 6566287178993762415
       type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
       data:
-        movementRange: 2
-    - rid: 2909491620187734086
+        movementRange: 4
+    - rid: 6566287178993762416
+      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
+      data:
+        healAmount: 5
+    - rid: 6566287178993762418
       type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
       data:
         damages: 2
         attackRange: 3
-    - rid: 2909491620187734087
-      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
-      data:
-        healAmount: 2

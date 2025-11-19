@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface ISpecialAbility
+public interface IAbility
 {
     public void Perform();
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public interface IAttackBehaviour
+public interface IAttackBehaviour : IAbility
 {
+    public uint AttackRange { get;}
     public void Attack();
 }
