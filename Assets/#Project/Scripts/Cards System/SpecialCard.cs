@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New card", menuName = "Card/Special Card")]
 public class SpecialCard : Card
 {
-    [Header("Special Card Traits :")]
     [SerializeReference] [SR] protected IMovementBehaviour movementBehaviour;
     public IMovementBehaviour MovementBehaviour => movementBehaviour;
     [SerializeReference] [SR] protected IAttackBehaviour attackBehaviour;

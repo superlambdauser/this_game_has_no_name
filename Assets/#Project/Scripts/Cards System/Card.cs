@@ -16,7 +16,6 @@ public abstract class Card : ScriptableObject
     public List<SpecialAbility> SpecialAbilities => specialAbilities;
 
 
-
     public enum CardType
     {
         Attack,

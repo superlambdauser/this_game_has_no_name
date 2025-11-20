@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New card", menuName = "Card/Attack Card")]
 public class AttackCard : Card
 {
-    [Header("Attack Cards Traits :")]
     [SerializeReference][SR] protected IAttackBehaviour attackBehaviour;
     public IAttackBehaviour AttackBehaviour => attackBehaviour;
 

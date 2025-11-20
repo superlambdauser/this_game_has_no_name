@@ -12,21 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e1cf984ac34724ba6d333e69abc786, type: 3}
   m_Name: TempAttackCard
   m_EditorClassIdentifier: Assembly-CSharp::AttackCard
-  cardName: 
-  cardRarityLevel: 0
+  cardName: Attack Card
+  cardRarityLevel: 4
   cardTypes: 00000000
+  specialAbilities: []
   attackBehaviour:
-    rid: 6566287178993762442
-  specialAbility:
-    rid: -2
-  attackRange: 0
+    rid: 6566287178993762475
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 6566287178993762442
+    - rid: 6566287178993762475
       type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
       data:
-        damages: 1
-        attackRange: 5
+        damages: 0
+        attackRange: 0
