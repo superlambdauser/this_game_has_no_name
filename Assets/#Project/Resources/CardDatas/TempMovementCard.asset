@@ -15,13 +15,18 @@ MonoBehaviour:
   cardName: Movement Card
   cardRarityLevel: 4
   cardTypes: 0100000002000000
-  specialAbilities: []
+  specialAbilities:
+  - rid: 6566287206994935886
   movementBehaviour:
-    rid: 6566287178993762476
+    rid: 6566287206994935885
   references:
     version: 2
     RefIds:
-    - rid: 6566287178993762476
+    - rid: 6566287206994935885
       type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
       data:
-        movementRange: 5
+        movementRange: 0
+    - rid: 6566287206994935886
+      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
+      data:
+        healAmount: 5

@@ -12,6 +12,9 @@ public class CardsCustomEditor : Editor
     private SerializedProperty movementBehaviour;
     private SerializedProperty specialAbilities;
 
+    private List<Card.CardType> cachedTypes = new List<Card.CardType>(); // Dynamic link between cardTypes and specialAbilities (see below)
+
+
     private void OnEnable()
     {
         cardTypes = serializedObject.FindProperty("cardTypes");
@@ -20,9 +23,9 @@ public class CardsCustomEditor : Editor
         specialAbilities = serializedObject.FindProperty("specialAbilities");
     }
 
-    public override void OnInspectorGUI()
+    public override void OnInspectorGUI() // NB : don't forget to override the method
     {
-        serializedObject.Update();
+        serializedObject.Update(); // Always start with the Update() inside OnInspectorGUI()
 
         // Draw all default properties except the custom ones :
         DrawPropertiesExcluding(serializedObject, "m_Script", "attackBehaviour", "movementBehaviour", "specialAbilities", "cardTypes");
@@ -47,7 +50,6 @@ public class CardsCustomEditor : Editor
             _ => null
         };
 
-
         // Remove invalid card types :
         for (int i = inspectedCard.CardTypes.Count - 1; i >= 0; i--)
         {
@@ -65,13 +67,30 @@ public class CardsCustomEditor : Editor
             inspectedCard.CardTypes.Insert(0, Enum.Parse<Card.CardType>(mandatoryType));
         }
 
+        // Detect changes in types list :
+        List<Card.CardType> previous = new List<Card.CardType>(cachedTypes);
+        List<Card.CardType> current = inspectedCard.CardTypes;
+
+        // Link "Special" in types list and special abilities dynamically :
+        if (!previous.Contains(Card.CardType.Special) && current.Contains(Card.CardType.Special)) // Special type added
+        {
+            specialAbilities.arraySize++; // Create slot
+            SerializedProperty newElement = specialAbilities.GetArrayElementAtIndex(specialAbilities.arraySize - 1); // Could put at index 0 but safer
+            newElement.managedReferenceValue = null; // Empty slot for user to fill it with special ability
+        }
+
+        if (previous.Contains(Card.CardType.Special) && !current.Contains(Card.CardType.Special)) // Special type removed
+        {
+            specialAbilities.ClearArray(); // Clear all special abilities
+        }
+
+        cachedTypes = new List<Card.CardType>(current);
+
+
         // Draw card types :
         EditorGUILayout.Space();
 
-        if (inspectedCard is SpecialCard)
-        {
-            EditorGUILayout.PropertyField(cardTypes, new GUIContent("Card type(s) :"), true);
-        }
+        EditorGUILayout.PropertyField(cardTypes, new GUIContent("Card type(s) :"), true);
 
         if (mandatoryType != null) // Mandatory type (only for attacks and movements)
         {
@@ -110,32 +129,37 @@ public class CardsCustomEditor : Editor
             }
         }
 
+
         // Draw traits section :
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Type(s) Traits :", EditorStyles.boldLabel);
 
-        // Draw behaviours based on allowed types safely
+        // Draw behaviours types safely :
         bool hasAttackType = inspectedCard.CardTypes.Contains(Card.CardType.Attack);
         bool hasMovementType = inspectedCard.CardTypes.Contains(Card.CardType.Movement);
+        bool hasSpecialType = inspectedCard.CardTypes.Contains(Card.CardType.Special);
 
         if (hasAttackType)
         {
-            if (attackBehaviour.managedReferenceValue == null) EditorGUILayout.HelpBox("Attack Behaviour is required when Attack type is assigned.", MessageType.Error);
-
             EditorGUILayout.PropertyField(attackBehaviour);
+
+            if (attackBehaviour.managedReferenceValue == null) EditorGUILayout.HelpBox("Attack Behaviour is required when Attack type is assigned.", MessageType.Error); // Null-check
         }
 
         if (hasMovementType)
         {
-            if (movementBehaviour.managedReferenceValue == null) EditorGUILayout.HelpBox("Movement Behaviour is required when Movement type is assigned.", MessageType.Error);
-
             EditorGUILayout.PropertyField(movementBehaviour);
+
+            if (movementBehaviour.managedReferenceValue == null) EditorGUILayout.HelpBox("Movement Behaviour is required when Movement type is assigned.", MessageType.Error); // Null-check
         }
 
-        if (allowedTypes.Contains("Special") && specialAbilities != null)
+        if (hasSpecialType && specialAbilities != null)
         {
-            // No warning if empty :
+            // Draw special properties list :
             EditorGUILayout.PropertyField(specialAbilities, new GUIContent("Special Abilities"), true);
+
+            // Error if list is empty but Special type selected :
+            if (specialAbilities.arraySize == 0) EditorGUILayout.HelpBox("At least one special ability must be added when Special type is selected.", MessageType.Error);
 
             // Prevent & remove duplicates :
             HashSet<Type> alreadyAssignedAbilities = new HashSet<Type>(); // Hashset<Type> = list of Type elements where duplicates are not allowed.
