@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de627cdec72304a4eaec55a59efcaf13, type: 3}
   m_Name: Movement
   m_EditorClassIdentifier: Assembly-CSharp::MovementCard
-  cardName: 
-  cardRarityLevel: 0
+  cardName: Move2
+  cardRarityLevel: 2
   cardTypes: 01000000
   specialAbilities: []
   movementBehaviour:
-    rid: -2
+    rid: 6566287199169151051
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 6566287199169151051
+      type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
+      data:
+        movementRange: 0

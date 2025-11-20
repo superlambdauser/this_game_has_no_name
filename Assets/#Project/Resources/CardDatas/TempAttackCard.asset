@@ -17,11 +17,11 @@ MonoBehaviour:
   cardTypes: 00000000
   specialAbilities: []
   attackBehaviour:
-    rid: 6566287178993762475
+    rid: 6566287199169151057
   references:
     version: 2
     RefIds:
-    - rid: 6566287178993762475
+    - rid: 6566287199169151057
       type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
       data:
         damages: 0

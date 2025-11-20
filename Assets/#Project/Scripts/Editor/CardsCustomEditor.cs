@@ -37,7 +37,7 @@ public class CardsCustomEditor : Editor
             SpecialCard => new string[] { "Attack", "Movement", "Special" }, // All allowed
             _ => Array.Empty<string>() // Empty array otherwise
         };
-        
+
         // Determine mandatory (non-removable) type :
         string mandatoryType = inspectedCard switch
         {
@@ -52,7 +52,7 @@ public class CardsCustomEditor : Editor
         for (int i = inspectedCard.CardTypes.Count - 1; i >= 0; i--)
         {
             string typeToString = inspectedCard.CardTypes[i].ToString();
-            
+
             if (typeToString != mandatoryType && !allowedTypes.Contains(typeToString))
             {
                 inspectedCard.CardTypes.RemoveAt(i);
@@ -67,7 +67,11 @@ public class CardsCustomEditor : Editor
 
         // Draw card types :
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Card Types:", EditorStyles.boldLabel);
+
+        if (inspectedCard is SpecialCard)
+        {
+            EditorGUILayout.PropertyField(cardTypes, new GUIContent("Card type(s) :"), true);
+        }
 
         if (mandatoryType != null) // Mandatory type (only for attacks and movements)
         {
@@ -96,7 +100,7 @@ public class CardsCustomEditor : Editor
         // At least one visible, assigned type for special cards :
         if (inspectedCard is SpecialCard)
         {
-            bool hasAnyType = 
+            bool hasAnyType =
                 hasSpecialAbility || // "Special" type check via specialAbilities list
                 inspectedCard.CardTypes.Count > 0; // "Attack" and/or "Movement" type check via CardTypes
 
