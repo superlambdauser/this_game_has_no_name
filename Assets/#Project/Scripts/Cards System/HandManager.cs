@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandManager : MonoBehaviour
+public class HandManager : Singleton<HandManager>
 {
     [SerializeField] private DeckManager deckManager;
     [SerializeField] private CardDisplay cardPrefab;

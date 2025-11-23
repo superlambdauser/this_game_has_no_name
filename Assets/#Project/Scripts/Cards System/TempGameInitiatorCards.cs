@@ -1,12 +1,7 @@
 using UnityEngine;
 
-public class TempGameInitiatorCards : MonoBehaviour
+public class TempGameInitiatorCards : Singleton<TempGameInitiatorCards>
 {
-    // Singleton pattern :
-    private TempGameInitiatorCards instance;
-    public TempGameInitiatorCards Instance => instance;
-
-
     void Start()
     {
         

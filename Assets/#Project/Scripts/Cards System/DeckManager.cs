@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeckManager : MonoBehaviour
+public class DeckManager : Singleton<DeckManager>
 {
     [SerializeField] List<Card> allCards = new List<Card>(); // TEMP. All existing objects of Card type 
     private int currentIndex = 0;
