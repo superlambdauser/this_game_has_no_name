@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MovementCard
   cardName: Move2
   cardRarityLevel: 2
-  cardTypes: 02000000
-  specialAbilities: []
+  cardTypes: 0100000002000000
+  specialAbilities:
+  - rid: 6566287294189011036
+  types: 0
   movementBehaviour:
     rid: 6566287199169151051
   references:
@@ -25,3 +27,7 @@ MonoBehaviour:
       type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
       data:
         movementRange: 0
+    - rid: 6566287294189011036
+      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
+      data:
+        healAmount: 0

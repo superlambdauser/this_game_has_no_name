@@ -11,12 +11,10 @@ public abstract class Card : ScriptableObject
     public string CardName => cardName;
     [SerializeField] private CardRarity cardRarityLevel;
     public CardRarity CardRarityLevel => cardRarityLevel;
-    [SerializeField] private List<CardType> cardTypes = new List<CardType>();
-    public List<CardType> CardTypes => cardTypes;
+    [SerializeField] private CardType typeFlags;
+    public CardType TypeFlags => typeFlags;
     [SerializeReference] [SR] protected List<SpecialAbility> specialAbilities = new List<SpecialAbility>();
     public List<SpecialAbility> SpecialAbilities => specialAbilities;
-
-    public CardType types;
 
 
     [Flags] public enum CardType // [Flags] attribute indicates that our enum consists of bit fields -> this indicates to the compiler that the enum has to be treated in a way that its values are not exclusive -> Values combinations are possible

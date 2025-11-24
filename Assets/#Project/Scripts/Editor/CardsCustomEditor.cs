@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 
+
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // !!!!!DON'T TOUCH THIS CODE ANYMORE AND FOCUS ON THE GAME !!!!!
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -13,22 +14,21 @@ using UnityEngine;
 [CustomEditor(typeof(Card), true)] // Custom Editor for Card objects, true = Card + Card children (default = false)
 public class CardsCustomEditor : Editor
 {
-    private SerializedProperty cardTypes;
     private SerializedProperty typeFlags; // Flags field (Card.types)
+    private int previousFlags;
     private SerializedProperty attackBehaviour;
     private SerializedProperty movementBehaviour;
     private SerializedProperty specialAbilities;
 
-    private List<Card.CardType> cachedTypes = new List<Card.CardType>(); // Dynamic link between cardTypes and specialAbilities (see below)
-
 
     private void OnEnable()
     {
-        cardTypes = serializedObject.FindProperty("cardTypes");
-        typeFlags = serializedObject.FindProperty("types");
+        typeFlags = serializedObject.FindProperty("typeFlags");
         attackBehaviour = serializedObject.FindProperty("attackBehaviour");
         movementBehaviour = serializedObject.FindProperty("movementBehaviour");
         specialAbilities = serializedObject.FindProperty("specialAbilities");
+
+        if (typeFlags != null) previousFlags = typeFlags.intValue;
     }
 
     public override void OnInspectorGUI() // NB : don't forget to override the method
@@ -37,7 +37,7 @@ public class CardsCustomEditor : Editor
         serializedObject.Update(); // Always start with the Update() inside OnInspectorGUI()
 
         // Draw all default properties except the custom ones :
-        DrawPropertiesExcluding(serializedObject, "m_Script", "attackBehaviour", "movementBehaviour", "specialAbilities", "cardTypes", "types");
+        DrawPropertiesExcluding(serializedObject, "m_Script", "typeFlags", "attackBehaviour", "movementBehaviour", "specialAbilities");
 
         Card inspectedCard = (Card)target; // Current instance of Card type inspected
 
@@ -59,51 +59,71 @@ public class CardsCustomEditor : Editor
             _ => null
         };
 
-        // Remove invalid card types :
-        for (int i = inspectedCard.CardTypes.Count - 1; i >= 0; i--)
+        // Ensure mandartory type flag is present :
+        if (mandatoryType != null && typeFlags != null)
         {
-            string typeToString = inspectedCard.CardTypes[i].ToString();
+            Card.CardType mandatoryEnum = (Card.CardType)Enum.Parse(typeof(Card.CardType), mandatoryType);
 
-            if (typeToString != mandatoryType && !allowedTypes.Contains(typeToString))
+            if ((typeFlags.intValue & (int)mandatoryEnum) == 0)
             {
-                inspectedCard.CardTypes.RemoveAt(i);
+                // Set mandatory bit :
+                typeFlags.intValue |= (int)mandatoryEnum; // Where x |= y means x = x | y (|= is the bitwise +=)
+
+                // Apply immediately for rest of the UI sees it :
+                serializedObject.ApplyModifiedProperties(); // Push
+                serializedObject.Update(); // Pull
             }
         }
 
-        // Ensure mandatory type is present :
-        if (mandatoryType != null && !inspectedCard.CardTypes.Contains(Enum.Parse<Card.CardType>(mandatoryType)))
+        // Draw flags field :
+        if (typeFlags != null) EditorGUILayout.PropertyField(typeFlags, new GUIContent("Card Type(s) :"));
+
+        // Commit user edits to the flags/list :
+        bool changed = serializedObject.ApplyModifiedProperties();
+        serializedObject.Update();
+
+        int currentFlags = (typeFlags != null) ? typeFlags.intValue : 0;
+        Card.CardType flags = (Card.CardType)currentFlags;
+
+        // If flags changed, sync :
+        if (changed)
         {
-            inspectedCard.CardTypes.Insert(0, Enum.Parse<Card.CardType>(mandatoryType));
-        }
+            int newFlags = (typeFlags != null) ? typeFlags.intValue : 0;
 
-        // Detect changes in types list :
-        List<Card.CardType> previous = new List<Card.CardType>(cachedTypes);
-        List<Card.CardType> current = inspectedCard.CardTypes;
-
-
-        // Link "Special" in types list and special abilities dynamically :
-        if (!EditorApplication.isPlayingOrWillChangePlaymode) // Prevent Special ability slot creation when hitting play or stop
-        {
-            if (!previous.Contains(Card.CardType.Special) && current.Contains(Card.CardType.Special)) // Special type added
+            // Change dynamically specialAbilities when Special flag added/removed
+            if (!EditorApplication.isPlayingOrWillChangePlaymode) // Edit mode only
             {
-                specialAbilities.arraySize++; // Create slot
-                SerializedProperty newElement = specialAbilities.GetArrayElementAtIndex(specialAbilities.arraySize - 1); // Could put at index 0 but safer
-                newElement.managedReferenceValue = null; // Empty slot for user to fill it with special ability
+                bool hadSpecial = (previousFlags & (int)Card.CardType.Special) != 0;
+                bool hasSpecial = (newFlags & (int)Card.CardType.Special) != 0;
+
+                if (!hadSpecial && hasSpecial) // Special just added
+                {
+                    // Create one empty slot if none exist :
+                    if (specialAbilities != null && specialAbilities.arraySize == 0)
+                    {
+                        specialAbilities.arraySize++; // Create slot
+                        SerializedProperty newElement = specialAbilities.GetArrayElementAtIndex(0);
+                        newElement.managedReferenceValue = null; // Empty slot
+                        serializedObject.ApplyModifiedProperties(); // Apply
+                    }
+                }
+
+                if (hadSpecial && !hasSpecial) // Special removed
+                {
+                    if (specialAbilities != null && specialAbilities.arraySize > 0)
+                    {
+                        specialAbilities.ClearArray(); // Empty list
+                        serializedObject.ApplyModifiedProperties(); // Apply
+                    }
+                }
             }
 
-            if (previous.Contains(Card.CardType.Special) && !current.Contains(Card.CardType.Special)) // Special type removed
-            {
-                specialAbilities.ClearArray(); // Clear all special abilities
-            }
+            previousFlags = newFlags;
+
+            // Force a redraw :
+            GUI.FocusControl(null);
+            return; // Stop this frame and redraw updated state
         }
-
-        cachedTypes = new List<Card.CardType>(current);
-
-
-        // Draw card types :
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(cardTypes, new GUIContent("Card type(s) :"), true);
 
         if (mandatoryType != null) // Mandatory type (only for attacks and movements)
         {
@@ -112,21 +132,23 @@ public class CardsCustomEditor : Editor
             EditorGUI.EndDisabledGroup();
         }
 
-        // Display "Special" type dynamically :
+        // Display "Special" header dynamically :
         bool hasSpecialAbility = specialAbilities != null && specialAbilities.arraySize > 0;
 
         if (hasSpecialAbility) EditorGUILayout.LabelField("Special");
 
         // Draw non-mandatory types :
-        foreach (Card.CardType type in inspectedCard.CardTypes)
+        foreach (Card.CardType type in Enum.GetValues(typeof(Card.CardType)))
         {
-            string typeToString = type.ToString();
+            if (type == Card.CardType.None) continue;
 
-            if (typeToString == mandatoryType) continue; // Skip mandatory
+            string typeName = type.ToString();
 
-            if (typeToString == "Special" && hasSpecialAbility) continue; // Already drawn dynamically above 
+            if (typeName == mandatoryType) continue; // Skip mandatory
 
-            EditorGUILayout.LabelField(typeToString);
+            if (type == Card.CardType.Special && hasSpecialAbility) continue; // Already drawn dynamically above 
+
+            if ((flags & type) != 0) EditorGUILayout.LabelField(typeName); // Draw any other type selected
         }
 
         // At least one visible, assigned type for special cards :
@@ -134,7 +156,7 @@ public class CardsCustomEditor : Editor
         {
             bool hasAnyType =
                 hasSpecialAbility || // "Special" type check via specialAbilities list
-                inspectedCard.CardTypes.Count > 0; // "Attack" and/or "Movement" type check via CardTypes
+                flags!= 0; // "Attack" and/or "Movement" type check via CardTypes
 
             if (!hasAnyType)
             {
@@ -142,15 +164,14 @@ public class CardsCustomEditor : Editor
             }
         }
 
-
         // Draw traits section :
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Type(s) Traits :", EditorStyles.boldLabel);
 
         // Draw behaviours types safely :
-        bool hasAttackType = inspectedCard.CardTypes.Contains(Card.CardType.Attack);
-        bool hasMovementType = inspectedCard.CardTypes.Contains(Card.CardType.Movement);
-        bool hasSpecialType = inspectedCard.CardTypes.Contains(Card.CardType.Special);
+        bool hasAttackType = (flags & Card.CardType.Attack) != 0;
+        bool hasMovementType = (flags & Card.CardType.Movement) != 0;
+        bool hasSpecialType = (flags & Card.CardType.Special) != 0;
 
         if (hasAttackType)
         {
@@ -187,22 +208,37 @@ public class CardsCustomEditor : Editor
                     EditorGUILayout.HelpBox($"Special Ability #{i} is empty. Select an ability or remove the entry.", MessageType.Error);
                 }
 
-                object obj = element.managedReferenceValue; // Comparing objects (in memory), not values
-
-                if (obj == null) continue; // Skip and go to next iteration 
-
-                Type type = obj.GetType();
+                Type abilityType = element.managedReferenceValue.GetType();
 
                 // Delete element if already assigned, add it to already assigned types otherwise :
-                if (alreadyAssignedAbilities.Contains(type))
+                if (alreadyAssignedAbilities.Contains(abilityType))
                 {
-                    Debug.Log($"{type.Name} is already assigned on {inspectedCard.CardName}. Special abilities can only be assigned once.");
+                    Debug.Log($"{abilityType.Name} is already assigned on {inspectedCard.CardName}. Special abilities can only be assigned once.");
                     specialAbilities.DeleteArrayElementAtIndex(i);
                 }
-                else alreadyAssignedAbilities.Add(type);
+                else alreadyAssignedAbilities.Add(abilityType);
             }
         }
 
+        // If specialAbilities got emptied by the user, auto-remove Special flag :
+        if (!EditorApplication.isPlayingOrWillChangePlaymode && specialAbilities != null) // Edit-mode only
+        {
+            if (specialAbilities.arraySize == 0 && (flags & Card.CardType.Special) != 0)
+            {
+                // remove Special bit from flags
+                flags &= ~Card.CardType.Special; // Where ~ is the bitwise NOT operator
+
+                if (typeFlags != null)
+                {
+                    typeFlags.intValue = (int)currentFlags;
+                    serializedObject.ApplyModifiedProperties();
+                    GUI.FocusControl(null);
+                    return;
+                }
+            }
+        }
+
+        // Write any remaining changes :
         serializedObject.ApplyModifiedProperties();
     }
 }
