@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MovementCard
   cardName: Move2
   cardRarityLevel: 2
-  cardTypes: 0100000002000000
+  cardTypes: 02000000
   specialAbilities: []
   movementBehaviour:
     rid: 6566287199169151051

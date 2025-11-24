@@ -4,6 +4,12 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!DON'T TOUCH THIS CODE ANYMORE AND FOCUS ON THE GAME !!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 [CustomEditor(typeof(Card), true)] // Custom Editor for Card objects, true = Card + Card children (defautl = false)
 public class CardsCustomEditor : Editor
 {

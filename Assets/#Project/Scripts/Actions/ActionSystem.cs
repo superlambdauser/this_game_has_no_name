@@ -40,13 +40,13 @@ public class ActionSystem : Singleton<ActionSystem>
 
 
     // FLOW = the complete lifecycle (flow) of a GameAction:
-    // - Runs pre-subscribers (global listeners)
-    // - Runs pre-reactions (GameAction-defined actions)
-    // - Runs performer (main logic)
-    // - Runs perform-reactions (GameAction-defined actions)
-    // - Runs post-subscribers (global listeners)
-    // - Runs post-reactions (GameAction-defined actions)
-    private IEnumerator Flow(GameAction action, Action OnFlowFinished = null) // Core of the ActionSystem
+        // - Runs pre-subscribers (global listeners)
+        // - Runs pre-reactions (GameAction-defined actions)
+        // - Runs performer (main logic)
+        // - Runs perform-reactions (GameAction-defined actions)
+        // - Runs post-subscribers (global listeners)
+        // - Runs post-reactions (GameAction-defined actions)
+    private IEnumerator Flow(GameAction action) // Core of the ActionSystem
     {
         // Pre-effects & external listeners phase (pre-reactions) : 
         currentReactions = action.PreReactions; // Must be set correctly for PerformReactions() to use the correct list
@@ -82,7 +82,7 @@ public class ActionSystem : Singleton<ActionSystem>
         }
     }
 
-    private IEnumerator RunReactions() // Coroutinethat runs all reactions in currentReactions 
+    private IEnumerator RunReactions() // Coroutine that runs all reactions in currentReactions 
     {
         // Run each reaction in the reactions list and wait (yield return) until each reaction is finished before starting the next :
         foreach (GameAction reaction in currentReactions)
