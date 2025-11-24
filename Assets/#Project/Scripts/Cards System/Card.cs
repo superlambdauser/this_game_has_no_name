@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using SerializeReferenceEditor;
 using UnityEngine;
@@ -15,12 +16,17 @@ public abstract class Card : ScriptableObject
     [SerializeReference] [SR] protected List<SpecialAbility> specialAbilities = new List<SpecialAbility>();
     public List<SpecialAbility> SpecialAbilities => specialAbilities;
 
+    public CardType types;
 
-    public enum CardType
+
+    [Flags] public enum CardType // [Flags] attribute indicates that our enum consists of bit fields -> this indicates to the compiler that the enum has to be treated in a way that its values are not exclusive -> Values combinations are possible
     {
-        Attack,
-        Movement,
-        Special
+        // NB : The enum indexes should always be powers of 2 (for a binary reason that is beyond my comprehension)
+        // The using of [Flag] attribute limits the number of elements inside the enum to 32 !
+        None = 0,
+        Attack = 1,
+        Movement = 2,
+        Special = 4
     }
 
     public enum CardRarity

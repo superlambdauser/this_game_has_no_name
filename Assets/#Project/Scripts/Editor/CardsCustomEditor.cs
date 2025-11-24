@@ -10,10 +10,11 @@ using UnityEngine;
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-[CustomEditor(typeof(Card), true)] // Custom Editor for Card objects, true = Card + Card children (defautl = false)
+[CustomEditor(typeof(Card), true)] // Custom Editor for Card objects, true = Card + Card children (default = false)
 public class CardsCustomEditor : Editor
 {
     private SerializedProperty cardTypes;
+    private SerializedProperty typeFlags; // Flags field (Card.types)
     private SerializedProperty attackBehaviour;
     private SerializedProperty movementBehaviour;
     private SerializedProperty specialAbilities;
@@ -24,6 +25,7 @@ public class CardsCustomEditor : Editor
     private void OnEnable()
     {
         cardTypes = serializedObject.FindProperty("cardTypes");
+        typeFlags = serializedObject.FindProperty("types");
         attackBehaviour = serializedObject.FindProperty("attackBehaviour");
         movementBehaviour = serializedObject.FindProperty("movementBehaviour");
         specialAbilities = serializedObject.FindProperty("specialAbilities");
@@ -31,10 +33,11 @@ public class CardsCustomEditor : Editor
 
     public override void OnInspectorGUI() // NB : don't forget to override the method
     {
+        // Pull current values :
         serializedObject.Update(); // Always start with the Update() inside OnInspectorGUI()
 
         // Draw all default properties except the custom ones :
-        DrawPropertiesExcluding(serializedObject, "m_Script", "attackBehaviour", "movementBehaviour", "specialAbilities", "cardTypes");
+        DrawPropertiesExcluding(serializedObject, "m_Script", "attackBehaviour", "movementBehaviour", "specialAbilities", "cardTypes", "types");
 
         Card inspectedCard = (Card)target; // Current instance of Card type inspected
 
@@ -77,17 +80,21 @@ public class CardsCustomEditor : Editor
         List<Card.CardType> previous = new List<Card.CardType>(cachedTypes);
         List<Card.CardType> current = inspectedCard.CardTypes;
 
-        // Link "Special" in types list and special abilities dynamically :
-        if (!previous.Contains(Card.CardType.Special) && current.Contains(Card.CardType.Special)) // Special type added
-        {
-            specialAbilities.arraySize++; // Create slot
-            SerializedProperty newElement = specialAbilities.GetArrayElementAtIndex(specialAbilities.arraySize - 1); // Could put at index 0 but safer
-            newElement.managedReferenceValue = null; // Empty slot for user to fill it with special ability
-        }
 
-        if (previous.Contains(Card.CardType.Special) && !current.Contains(Card.CardType.Special)) // Special type removed
+        // Link "Special" in types list and special abilities dynamically :
+        if (!EditorApplication.isPlayingOrWillChangePlaymode) // Prevent Special ability slot creation when hitting play or stop
         {
-            specialAbilities.ClearArray(); // Clear all special abilities
+            if (!previous.Contains(Card.CardType.Special) && current.Contains(Card.CardType.Special)) // Special type added
+            {
+                specialAbilities.arraySize++; // Create slot
+                SerializedProperty newElement = specialAbilities.GetArrayElementAtIndex(specialAbilities.arraySize - 1); // Could put at index 0 but safer
+                newElement.managedReferenceValue = null; // Empty slot for user to fill it with special ability
+            }
+
+            if (previous.Contains(Card.CardType.Special) && !current.Contains(Card.CardType.Special)) // Special type removed
+            {
+                specialAbilities.ClearArray(); // Clear all special abilities
+            }
         }
 
         cachedTypes = new List<Card.CardType>(current);
