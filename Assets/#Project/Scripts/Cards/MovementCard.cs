@@ -1,20 +1,18 @@
 using SerializeReferenceEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New card", menuName = "Card/Special Card")]
-public class SpecialCard : Card
+[CreateAssetMenu(fileName = "New card", menuName = "Card/Movement Card")]
+public class MovementCard : CardData
 {
     [SerializeReference] [SR] protected IMovementBehaviour movementBehaviour;
     public IMovementBehaviour MovementBehaviour => movementBehaviour;
-    [SerializeReference] [SR] protected IAttackBehaviour attackBehaviour;
-    public IAttackBehaviour AttackBehaviour => attackBehaviour;
+
+    public uint MovementRange => movementBehaviour.MovementRange;
 
 
     public override void Play()
     {
-        movementBehaviour?.Perform();
-        attackBehaviour?.Perform();
-
+        movementBehaviour.Perform();
         foreach (SpecialAbility specialAbility in SpecialAbilities)
         {
             specialAbility?.Perform();

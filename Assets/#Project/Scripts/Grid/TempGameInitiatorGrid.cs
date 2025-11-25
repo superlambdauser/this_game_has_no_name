@@ -2,18 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
-public class GameInitiator : MonoBehaviour
+public class GameInitiator : Singleton<GameInitiator>
 {
-    // Singleton pattern
-    private GameInitiator instance;
-    public GameInitiator Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
     [Header("Settings :")]
     //Implement Game Data SO later
     [SerializeField] private int gridRows;
@@ -26,7 +16,7 @@ public class GameInitiator : MonoBehaviour
 
     [Header("Systems :")]
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private GridControl gridControl;
+    [SerializeField] private GridSystem gridControl;
     private GameplayEngine gameplayEngine;
 
 

@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GridControl : MonoBehaviour, ISystem // bridge between logic & view
+public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic & view
 {
     private Camera cam;
 

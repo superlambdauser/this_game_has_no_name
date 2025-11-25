@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        instance?.Update(Time.deltaTime); // Update() if gameplayEngine != null
+        instance?.UpdateSystems(Time.deltaTime); // Update() if gameplayEngine != null
     }
 
 

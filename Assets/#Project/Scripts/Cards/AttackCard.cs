@@ -2,7 +2,7 @@ using SerializeReferenceEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New card", menuName = "Card/Attack Card")]
-public class AttackCard : Card
+public class AttackCard : CardData
 {
     [SerializeReference][SR] protected IAttackBehaviour attackBehaviour;
     public IAttackBehaviour AttackBehaviour => attackBehaviour;

@@ -4,7 +4,7 @@ using SerializeReferenceEditor;
 using UnityEngine;
 
 
-public abstract class Card : ScriptableObject
+public abstract class CardData : ScriptableObject
 {
     [Header("Basic Cards Traits :")]
     [SerializeField] private string cardName;

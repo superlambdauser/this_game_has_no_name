@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 
-public class GameplayEngine
+public class GameplayEngine : Singleton<GameplayEngine>
 {
     private List<ISystem> systems = new List<ISystem>();
-    private GridData gridData;
 
 
     public GameplayEngine(GridData gridData)
     {
-        this.gridData = gridData;
     }
 
     public void RegisterSystem(ISystem system)
@@ -16,7 +14,7 @@ public class GameplayEngine
         systems.Add(system);
     }
 
-    public void Update(float dt)
+    public void UpdateSystems(float dt)
     {
         foreach (ISystem system in systems)
         {

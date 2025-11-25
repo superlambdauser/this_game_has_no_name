@@ -11,7 +11,7 @@ using UnityEngine;
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-[CustomEditor(typeof(Card), true)] // Custom Editor for Card objects, true = Card + Card children (default = false)
+[CustomEditor(typeof(CardData), true)] // Custom Editor for Card objects, true = Card + Card children (default = false)
 public class CardsCustomEditor : Editor
 {
     private SerializedProperty typeFlags; // Flags field (Card.types)
@@ -39,7 +39,7 @@ public class CardsCustomEditor : Editor
         // Draw all default properties except the custom ones :
         DrawPropertiesExcluding(serializedObject, "m_Script", "typeFlags", "attackBehaviour", "movementBehaviour", "specialAbilities");
 
-        Card inspectedCard = (Card)target; // Current instance of Card type inspected
+        CardData inspectedCard = (CardData)target; // Current instance of Card type inspected
 
         // Determine allowed types :
         string[] allowedTypes = inspectedCard switch
@@ -62,7 +62,7 @@ public class CardsCustomEditor : Editor
         // Ensure mandartory type flag is present :
         if (mandatoryType != null && typeFlags != null)
         {
-            Card.CardType mandatoryEnum = (Card.CardType)Enum.Parse(typeof(Card.CardType), mandatoryType);
+            CardData.CardType mandatoryEnum = (CardData.CardType)Enum.Parse(typeof(CardData.CardType), mandatoryType);
 
             if ((typeFlags.intValue & (int)mandatoryEnum) == 0)
             {
@@ -83,7 +83,7 @@ public class CardsCustomEditor : Editor
         serializedObject.Update();
 
         int currentFlags = (typeFlags != null) ? typeFlags.intValue : 0;
-        Card.CardType flags = (Card.CardType)currentFlags;
+        CardData.CardType flags = (CardData.CardType)currentFlags;
 
         // If flags changed, sync :
         if (changed)
@@ -93,8 +93,8 @@ public class CardsCustomEditor : Editor
             // Change dynamically specialAbilities when Special flag added/removed
             if (!EditorApplication.isPlayingOrWillChangePlaymode) // Edit mode only
             {
-                bool hadSpecial = (previousFlags & (int)Card.CardType.Special) != 0;
-                bool hasSpecial = (newFlags & (int)Card.CardType.Special) != 0;
+                bool hadSpecial = (previousFlags & (int)CardData.CardType.Special) != 0;
+                bool hasSpecial = (newFlags & (int)CardData.CardType.Special) != 0;
 
                 if (!hadSpecial && hasSpecial) // Special just added
                 {
@@ -138,15 +138,15 @@ public class CardsCustomEditor : Editor
         if (hasSpecialAbility) EditorGUILayout.LabelField("Special");
 
         // Draw non-mandatory types :
-        foreach (Card.CardType type in Enum.GetValues(typeof(Card.CardType)))
+        foreach (CardData.CardType type in Enum.GetValues(typeof(CardData.CardType)))
         {
-            if (type == Card.CardType.None) continue;
+            if (type == CardData.CardType.None) continue;
 
             string typeName = type.ToString();
 
             if (typeName == mandatoryType) continue; // Skip mandatory
 
-            if (type == Card.CardType.Special && hasSpecialAbility) continue; // Already drawn dynamically above 
+            if (type == CardData.CardType.Special && hasSpecialAbility) continue; // Already drawn dynamically above 
 
             if ((flags & type) != 0) EditorGUILayout.LabelField(typeName); // Draw any other type selected
         }
@@ -169,9 +169,9 @@ public class CardsCustomEditor : Editor
         EditorGUILayout.LabelField("Type(s) Traits :", EditorStyles.boldLabel);
 
         // Draw behaviours types safely :
-        bool hasAttackType = (flags & Card.CardType.Attack) != 0;
-        bool hasMovementType = (flags & Card.CardType.Movement) != 0;
-        bool hasSpecialType = (flags & Card.CardType.Special) != 0;
+        bool hasAttackType = (flags & CardData.CardType.Attack) != 0;
+        bool hasMovementType = (flags & CardData.CardType.Movement) != 0;
+        bool hasSpecialType = (flags & CardData.CardType.Special) != 0;
 
         if (hasAttackType)
         {
@@ -223,10 +223,10 @@ public class CardsCustomEditor : Editor
         // If specialAbilities got emptied by the user, auto-remove Special flag :
         if (!EditorApplication.isPlayingOrWillChangePlaymode && specialAbilities != null) // Edit-mode only
         {
-            if (specialAbilities.arraySize == 0 && (flags & Card.CardType.Special) != 0)
+            if (specialAbilities.arraySize == 0 && (flags & CardData.CardType.Special) != 0)
             {
                 // remove Special bit from flags
-                flags &= ~Card.CardType.Special; // Where ~ is the bitwise NOT operator
+                flags &= ~CardData.CardType.Special; // Where ~ is the bitwise NOT operator
 
                 if (typeFlags != null)
                 {

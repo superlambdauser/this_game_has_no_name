@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class DeckManager : Singleton<DeckManager>
 {
-    [SerializeField] List<Card> allCards = new List<Card>(); // TEMP. All existing objects of Card type 
+    [SerializeField] List<CardData> allCards = new List<CardData>(); // TEMP. All existing objects of Card type 
     private int currentIndex = 0;
 
     private void Start()
     {
         // Load all card assets from Ressources folder :
-        Card[] cards = Resources.LoadAll<Card>("CardDatas"); // !!! The given path must be within a folder named "Resources" 
+        CardData[] cards = Resources.LoadAll<CardData>("CardDatas"); // !!! The given path must be within a folder named "Resources" 
 
         allCards.AddRange(cards);
     }
@@ -18,7 +18,7 @@ public class DeckManager : Singleton<DeckManager>
     {
         if (allCards.Count == 0) return;
 
-        Card nextCard = allCards[currentIndex];
+        CardData nextCard = allCards[currentIndex];
 
         handManager.AddCardToHand(nextCard);
         currentIndex = (currentIndex + 1) % allCards.Count; 

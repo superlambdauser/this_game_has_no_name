@@ -4,8 +4,8 @@ using UnityEngine;
 public class HandManager : Singleton<HandManager>
 {
     [SerializeField] private DeckManager deckManager;
-    [SerializeField] private CardDisplay cardPrefab;
-    private List<CardDisplay> cardsInHand = new List<CardDisplay>();
+    [SerializeField] private CardView cardPrefab;
+    private List<CardView> cardsInHand = new List<CardView>();
     [SerializeField] private Transform handPosition; // Center of the CIRCLE shape that will determine our the fan shape used to display our hand (not the center of the hand itself)
     // NB : I think later in development this should be given by the GameInitiator
     public int numOfCardsInHand = 8; // Temp for testing
@@ -31,16 +31,16 @@ public class HandManager : Singleton<HandManager>
         UpdateHandDisplay();
     }
 
-    public void AddCardToHand(Card cardData)
+    public void AddCardToHand(CardData cardData)
     {
         if (cardsInHand.Count < maxHandSize)
         {
             // Card instantiation :
-            CardDisplay newCard = Instantiate(cardPrefab, handPosition.position, Quaternion.identity, handPosition);
+            CardView newCard = Instantiate(cardPrefab, handPosition.position, Quaternion.identity, handPosition);
 
             cardsInHand.Add(newCard);
 
-            newCard.GetComponent<CardDisplay>().cardData = cardData; // Set the given cardData to instantiated card
+            newCard.GetComponent<CardView>().cardData = cardData; // Set the given cardData to instantiated card
         }
 
         UpdateHandDisplay();

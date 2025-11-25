@@ -3,9 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardDisplay : MonoBehaviour
+public class CardView : MonoBehaviour
 {
-    public Card cardData;
+    public CardData cardData;
     [SerializeField] private Image cardImage;
     [SerializeField] private Image rarityLevelFrameImage;
     [SerializeField] private Image[] typeIconImages;
@@ -14,7 +14,7 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private TMP_Text cardAttackRangeText;
     [SerializeField] private TMP_Text cardMovementRangeText;
     private int cardRarityLevel;
-    private Card.CardType flags;
+    private CardData.CardType flags;
 
 
     private Color[] rarityColors =
@@ -87,9 +87,9 @@ public class CardDisplay : MonoBehaviour
         }
 
         // Activate only the icons that match card's type(s)
-        foreach (Card.CardType type in Enum.GetValues(typeof(Card.CardType))) // For each given type 
+        foreach (CardData.CardType type in Enum.GetValues(typeof(CardData.CardType))) // For each given type 
         {
-            if (type == Card.CardType.None) continue; // Skip bit 0
+            if (type == CardData.CardType.None) continue; // Skip bit 0
 
             if ((flags & type) != 0) // Type is enabled in flags
             {
