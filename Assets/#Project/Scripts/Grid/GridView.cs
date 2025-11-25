@@ -55,6 +55,8 @@ public class GridView : MonoBehaviour
 
         highlightMap.SetTile(new Vector3Int(0, 0, 0), highlightTile);
         highlightMap.SetColor(new Vector3Int(0, 0, 0), Color.red);
+
+        
     }
 
     private int CountTiles(Tilemap tilemap)

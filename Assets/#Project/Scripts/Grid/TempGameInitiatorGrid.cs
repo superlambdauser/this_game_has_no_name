@@ -16,12 +16,15 @@ public class GameInitiator : Singleton<GameInitiator>
 
     [Header("Systems :")]
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private GridSystem gridControl;
+    [SerializeField] private GridSystem gridSystem;
     private GameplayEngine gameplayEngine;
 
 
     [Header("Data :")]
     private GridData gridData;
+
+    [Header("UI :")]
+    [SerializeField] private Canvas canvas;
 
 
     [Header("View :")]
@@ -52,15 +55,15 @@ public class GameInitiator : Singleton<GameInitiator>
 
         // --- View ---
         gridView.Initiate(gridData, mainTilemap, highlightMap, basicTile, highlightTile);
-        
+
         // --- Controllers ---
-        gridControl.Initiate(mainCamera, gridView, gridData, actions);
-        gridControl.gameObject.SetActive(true); // Forcing the OnEnable() of the GridControl to access inputs
+        gridSystem.Initiate(mainCamera, gridView, gridData, actions);
+        gridSystem.gameObject.SetActive(true); // Forcing the OnEnable() of the GridControl to access inputs
 
         // --- Systems ---
         gameplayEngine = new GameplayEngine(gridData);
         // later : register all systems viar RegisterSystem(new ...System()) method
-        gameplayEngine.RegisterSystem(gridControl);
+        gameplayEngine.RegisterSystem(gridSystem);
 
         // --- Game Manager ---
         gameManager.Initiate(gameplayEngine);
@@ -70,9 +73,10 @@ public class GameInitiator : Singleton<GameInitiator>
 
     private void InstantiateGameObjects()
     {
-        mainCamera = Instantiate(mainCamera);
+        mainCamera = Instantiate(mainCamera, new Vector3(0, 0, -10), Quaternion.identity);
         gridView = Instantiate(gridView);
-        gridControl = Instantiate(gridControl);
+        gridView.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 10f;
+        gridSystem = Instantiate(gridSystem);
         gameManager = Instantiate(gameManager);
         mainTilemap = Instantiate(mainTilemap);
         highlightMap = Instantiate(highlightMap);

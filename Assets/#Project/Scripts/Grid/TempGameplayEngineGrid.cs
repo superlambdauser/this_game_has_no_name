@@ -3,10 +3,12 @@ using System.Collections.Generic;
 public class GameplayEngine : Singleton<GameplayEngine>
 {
     private List<ISystem> systems = new List<ISystem>();
+    public GridData GridData {get; private set; }
 
 
     public GameplayEngine(GridData gridData)
     {
+        GridData = gridData;
     }
 
     public void RegisterSystem(ISystem system)
