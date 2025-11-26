@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -30,8 +32,7 @@ public class GameInitiator : Singleton<GameInitiator>
     [Header("View :")]
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GridView gridView;
-    [SerializeField] private Tilemap mainTilemap;
-    [SerializeField] private Tilemap highlightMap;
+    private Tilemap[] tilemaps;
     [SerializeField] private TileBase basicTile;
     [SerializeField] private TileBase highlightTile;
 
@@ -39,6 +40,8 @@ public class GameInitiator : Singleton<GameInitiator>
     #region Unity events
     private void Start()
     {
+        tilemaps = gridView.GetComponentsInChildren<Tilemap>();
+        
         BuildGame();
         Destroy(gameObject); // Destroys itself after instantiation
     }
@@ -54,15 +57,16 @@ public class GameInitiator : Singleton<GameInitiator>
         gridData = new GridData(gridRows, gridColumns);
 
         // --- View ---
-        gridView.Initiate(gridData, mainTilemap, highlightMap, basicTile, highlightTile);
+        gridView.Initiate(tilemaps, gridData, basicTile, highlightTile);
 
         // --- Controllers ---
         gridSystem.Initiate(mainCamera, gridView, gridData, actions);
         gridSystem.gameObject.SetActive(true); // Forcing the OnEnable() of the GridControl to access inputs
 
         // --- Systems ---
-        gameplayEngine = new GameplayEngine(gridData);
-        // later : register all systems viar RegisterSystem(new ...System()) method
+        gameplayEngine = GameplayEngine.Instance;
+        gameplayEngine.Initiate(gridData);
+            // later : register all systems viar RegisterSystem(new ...System()) method
         gameplayEngine.RegisterSystem(gridSystem);
 
         // --- Game Manager ---
@@ -77,9 +81,8 @@ public class GameInitiator : Singleton<GameInitiator>
         gridView = Instantiate(gridView);
         gridView.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 10f;
         gridSystem = Instantiate(gridSystem);
+        gameplayEngine = new GameObject("GameplayEngine").AddComponent<GameplayEngine>();
         gameManager = Instantiate(gameManager);
-        mainTilemap = Instantiate(mainTilemap);
-        highlightMap = Instantiate(highlightMap);
     }
     #endregion
 }

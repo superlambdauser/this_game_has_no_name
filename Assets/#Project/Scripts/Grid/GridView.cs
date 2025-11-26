@@ -6,27 +6,23 @@ using UnityEngine.Tilemaps;
 public class GridView : MonoBehaviour
 {
     private Tilemap mainTilemap;
-    public Tilemap MainTilemap
-    {
-        get
-        {
-            return mainTilemap;
-        }
-    }
+    public Tilemap MainTilemap => mainTilemap;
     private Tilemap highlightMap;
+    public Tilemap HighlightMap => highlightMap;
+    private Tilemap[] tilemaps; 
     private TileBase tile;
     private TileBase highlightTile;
 
 
-    public void Initiate(GridData gridData, Tilemap mainTilemap, Tilemap highlightMap, TileBase tile, TileBase highlightTile)
+    public void Initiate(Tilemap[] tilemaps, GridData gridData, TileBase tile, TileBase highlightTile)
     {
-        this.mainTilemap = mainTilemap;
-        this.highlightMap = highlightMap;
+        Debug.Log("Tilemap count: " + tilemaps.Length);
+
+        mainTilemap = tilemaps[0];
+        highlightMap = tilemaps[1];
+
         this.tile = tile;
         this.highlightTile = highlightTile;
-
-        mainTilemap.transform.SetParent(transform);
-        highlightMap.transform.SetParent(transform);
 
         Debug.Log($"GridView.Initiate -> mainTilemap: {(mainTilemap != null ? mainTilemap.gameObject.name : "null")}, highlightMap: {(highlightMap != null ? highlightMap.gameObject.name : "null")}, tile: {(tile != null)}, highlightTile: {(highlightTile != null)}");
 
@@ -54,7 +50,6 @@ public class GridView : MonoBehaviour
         }
 
         highlightMap.SetTile(new Vector3Int(0, 0, 0), highlightTile);
-        highlightMap.SetColor(new Vector3Int(0, 0, 0), Color.red);
 
         
     }

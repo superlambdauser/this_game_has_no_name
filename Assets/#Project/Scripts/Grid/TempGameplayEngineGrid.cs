@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameplayEngine : Singleton<GameplayEngine>
 {
@@ -6,7 +7,7 @@ public class GameplayEngine : Singleton<GameplayEngine>
     public GridData GridData {get; private set; }
 
 
-    public GameplayEngine(GridData gridData)
+    public void Initiate(GridData gridData)
     {
         GridData = gridData;
     }

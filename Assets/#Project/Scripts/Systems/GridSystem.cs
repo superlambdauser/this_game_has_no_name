@@ -28,14 +28,12 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
     #region  Unity events :
     private void OnEnable()
     {
-        Debug.Log("Enabled");
         actions.FindActionMap(INPUT_ACTION_MAP).Enable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed += Select;
     }
 
     private void OnDisable()
     {
-        Debug.Log("Disabled");
         actions.FindActionMap(INPUT_ACTION_MAP).Disable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed -= Select;
     }
