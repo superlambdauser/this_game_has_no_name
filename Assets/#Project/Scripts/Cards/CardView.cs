@@ -3,9 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Updates dynamically the visuals of each card depending on given data.
+/// </summary>
 public class CardView : MonoBehaviour
 {
-    public CardData cardData;
+    [SerializeField] private CardData cardData;
+    public CardData CardData { get; set; }
     [SerializeField] private Image cardImage;
     [SerializeField] private Image rarityLevelFrameImage;
     [SerializeField] private Image[] typeIconImages;
@@ -27,21 +31,20 @@ public class CardView : MonoBehaviour
     };
 
 
-    public void Start()
+    private void Start()
     {
-        flags = cardData.TypeFlags;
+        flags = CardData.TypeFlags;
         UpdateCardDisplay();
     }
-
 
     private void UpdateCardDisplay()
     {
         Debug.Log($"Updating card {cardData?.name ?? "NULL"}");
 
-        cardNameText.text = cardData.CardName; // Update title
+        cardNameText.text = CardData.CardName; // Update title
 
         // Update frame color & displayed rarity level based on card's rarity level enum index :
-        cardRarityLevel = (int)cardData.CardRarityLevel;
+        cardRarityLevel = (int)CardData.CardRarityLevel;
 
         rarityLevelFrameImage.color = rarityColors[cardRarityLevel];
         cardRarityLevelText.text = cardRarityLevel.ToString();
@@ -50,7 +53,7 @@ public class CardView : MonoBehaviour
         cardAttackRangeText.gameObject.SetActive(false);
         cardMovementRangeText.gameObject.SetActive(false);
 
-        if (cardData is SpecialCard specialCard)
+        if (CardData is SpecialCard specialCard)
         {
             bool hasAttack = specialCard.AttackBehaviour != null; // Set bool to true if Attack Behaviour not null
             bool hasMovement = specialCard.MovementBehaviour != null; // Idem with Movement Behaviour
@@ -68,13 +71,13 @@ public class CardView : MonoBehaviour
             }
         }
 
-        else if (cardData is AttackCard attackCard && attackCard.AttackRange > 0)
+        else if (CardData is AttackCard attackCard && attackCard.AttackRange > 0)
         {
             cardAttackRangeText.text = attackCard.AttackRange.ToString();
             cardAttackRangeText.gameObject.SetActive(true);
         }
 
-        else if (cardData is MovementCard movementCard && movementCard.MovementRange > 0)
+        else if (CardData is MovementCard movementCard && movementCard.MovementRange > 0)
         {
             cardMovementRangeText.text = movementCard.MovementRange.ToString();
             cardMovementRangeText.gameObject.SetActive(true);

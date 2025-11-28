@@ -1,26 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Deck of cards. Governs discard pile and works with Hand script.
+/// </summary>
 public class DeckManager : Singleton<DeckManager>
 {
-    [SerializeField] List<CardData> allCards = new List<CardData>(); // TEMP. All existing objects of Card type 
+    [SerializeField] private CardsCollection playerDeck;
+    private List<CardData> stackPile = new List<CardData>(); 
+    private List<CardData> discardPile = new List<CardData>();
+    [HideInInspector] public List<CardData> HandCards { get; private set; }
     private int currentIndex = 0;
 
     private void Start()
     {
-        // Load all card assets from Ressources folder :
-        CardData[] cards = Resources.LoadAll<CardData>("CardDatas"); // !!! The given path must be within a folder named "Resources" 
+        // (Temporary) Load all card assets from Ressources folder :
+        CardData[] cards = Resources.LoadAll<CardData>("CardDatas"); // !!! The given path MUST be within a folder named "Resources" 
 
-        allCards.AddRange(cards);
+        stackPile.AddRange(cards); // (Temporary) Adds all cards scriptable objects from the ressource folder
     }
 
     public void DrawCard(HandManager handManager)
     {
-        if (allCards.Count == 0) return;
+        if (stackPile.Count == 0) return;
 
-        CardData nextCard = allCards[currentIndex];
+        CardData nextCard = stackPile[currentIndex];
 
         handManager.AddCardToHand(nextCard);
-        currentIndex = (currentIndex + 1) % allCards.Count; 
+        currentIndex = (currentIndex + 1) % stackPile.Count; // Increment index but set it to 0 when reaching end of stackPile
     }
 }

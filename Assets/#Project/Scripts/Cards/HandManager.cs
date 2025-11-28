@@ -40,7 +40,7 @@ public class HandManager : Singleton<HandManager>
 
             cardsInHand.Add(newCard);
 
-            newCard.GetComponent<CardView>().cardData = cardData; // Set the given cardData to instantiated card
+            newCard.GetComponent<CardView>().CardData = cardData; // Set the given cardData to instantiated card
         }
 
         UpdateHandDisplay();

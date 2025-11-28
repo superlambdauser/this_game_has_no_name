@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using SerializeReferenceEditor;
 using UnityEngine;
 
-
+/// <summary>
+/// Holds data for each individual card.
+/// </summary>
 public abstract class CardData : ScriptableObject
 {
     [Header("Basic Cards Traits :")]
