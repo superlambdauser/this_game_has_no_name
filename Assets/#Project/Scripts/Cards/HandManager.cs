@@ -20,10 +20,7 @@ public class HandManager : Singleton<HandManager>
 
     private void Start()
     {
-        for (int i = 0;  i < numOfCardsInHand; i++)
-        {
-            deckManager.DrawCard(this);
-        }
+        deckManager.DrawHand(maxHandSize);
     }
 
     private void Update()
