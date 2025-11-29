@@ -98,12 +98,9 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
             return; //Handle out-of-grid clicks
         }
 
-        Debug.Log("Force highlight test");
-        gridView.Highlight(new List<Vector2Int>() { new Vector2Int(0, 0) }, Color.red);
-
         // things to do when clicked (ex : change color to begin with)
         List<Vector2Int> area = GetArea(position, range);
-        gridView.Highlight(area, color);
+        gridView.Highlight(area);
     }
 
     private List<Vector2Int> GetArea(Vector2Int center, int range)

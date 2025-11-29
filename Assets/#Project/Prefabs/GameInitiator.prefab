@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4824651278934335820}
   - component: {fileID: 1918142778760547068}
   m_Layer: 0
-  m_Name: TempGameInitiator
+  m_Name: GameInitiator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

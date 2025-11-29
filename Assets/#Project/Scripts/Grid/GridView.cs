@@ -3,17 +3,20 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Grid))]
-public class GridView : MonoBehaviour
+public class GridView : Singleton<GridView>
 {
     private Tilemap mainTilemap;
     public Tilemap MainTilemap => mainTilemap;
     private Tilemap highlightMap;
     public Tilemap HighlightMap => highlightMap;
-    private Tilemap[] tilemaps; 
+    private Tilemap[] tilemaps;
     private TileBase tile;
     private TileBase highlightTile;
 
-
+    private void Start()
+    {
+        Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
+    }
     public void Initiate(Tilemap[] tilemaps, GridData gridData, TileBase tile, TileBase highlightTile)
     {
         Debug.Log("Tilemap count: " + tilemaps.Length);
@@ -48,10 +51,6 @@ public class GridView : MonoBehaviour
             highlightMap.ClearAllTiles();
             Debug.Log($"Tile count after ClearAllTiles: {CountTiles(highlightMap)}");
         }
-
-        highlightMap.SetTile(new Vector3Int(0, 0, 0), highlightTile);
-
-        
     }
 
     private int CountTiles(Tilemap tilemap)
@@ -68,10 +67,10 @@ public class GridView : MonoBehaviour
         return count;
     }
 
-    public void Highlight(IEnumerable<Vector2Int> cellsPositions, Color color) // Ideally, add a IEnumerator of Vector2Int argument that represents the area of action and contains all the cells inside the area
+    public void Highlight(IEnumerable<Vector2Int> cellsPositions) // Ideally, add a IEnumerator of Vector2Int argument that represents the area of action and contains all the cells inside the area
     {
         Debug.Log($"Highlight() called! HighlightMap: {highlightMap != null}, HighlightTile: {highlightTile != null}");
-
+        Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
         if (highlightMap == null)
         {
             Debug.LogError("HighlightMap missing.");
@@ -91,11 +90,8 @@ public class GridView : MonoBehaviour
         int placed = 0;
         foreach (Vector2Int cellPosition in cellsPositions)
         {
-            Debug.Log($"Highlighting cell {cellPosition}");
             Vector3Int pos = new Vector3Int(cellPosition.x, cellPosition.y, 0);
             highlightMap.SetTile(pos, highlightTile); // Set a visible tile
-            // highlightMap.SetColor(pos, color);       // Then color it
-            placed++;
         }
 
         Debug.Log($"Highlight placed tiles: {placed}");
