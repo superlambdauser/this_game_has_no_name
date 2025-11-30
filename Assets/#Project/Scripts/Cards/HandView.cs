@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Bridge between cardView & cardData, only displaying hand
 /// </summary>
-public class HandManager : Singleton<HandManager>
+public class HandView : Singleton<HandView>
 {
     [SerializeField] private DeckSystem deckManager;
     [SerializeField] private CardView cardPrefab;

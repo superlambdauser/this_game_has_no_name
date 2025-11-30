@@ -11,7 +11,7 @@ public class DeckSystem : Singleton<DeckSystem>
     [SerializeField] private CardsCollection playerDeck;
     private List<CardData> stackPile = new List<CardData>(); 
     private List<CardData> discardPile = new List<CardData>();
-    [SerializeField] private HandManager handManager;
+    [SerializeField] private HandView handManager;
     [HideInInspector] public List<CardData> HandCards { get; set; } = new List<CardData>();
 
 
