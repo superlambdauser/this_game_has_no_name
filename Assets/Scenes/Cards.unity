@@ -1012,7 +1012,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
   deckManager: {fileID: 1187476506}
   cardPrefab: {fileID: -1993109365048656754, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-  handPosition: {fileID: 1628606213}
   numOfCardsInHand: 12
   maxHandSize: 8
   fanStrength: 1
@@ -1155,9 +1154,9 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1314195932}
   - {fileID: 626292885}
   - {fileID: 476302962}
-  - {fileID: 1314195932}
   - {fileID: 686450486}
   - {fileID: 2100043969}
   - {fileID: 1187476505}

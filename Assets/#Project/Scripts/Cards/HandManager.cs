@@ -1,12 +1,18 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
+
+/// <summary>
+/// Bridge between cardView & cardData, only displaying hand
+/// </summary>
 public class HandManager : Singleton<HandManager>
 {
-    [SerializeField] private DeckManager deckManager;
+    [SerializeField] private DeckSystem deckManager;
     [SerializeField] private CardView cardPrefab;
     private List<CardView> cardsInHand = new List<CardView>();
-    [SerializeField] private Transform handPosition; // Center of the CIRCLE shape that will determine our the fan shape used to display our hand (not the center of the hand itself)
+    public List<CardView> CardsInHand { get; private set; }
+    private Transform handPosition; // Center of the CIRCLE shape that will determine our the fan shape used to display our hand (not the center of the hand itself)
     // NB : I think later in development this should be given by the GameInitiator
     public int numOfCardsInHand = 8; // Temp for testing
     public int maxHandSize = 5;
@@ -20,6 +26,7 @@ public class HandManager : Singleton<HandManager>
 
     private void Start()
     {
+        handPosition = transform;
         deckManager.DrawHand(maxHandSize);
     }
 
@@ -28,6 +35,27 @@ public class HandManager : Singleton<HandManager>
         UpdateHandDisplay();
     }
 
+
+#region Custom Methods
+    /// <summary>
+    /// Gets the CardView linked to a given CardData
+    /// </summary>
+    /// <param name="cardData"></param>
+    /// <returns></returns>
+    private CardView DataToView(CardData cardData)
+    {
+        // Loop through each CardView element in the list and return it if CardDatas match
+        foreach (CardView cardView in cardsInHand)
+        {
+            if (cardView.CardData == cardData) return cardView; // Return if found
+        }
+
+        return null; // Return null if no match found
+    }
+    /// <summary>
+    /// Instantiate a given card & display it on screen
+    /// </summary>
+    /// <param name="cardData"></param>
     public void AddCardToHand(CardData cardData)
     {
         if (cardsInHand.Count < maxHandSize)
@@ -41,6 +69,17 @@ public class HandManager : Singleton<HandManager>
         }
 
         UpdateHandDisplay();
+    }
+
+    public CardView RemoveCardFromHand(CardData cardData)
+    {
+        CardView cardView = DataToView(cardData);
+
+        cardsInHand.Remove(cardView); // Remove from the list
+
+        UpdateHandDisplay(); // Update displayed hand
+
+        return cardView;
     }
 
     private void UpdateHandDisplay()
@@ -67,4 +106,5 @@ public class HandManager : Singleton<HandManager>
             cardsInHand[i].transform.localRotation = Quaternion.Euler(0, 0, -angleInDegrees);
         }
     }
+#endregion
 }

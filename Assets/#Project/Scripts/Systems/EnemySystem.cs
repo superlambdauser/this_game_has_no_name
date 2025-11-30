@@ -17,6 +17,7 @@ public class EnemySystem : MonoBehaviour
     // Performers :
     private IEnumerator EnemyTurnPerformer(EnemyTurnGA enemyTurnGA)
     {
+        // Temp performer :
         Debug.Log("Enemy Turn");
         yield return new WaitForSeconds(2);
         Debug.Log("End enemy turn");
