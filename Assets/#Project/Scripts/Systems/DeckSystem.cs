@@ -8,11 +8,10 @@ using UnityEngine;
 /// </summary>
 public class DeckSystem : Singleton<DeckSystem>
 {
-    [SerializeField] private CardsCollection playerDeck;
     private List<CardData> stackPile = new List<CardData>();
     private List<CardData> discardPile = new List<CardData>();
-    [SerializeField] private HandView handView;
-    [HideInInspector] public List<CardData> HandCards { get; set; } = new List<CardData>();
+    private HandView handView;
+    public List<CardData> HandCards { get; set; } = new List<CardData>();
 
     #region Unity Events :
     private void OnEnable()
@@ -40,17 +39,24 @@ public class DeckSystem : Singleton<DeckSystem>
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ActionSystem.ReactionTiming.Pre);
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ActionSystem.ReactionTiming.Post);
     }
-    private void Start()
-    {
-        // (Temporary) Load all card assets from Ressources folder :
-        CardData[] cards = Resources.LoadAll<CardData>("CardDatas"); // !!! The given path MUST be within a folder named "Resources" 
-
-        stackPile.AddRange(cards); // (Temporary) Adds all cards scriptable objects from the ressource folder
-    }
     #endregion
 
 
     #region Custom Methods
+    public void Initiate()
+    {
+        Debug.Log("Deck System Initiation called");
+        handView = HandView.Instance;
+
+        // Load all card assets from Ressources folder :
+        CardsCollection cardsCollection = Resources.Load<CardsCollection>("Cards Collections/TempDeckTest"); // !!! The given path MUST be within a folder named "Resources" 
+        CardData[] deck = cardsCollection.CardsInCollection.ToArray();
+
+        stackPile.AddRange(deck); // Adds all cards scriptable objects from the ressource folder
+
+        DrawHand(handView.maxHandSize); // Draw initial hand
+    }
+
     #region Performers
     // Performers :
     private IEnumerator DrawCardsPerformer(DrawCardsGA gameAction)
@@ -113,7 +119,7 @@ public class DeckSystem : Singleton<DeckSystem>
         ActionSystem.Instance.AddReaction(drawCardsGA);
     }
     #endregion
-    
+
     public IEnumerator DrawCard()
     {
         CardData card = stackPile.DrawRandom();
@@ -138,11 +144,11 @@ public class DeckSystem : Singleton<DeckSystem>
         yield break;
     }
 
-    public void DrawHand(int amount = 5)
+    public IEnumerator DrawHand(int amount = 5)
     {
         for (int i = 0; i < amount; i++)
         {
-            StartCoroutine(DrawCard());
+            yield return DrawCard();
         }
     }
 
@@ -162,5 +168,5 @@ public class DeckSystem : Singleton<DeckSystem>
         stackPile.AddRange(discardPile);
         discardPile.Clear();
     }
-#endregion
+    #endregion
 }

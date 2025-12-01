@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using Unity.VisualScripting;
 
 public class GameInitiator : Singleton<GameInitiator>
 {
@@ -19,22 +19,28 @@ public class GameInitiator : Singleton<GameInitiator>
     [Header("Systems :")]
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GridSystem gridSystem;
+    [SerializeField] private DeckSystem deckSystem;
     private GameplayEngine gameplayEngine;
 
 
     [Header("Data :")]
     private GridData gridData;
+    
 
     [Header("UI :")]
     [SerializeField] private Canvas canvas;
 
 
     [Header("View :")]
+    // Grid :
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GridView gridView;
-    private Tilemap[] tilemaps;
     [SerializeField] private TileBase basicTile;
     [SerializeField] private TileBase highlightTile;
+    private Tilemap[] tilemaps;
+
+    // Cards :
+    [SerializeField] private HandView handView;
 
 
     #region Unity events
@@ -58,6 +64,8 @@ public class GameInitiator : Singleton<GameInitiator>
 
         // --- View ---
         gridView.Initiate(tilemaps, gridData, basicTile, highlightTile);
+        handView.Initiate();
+        deckSystem.Initiate();
 
         // --- Controllers ---
         gridSystem.Initiate(mainCamera, gridView, gridData, actions);
@@ -78,11 +86,16 @@ public class GameInitiator : Singleton<GameInitiator>
     private void InstantiateGameObjects()
     {
         mainCamera = Instantiate(mainCamera, new Vector3(0, 0, -10), Quaternion.identity);
+        
+        gameplayEngine = new GameObject("GameplayEngine").AddComponent<GameplayEngine>();
+        gameManager = Instantiate(gameManager);
+        
         gridView = Instantiate(gridView);
         gridView.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 10f;
         gridSystem = Instantiate(gridSystem);
-        gameplayEngine = new GameObject("GameplayEngine").AddComponent<GameplayEngine>();
-        gameManager = Instantiate(gameManager);
+
+        handView = Instantiate(handView, canvas.transform, false);
+        deckSystem = Instantiate(deckSystem);
     }
     #endregion
 }

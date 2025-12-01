@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4824651278934335820}
-  - component: {fileID: 1918142778760547068}
+  - component: {fileID: 2433730159794334126}
   m_Layer: 0
   m_Name: GameInitiator
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1918142778760547068
+--- !u!114 &2433730159794334126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,8 +49,10 @@ MonoBehaviour:
   actions: {fileID: -944628639613478452, guid: 9f08fbc486ae66d4eb5125320da43da7, type: 3}
   gameManager: {fileID: 9218477947236984909, guid: 291e5311a58724e4586b628ac7233e62, type: 3}
   gridSystem: {fileID: 3724693456807463634, guid: da6fdd6344480e34f953b014b9a850d4, type: 3}
-  canvas: {fileID: 3298975990122769804, guid: 31560e152c3a5bf4296fddd9937fa4ba, type: 3}
+  deckSystem: {fileID: 5418863641819804874, guid: 29e18a5a865f12c448617b452eda2c13, type: 3}
+  canvas: {fileID: 0}
   mainCamera: {fileID: 6718472776401959001, guid: a9433a066dcf06e4bb479770c350ec1b, type: 3}
   gridView: {fileID: 80560492723834189, guid: 25c33ef0cf683a64b8e41f9d09e1b68b, type: 3}
   basicTile: {fileID: 11400000, guid: 7004cb5eedd7b3b488ddc5ed144d72ae, type: 2}
   highlightTile: {fileID: 11400000, guid: a4bb60116d00d2c419391ec95135826a, type: 2}
+  handView: {fileID: -4556314257406285928, guid: c7c2256912155c043bfec4ef9da3f3bb, type: 3}

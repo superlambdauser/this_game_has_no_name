@@ -8,15 +8,15 @@ using UnityEngine;
 /// </summary>
 public class HandView : Singleton<HandView>
 {
-    [SerializeField] private DeckSystem deckManager;
-    [SerializeField] private CardView cardPrefab;
     private List<CardView> cardsInHand = new List<CardView>();
-    public List<CardView> CardsInHand { get; private set; }
-    private Transform handPosition; // Center of the CIRCLE shape that will determine our the fan shape used to display our hand (not the center of the hand itself)
-    // NB : I think later in development this should be given by the GameInitiator
+    public List<CardView> CardsInHand => cardsInHand;
     public int numOfCardsInHand = 8; // Temp for testing
     public int maxHandSize = 5;
 
+    [SerializeField] private CardView cardPrefab;
+    private RectTransform handPosition; // Center of the CIRCLE shape that will determine our the fan shape used to display our hand (not the center of the hand itself)
+    [SerializeField] private RectTransform stackPilePoint;
+    [SerializeField] private RectTransform discardPilePoint;
     [Header("Circle for fan shape settings :")]
     [SerializeField, Range(0f, 1f)] private float fanStrength = 0.5f; // 0 = flat shape, 1 = wide arc
     [SerializeField, Range(0f, 180f)] private float maxAngle = 80f; // startAngle = -arcAnlge/2 (& endAngle = arcAngle/2) already set correct boundaries if the given angle is bigger than 180°, I clamp it in the inspector for clarity.
@@ -24,19 +24,23 @@ public class HandView : Singleton<HandView>
 
 
 
-    private void Start()
-    {
-        handPosition = transform;
-        deckManager.DrawHand(maxHandSize);
-    }
-
     private void Update()
     {
         UpdateHandDisplay();
     }
 
 
-#region Custom Methods
+    #region Custom Methods
+    public void Initiate()
+    {
+        Debug.Log("HandView Initiate() called");
+        handPosition = GetComponent<RectTransform>();
+
+        cardsInHand.Clear();
+
+        UpdateHandDisplay();
+    }
+
     /// <summary>
     /// Gets the CardView linked to a given CardData
     /// </summary>
@@ -58,11 +62,14 @@ public class HandView : Singleton<HandView>
     /// <param name="cardData"></param>
     public void AddCardToHand(CardData cardData)
     {
+        Debug.Log("AddCardToHand() called with: " + cardData);
         if (cardsInHand.Count < maxHandSize)
         {
+            Debug.Log("Instantiating card...");
             // Card instantiation :
             CardView newCard = Instantiate(cardPrefab, handPosition.position, Quaternion.identity, handPosition);
 
+            Debug.Log("Card instantiated: " + newCard);
             cardsInHand.Add(newCard);
 
             newCard.GetComponent<CardView>().CardData = cardData; // Set the given cardData to instantiated card
@@ -106,5 +113,5 @@ public class HandView : Singleton<HandView>
             cardsInHand[i].transform.localRotation = Quaternion.Euler(0, 0, -angleInDegrees);
         }
     }
-#endregion
+    #endregion
 }

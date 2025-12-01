@@ -4,10 +4,12 @@ using UnityEngine;
 /// <summary>
 ///  Generic collection of CardData objects. A deck, a booster pack, etc.
 /// </summary>
+[CreateAssetMenu(fileName = "New card collection", menuName = "Card Collection")]
 public class CardsCollection : ScriptableObject
 {
-    public List<CardData> CardsInCollection { get; private set; }
     [SerializeField] bool allowsDuplicates = true;
+    [SerializeField] private List<CardData> cardsInCollection;
+    public List<CardData> CardsInCollection => cardsInCollection;
 
     public void RemoveCard(CardData card)
     {
