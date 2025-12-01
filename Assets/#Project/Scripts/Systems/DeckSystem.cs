@@ -9,12 +9,12 @@ using UnityEngine;
 public class DeckSystem : Singleton<DeckSystem>
 {
     [SerializeField] private CardsCollection playerDeck;
-    private List<CardData> stackPile = new List<CardData>(); 
+    private List<CardData> stackPile = new List<CardData>();
     private List<CardData> discardPile = new List<CardData>();
-    [SerializeField] private HandView handManager;
+    [SerializeField] private HandView handView;
     [HideInInspector] public List<CardData> HandCards { get; set; } = new List<CardData>();
 
-
+    #region Unity Events :
     private void OnEnable()
     {
         // Attaching performers :
@@ -22,6 +22,10 @@ public class DeckSystem : Singleton<DeckSystem>
         ActionSystem.AttachPerformer<DiscardCardsGA>(DiscardCardsPerformer);
         ActionSystem.AttachPerformer<DiscardSingleCardGA>(DiscardSingleCardPerformer);
         ActionSystem.AttachPerformer<DiscardAllCardsGA>(DiscardAllCardsPerformer);
+
+        // Subscribing reactions :
+        ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ActionSystem.ReactionTiming.Pre);
+        ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ActionSystem.ReactionTiming.Post);
     }
 
     private void OnDisable()
@@ -31,8 +35,11 @@ public class DeckSystem : Singleton<DeckSystem>
         ActionSystem.DetachPerformer<DiscardCardsGA>();
         ActionSystem.DetachPerformer<DiscardSingleCardGA>();
         ActionSystem.DetachPerformer<DiscardAllCardsGA>();
-    }
 
+        // Unsubscribing reactions :
+        ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ActionSystem.ReactionTiming.Pre);
+        ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ActionSystem.ReactionTiming.Post);
+    }
     private void Start()
     {
         // (Temporary) Load all card assets from Ressources folder :
@@ -40,7 +47,11 @@ public class DeckSystem : Singleton<DeckSystem>
 
         stackPile.AddRange(cards); // (Temporary) Adds all cards scriptable objects from the ressource folder
     }
+    #endregion
 
+
+    #region Custom Methods
+    #region Performers
     // Performers :
     private IEnumerator DrawCardsPerformer(DrawCardsGA gameAction)
     {
@@ -85,16 +96,30 @@ public class DeckSystem : Singleton<DeckSystem>
     }
 
     private IEnumerator DiscardAllCardsPerformer(DiscardAllCardsGA gameAction)
-{
-    yield return DiscardCardsPerformer(gameAction);
-}
+    {
+        yield return DiscardCardsPerformer(gameAction);
+    }
+    #endregion
 
+    #region Reactions
+    private void EnemyTurnPreReaction(EnemyTurnGA gameAction)
+    {
+        DiscardAllCardsGA discardAllCardsGA = new DiscardAllCardsGA();
+        ActionSystem.Instance.AddReaction(discardAllCardsGA);
+    }
+    private void EnemyTurnPostReaction(EnemyTurnGA gameAction)
+    {
+        DrawCardsGA drawCardsGA = new DrawCardsGA(handView.maxHandSize);
+        ActionSystem.Instance.AddReaction(drawCardsGA);
+    }
+    #endregion
+    
     public IEnumerator DrawCard()
     {
         CardData card = stackPile.DrawRandom();
 
         HandCards.Add(card);
-        handManager.AddCardToHand(card);
+        handView.AddCardToHand(card);
 
         yield break;
     }
@@ -106,7 +131,7 @@ public class DeckSystem : Singleton<DeckSystem>
             HandCards.Remove(card);
         }
 
-        handManager.RemoveCardFromHand(card);
+        handView.RemoveCardFromHand(card);
 
         discardPile.Add(card);
 
@@ -137,4 +162,5 @@ public class DeckSystem : Singleton<DeckSystem>
         stackPile.AddRange(discardPile);
         discardPile.Clear();
     }
+#endregion
 }

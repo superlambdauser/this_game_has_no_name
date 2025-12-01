@@ -37,6 +37,11 @@ public class ActionSystem : Singleton<ActionSystem>
     private static Dictionary<Type, Func<GameAction, IEnumerator>> performers = new(); // Performers hold the logic for their game action
     // NB : Each action type has exactly one performer that defines how it executes
 
+    public enum ReactionTiming
+    {
+        Pre,
+        Post
+    }
 
 
     // FLOW = the complete lifecycle (flow) of a GameAction:
@@ -133,9 +138,9 @@ public class ActionSystem : Singleton<ActionSystem>
         if (performers.ContainsKey(type)) performers.Remove(type);
     }
 
-    public static void SubscribeReaction<T>(Action<T> reactionFunction, bool isPreSubscriber) where T : GameAction // Allows registering a method to be run before or after actions of type T
+    public static void SubscribeReaction<T>(Action<T> reactionFunction, ReactionTiming reactionTiming) where T : GameAction // Allows registering a method to be run before or after actions of type T
     {
-        Dictionary<Type, List<Action<GameAction>>> targetDict = isPreSubscriber ? preSubscribers : postSubscribers; // Choose correct dictionary 
+        Dictionary<Type, List<Action<GameAction>>> targetDict = (reactionTiming == ReactionTiming.Pre) ? preSubscribers : postSubscribers; // Choose correct dictionary 
 
         Type actionType = typeof(T);
 
@@ -147,9 +152,9 @@ public class ActionSystem : Singleton<ActionSystem>
         targetDict[actionType].Add(Wrapped); // Adds subscriber to dict key
     }
 
-    public static void UnsubscribeReaction<T>(Action<T> reactionFunction, bool isPreSubscriber) where T : GameAction // Removes the reaction from the appropriate dictionary
+    public static void UnsubscribeReaction<T>(Action<T> reactionFunction, ReactionTiming reactionTiming) where T : GameAction // Removes the reaction from the appropriate dictionary
     {
-        Dictionary<Type, List<Action<GameAction>>> targetDict = isPreSubscriber ? preSubscribers : postSubscribers;
+        Dictionary<Type, List<Action<GameAction>>> targetDict = (reactionTiming == ReactionTiming.Pre) ? preSubscribers : postSubscribers;
 
         Type actionType = typeof(T);
 
