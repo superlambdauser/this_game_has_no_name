@@ -46,8 +46,6 @@ public class GameInitiator : Singleton<GameInitiator>
     #region Unity events
     private void Start()
     {
-        tilemaps = gridView.GetComponentsInChildren<Tilemap>();
-        
         BuildGame();
         Destroy(gameObject); // Destroys itself after instantiation
     }
@@ -63,7 +61,7 @@ public class GameInitiator : Singleton<GameInitiator>
         gridData = new GridData(gridRows, gridColumns);
 
         // --- View ---
-        gridView.Initiate(tilemaps, gridData, basicTile, highlightTile);
+        gridView.Initiate(gridData, basicTile, highlightTile);
         handView.Initiate();
         deckSystem.Initiate();
 

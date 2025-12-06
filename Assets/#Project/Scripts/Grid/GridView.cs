@@ -17,8 +17,10 @@ public class GridView : Singleton<GridView>
     {
         Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
     }
-    public void Initiate(Tilemap[] tilemaps, GridData gridData, TileBase tile, TileBase highlightTile)
+    public void Initiate(GridData gridData, TileBase tile, TileBase highlightTile)
     {
+        Tilemap[] tilemaps = GetComponentsInChildren<Tilemap>();
+
         Debug.Log("Tilemap count: " + tilemaps.Length);
 
         mainTilemap = tilemaps[0];

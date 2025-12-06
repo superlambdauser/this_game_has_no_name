@@ -47,12 +47,16 @@ public class DeckSystem : Singleton<DeckSystem>
     {
         Debug.Log("Deck System Initiation called");
         handView = HandView.Instance;
+        // Debug.Log($"Deck : {(handView != null ? handView.gameObject.name : "null")}");
 
         // Load all card assets from Ressources folder :
         CardsCollection cardsCollection = Resources.Load<CardsCollection>("Cards Collections/TempDeckTest"); // !!! The given path MUST be within a folder named "Resources" 
         CardData[] deck = cardsCollection.CardsInCollection.ToArray();
 
-        stackPile.AddRange(deck); // Adds all cards scriptable objects from the ressource folder
+        // Debug.Log($"Deck : {(deck != null ? "not null" : "null")}");
+
+        stackPile.AddRange(deck); // Adds all cards scriptable objects from the ressource folder to draw pile
+        // Debug.Log($"Stackpile : {(deck != null ? stackPile.Count : "null")}");
 
         DrawHand(handView.maxHandSize); // Draw initial hand
     }
@@ -122,12 +126,13 @@ public class DeckSystem : Singleton<DeckSystem>
 
     public IEnumerator DrawCard()
     {
+        Debug.Log("DrawCard() called");
         CardData card = stackPile.DrawRandom();
 
         HandCards.Add(card);
         handView.AddCardToHand(card);
 
-        yield break;
+        yield return HandCards;
     }
 
     public IEnumerator DiscardCard(CardData card)
@@ -146,6 +151,7 @@ public class DeckSystem : Singleton<DeckSystem>
 
     public IEnumerator DrawHand(int amount = 5)
     {
+        Debug.Log("DrawHand() called");
         for (int i = 0; i < amount; i++)
         {
             yield return DrawCard();
