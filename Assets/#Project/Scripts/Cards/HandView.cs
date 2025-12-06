@@ -14,10 +14,13 @@ public class HandView : Singleton<HandView>
     public int maxHandSize = 5;
 
     [SerializeField] private CardView cardPrefab;
-    private RectTransform handPosition; // Center of the CIRCLE shape that will determine our the fan shape used to display our hand (not the center of the hand itself)
+    private RectTransform handPosition;
+    private float canvasHeight;
     [SerializeField] private RectTransform stackPilePoint;
     [SerializeField] private RectTransform discardPilePoint;
+
     [Header("Circle for fan shape settings :")]
+    [SerializeField, Range(-1f, 1f)] private float fanVerticalPosition = 0.35f;
     [SerializeField, Range(0f, 1f)] private float fanStrength = 0.5f; // 0 = flat shape, 1 = wide arc
     [SerializeField, Range(0f, 180f)] private float maxAngle = 80f; // startAngle = -arcAnlge/2 (& endAngle = arcAngle/2) already set correct boundaries if the given angle is bigger than 180°, I clamp it in the inspector for clarity.
     [SerializeField] private float radius = 300f; // Depth of the curve (and radius of the circle shape)
@@ -35,6 +38,7 @@ public class HandView : Singleton<HandView>
     {
         Debug.Log("HandView Initiate() called");
         handPosition = GetComponent<RectTransform>();
+        canvasHeight = handPosition.rect.height;
 
         cardsInHand.Clear();
 
@@ -98,6 +102,9 @@ public class HandView : Singleton<HandView>
         float startAngle = -arcAngle / 2;
         float angleStep = (cardsCount > 1) ? arcAngle / (cardsCount - 1f) : 0f; // (count - 1) because for N cards there will always be (N-1) steps between 1st and last card
 
+        RectTransform rt = handPosition;
+        float canvasHeight = rt.rect.height;
+
         for (int i = 0; i < cardsCount; i++)
         {
             float angleInDegrees = startAngle + (i * angleStep); // Get current card's angle in the circle
@@ -106,7 +113,7 @@ public class HandView : Singleton<HandView>
             float angleInRadians = angleInDegrees * Mathf.Deg2Rad; // We need radians to work with Mathf.Sin() and Mathf.Cos();
 
             float x = radius * Mathf.Sin(angleInRadians);
-            float y = radius * Mathf.Cos(angleInRadians);
+             float y = radius * Mathf.Cos(angleInRadians) - radius/2f - canvasHeight * fanVerticalPosition;
 
             // Set current card's position & rotation :
             cardsInHand[i].transform.localPosition = new Vector3(x, y, 0f); // Could maybe make it a Vector2 instead ?

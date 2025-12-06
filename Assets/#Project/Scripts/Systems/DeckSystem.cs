@@ -58,7 +58,7 @@ public class DeckSystem : Singleton<DeckSystem>
         stackPile.AddRange(deck); // Adds all cards scriptable objects from the ressource folder to draw pile
         // Debug.Log($"Stackpile : {(deck != null ? stackPile.Count : "null")}");
 
-        DrawHand(handView.maxHandSize); // Draw initial hand
+        StartCoroutine(DrawHand(handView.maxHandSize)); // Draw initial hand
     }
 
     #region Performers

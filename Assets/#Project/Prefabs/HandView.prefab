@@ -34,10 +34,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &-4556314257406285928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,9 +55,10 @@ MonoBehaviour:
   cardPrefab: {fileID: -1993109365048656754, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
   stackPilePoint: {fileID: 4267789435339740503}
   discardPilePoint: {fileID: 2202417972529306584}
-  fanStrength: 0.5
-  maxAngle: 80
-  radius: 300
+  fanVerticalPosition: 1
+  fanStrength: 0.961
+  maxAngle: 67
+  radius: 500
 --- !u!1 &3091691248570656884
 GameObject:
   m_ObjectHideFlags: 0
