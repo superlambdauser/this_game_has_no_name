@@ -56,7 +56,7 @@ public class GridView : Singleton<GridView>
         }
     }
 
-    private int CountTiles(Tilemap tilemap)
+    private int CountTiles(Tilemap tilemap) // For debugging 
     {
         if (tilemap == null) return 0;
 

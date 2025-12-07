@@ -20,6 +20,7 @@ public class GameInitiator : Singleton<GameInitiator>
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GridSystem gridSystem;
     [SerializeField] private DeckSystem deckSystem;
+    [SerializeField] private CardHoverSystem cardHoverSystem;
     private GameplayEngine gameplayEngine;
 
 
@@ -41,6 +42,7 @@ public class GameInitiator : Singleton<GameInitiator>
 
     // Cards :
     [SerializeField] private HandView handView;
+    [SerializeField] private CardView hoveredCardViewPrefab;
 
 
     #region Unity events
@@ -63,7 +65,6 @@ public class GameInitiator : Singleton<GameInitiator>
         // --- View ---
         gridView.Initiate(gridData, basicTile, highlightTile);
         handView.Initiate();
-        deckSystem.Initiate();
 
         // --- Controllers ---
         gridSystem.Initiate(mainCamera, gridView, gridData, actions);
@@ -71,6 +72,8 @@ public class GameInitiator : Singleton<GameInitiator>
 
         // --- Systems ---
         gameplayEngine = GameplayEngine.Instance;
+        deckSystem.Initiate();
+        cardHoverSystem.Initiate(hoveredCardViewPrefab);
         gameplayEngine.Initiate(gridData);
             // later : register all systems viar RegisterSystem(new ...System()) method
         gameplayEngine.RegisterSystem(gridSystem);
@@ -94,6 +97,10 @@ public class GameInitiator : Singleton<GameInitiator>
 
         handView = Instantiate(handView, canvas.transform, false);
         deckSystem = Instantiate(deckSystem);
+
+
+        hoveredCardViewPrefab = Instantiate(hoveredCardViewPrefab, handView.transform, false);
+        cardHoverSystem = Instantiate(cardHoverSystem);
     }
     #endregion
 }

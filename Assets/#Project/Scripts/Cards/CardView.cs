@@ -1,15 +1,21 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
 /// Updates dynamically the visuals of each card depending on given data.
 /// </summary>
-public class CardView : MonoBehaviour
+public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler // Required interfaces when using the OnPointer[...] methods
 {
     [SerializeField] private CardData cardData;
-    public CardData CardData { get; set; }
+    public CardData CardData
+    {
+        get => cardData;
+        set => cardData = value;
+    }
+    
     [SerializeField] private Image cardImage;
     [SerializeField] private Image rarityLevelFrameImage;
     [SerializeField] private Image[] typeIconImages;
@@ -37,7 +43,20 @@ public class CardView : MonoBehaviour
         UpdateCardDisplay();
     }
 
-    private void UpdateCardDisplay()
+    public void OnPointerEnter(PointerEventData eventData) // For hovering effect
+    {
+        Debug.Log($"Mouse entered {gameObject.name}");
+
+        Vector2 hoverPos = new Vector2(transform.position.x, -2);
+        CardHoverSystem.Instance.Show(CardData, hoverPos);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        CardHoverSystem.Instance.Hide();
+    }
+
+    public void UpdateCardDisplay()
     {
         Debug.Log($"Updating card {cardData?.name ?? "NULL"}");
 
