@@ -9,15 +9,15 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
 
     private GridView gridView;
     private GridData gridData;
-    TileData currentTile;
 
+    // Input actions :
     private const string INPUT_ACTION_MAP = "InGame";
     private const string INPUT_SELECT_ACTION = "Select";
     private InputActionAsset actions;
     private InputActionMap actionMap;
     private InputAction selectAction;
 
-
+    private Vector2Int previousMousePos = new Vector2Int(int.MinValue, int.MinValue); // Making sure value is not insade grid bounds
 
 
     // --- HARDCODED VARS THAT DEPEND ON THE CARDS ---
@@ -36,6 +36,19 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
     {
         actions.FindActionMap(INPUT_ACTION_MAP).Disable();
         actions.FindActionMap(INPUT_ACTION_MAP).FindAction(INPUT_SELECT_ACTION).performed -= Select;
+    }
+
+    private void Update()
+    {
+        // Higlight area on hover :
+        Vector2Int mousePos = GetMousePosition();
+
+        if (!(mousePos == previousMousePos))
+        {
+            HandleHover(mousePos);
+
+            previousMousePos = mousePos;
+        }
     }
     #endregion
 
@@ -64,43 +77,63 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
         // :-) It's a system so i have to implement it... 
     }
 
+
     private void Select(InputAction.CallbackContext context)
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue(); // Read mouse position on screen
         Vector2Int mousePos = ScreenToGridPos(mouseScreenPos); // convert it to grid position
 
-        Debug.Log($"Mouse on cell : {mousePos}");
+        Debug.Log($"Mouse clicked on cell : {mousePos}");
 
         HandleClick(mousePos);
     }
 
-    private Vector2Int ScreenToGridPos(Vector3 mousePos)
-    {
-        Debug.Log($"Mouse screen: {mousePos}");
-        Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10f)); // convert mouse position to world position
-        Debug.Log($"World pos: {worldPos}");
-
-        GridLayout gridLayout = gridView.GetComponentInParent<GridLayout>();
-        Vector3Int cellPos = gridLayout.WorldToCell(worldPos); // convert it again to a cell from the tilemap
-        Debug.Log($"Cell pos: {cellPos}");
-
-        return new Vector2Int(cellPos.x, cellPos.y); // return a Vector2Int that represents the cell
-    }
-
     private void HandleClick(Vector2Int position)
     {
-        currentTile = gridData.GetTile(position);
-
-        if (currentTile == null)
-
+        if (!IsInGrid(position))
         {
             Debug.Log("Tile is missing");
+            gridView.HighlightMap.ClearAllTiles();
             return; //Handle out-of-grid clicks
         }
 
         // things to do when clicked (ex : change color to begin with)
         List<Vector2Int> area = GetArea(position, range);
         gridView.Highlight(area);
+    }
+
+    private void HandleHover(Vector2Int position)
+    {
+        if (!IsInGrid(position))
+        {
+            gridView.HighlightMap.ClearAllTiles();
+            return; // Handle out-of-grid
+        }
+
+        // Highlight area on hover :
+        List<Vector2Int> area = GetArea(position, range);
+        gridView.Highlight(area);
+    }
+
+    private Vector2Int GetMousePosition()
+    {
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue(); // Read mouse position on screen
+        Vector2Int mousePos = ScreenToGridPos(mouseScreenPos); // convert it to grid position
+
+        return mousePos;
+    }
+
+    private Vector2Int ScreenToGridPos(Vector3 mousePos)
+    {
+        // Debug.Log($"Mouse screen: {mousePos}");
+        Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10f)); // convert mouse position to world position
+        // Debug.Log($"World pos: {worldPos}");
+
+        GridLayout gridLayout = gridView.GetComponentInParent<GridLayout>();
+        Vector3Int cellPos = gridLayout.WorldToCell(worldPos); // convert it again to a cell from the tilemap
+        // Debug.Log($"Cell pos: {cellPos}");
+
+        return new Vector2Int(cellPos.x, cellPos.y); // return a Vector2Int that represents the cell
     }
 
     private List<Vector2Int> GetArea(Vector2Int center, int range)
@@ -124,6 +157,13 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
         foreach (Vector2Int v in area) Debug.Log($"cell : {v}");
 
         return area;
+    }
+
+    private bool IsInGrid(Vector2Int pos)
+    {
+        return pos.x >= 0 && pos.y >= 0 &&
+               pos.x < gridData.rows &&
+               pos.y < gridData.columns;
     }
     #endregion
 }

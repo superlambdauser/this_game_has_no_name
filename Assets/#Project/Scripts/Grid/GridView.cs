@@ -19,12 +19,15 @@ public class GridView : Singleton<GridView>
     }
     public void Initiate(GridData gridData, TileBase tile, TileBase highlightTile)
     {
-        Tilemap[] tilemaps = GetComponentsInChildren<Tilemap>();
+        tilemaps = GetComponentsInChildren<Tilemap>();
+
+        foreach (var map in tilemaps)
+        {
+            if (map.gameObject.name.Contains("Main")) mainTilemap = map;
+            else if (map.gameObject.name.Contains("Highlight")) highlightMap = map;
+        }
 
         Debug.Log("Tilemap count: " + tilemaps.Length);
-
-        mainTilemap = tilemaps[0];
-        highlightMap = tilemaps[1];
 
         this.tile = tile;
         this.highlightTile = highlightTile;
@@ -49,9 +52,7 @@ public class GridView : Singleton<GridView>
 
         if (highlightMap != null)
         {
-            Debug.Log($"Clearing highlightMap at Initiate. Tile count before: {CountTiles(highlightMap)}");
             highlightMap.ClearAllTiles();
-            Debug.Log($"Tile count after ClearAllTiles: {CountTiles(highlightMap)}");
         }
     }
 
@@ -71,8 +72,8 @@ public class GridView : Singleton<GridView>
 
     public void Highlight(IEnumerable<Vector2Int> cellsPositions) // Ideally, add a IEnumerator of Vector2Int argument that represents the area of action and contains all the cells inside the area
     {
-        Debug.Log($"Highlight() called! HighlightMap: {highlightMap != null}, HighlightTile: {highlightTile != null}");
-        Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
+        // Debug.Log($"Highlight() called! HighlightMap: {highlightMap != null}, HighlightTile: {highlightTile != null}");
+        // Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
         if (highlightMap == null)
         {
             Debug.LogError("HighlightMap missing.");
@@ -85,17 +86,14 @@ public class GridView : Singleton<GridView>
             return;
         }
 
-        Debug.Log($"Clearing highlightMap (before count: {CountTiles(highlightMap)})");
+        // Debug.Log($"Clearing highlightMap (before count: {CountTiles(highlightMap)})");
         highlightMap.ClearAllTiles();
-        Debug.Log($"After ClearAllTiles (count: {CountTiles(highlightMap)})");
+        // Debug.Log($"After ClearAllTiles (count: {CountTiles(highlightMap)})");
 
-        int placed = 0;
         foreach (Vector2Int cellPosition in cellsPositions)
         {
             Vector3Int pos = new Vector3Int(cellPosition.x, cellPosition.y, 0);
             highlightMap.SetTile(pos, highlightTile); // Set a visible tile
         }
-
-        Debug.Log($"Highlight placed tiles: {placed}");
     }
 }
