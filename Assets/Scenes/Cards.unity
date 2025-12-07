@@ -642,6 +642,14 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 626292884}
+    - target: {fileID: 2433730159794334126, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
+      propertyPath: cardHoverSystem
+      value: 
+      objectReference: {fileID: 2737173821864348300, guid: 8c1c52ff2c5b593459f94199a11e68f0, type: 3}
+    - target: {fileID: 2433730159794334126, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
+      propertyPath: hoveredCardViewPrefab
+      value: 
+      objectReference: {fileID: 1755112498968221852, guid: 361b35922eda9db48a4e437e9b9d4dd2, type: 3}
     - target: {fileID: 4824651278934335820, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 85.22633
