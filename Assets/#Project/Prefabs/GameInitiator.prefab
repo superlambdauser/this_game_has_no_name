@@ -50,9 +50,11 @@ MonoBehaviour:
   gameManager: {fileID: 9218477947236984909, guid: 291e5311a58724e4586b628ac7233e62, type: 3}
   gridSystem: {fileID: 3724693456807463634, guid: da6fdd6344480e34f953b014b9a850d4, type: 3}
   deckSystem: {fileID: 5418863641819804874, guid: 29e18a5a865f12c448617b452eda2c13, type: 3}
+  cardHoverSystem: {fileID: 0}
   canvas: {fileID: 0}
   mainCamera: {fileID: 6718472776401959001, guid: a9433a066dcf06e4bb479770c350ec1b, type: 3}
   gridView: {fileID: 80560492723834189, guid: 25c33ef0cf683a64b8e41f9d09e1b68b, type: 3}
   basicTile: {fileID: 11400000, guid: 7004cb5eedd7b3b488ddc5ed144d72ae, type: 2}
   highlightTile: {fileID: 11400000, guid: a4bb60116d00d2c419391ec95135826a, type: 2}
   handView: {fileID: -4556314257406285928, guid: c7c2256912155c043bfec4ef9da3f3bb, type: 3}
+  hoveredCardViewPrefab: {fileID: 1755112498968221852, guid: 361b35922eda9db48a4e437e9b9d4dd2, type: 3}

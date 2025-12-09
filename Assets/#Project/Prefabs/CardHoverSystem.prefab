@@ -44,4 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5445a92b6e9a36f4084568abffa8fc2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardHoverSystem
-  hoveredCardView: {fileID: 1755112498968221852, guid: 361b35922eda9db48a4e437e9b9d4dd2, type: 3}
