@@ -99,7 +99,7 @@ public class GameInitiator : Singleton<GameInitiator>
         deckSystem = Instantiate(deckSystem);
 
 
-        hoveredCardViewPrefab = Instantiate(hoveredCardViewPrefab, handView.transform, false);
+        hoveredCardViewPrefab = Instantiate(hoveredCardViewPrefab, canvas.transform, false);
         cardHoverSystem = Instantiate(cardHoverSystem);
     }
     #endregion

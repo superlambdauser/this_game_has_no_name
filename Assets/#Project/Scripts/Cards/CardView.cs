@@ -25,6 +25,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private TMP_Text cardMovementRangeText;
     private int cardRarityLevel;
     private CardData.CardType flags;
+    private bool pointerAlreadyEntered = false;
 
 
     private Color[] rarityColors =
@@ -45,14 +46,21 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData) // For hovering effect
     {
-        Debug.Log($"Mouse entered {gameObject.name}");
+        Debug.Log($"Mouse entered {gameObject.name} + Pointer already entered : {pointerAlreadyEntered}");
 
-        Vector2 hoverPos = new Vector2(transform.position.x, -2);
-        CardHoverSystem.Instance.Show(CardData, hoverPos);
+        if (!pointerAlreadyEntered)
+        {   
+            Vector2 hoverPos = new Vector2(transform.position.x, transform.position.y);
+            Vector3 hoverRot = transform.rotation.eulerAngles;
+            CardHoverSystem.Instance.Show(CardData, hoverPos, hoverRot);
+            pointerAlreadyEntered = true;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("The cursor exited the selectable UI element.");
+        pointerAlreadyEntered = false;
         CardHoverSystem.Instance.Hide();
     }
 

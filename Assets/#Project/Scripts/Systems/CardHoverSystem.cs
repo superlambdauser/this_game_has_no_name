@@ -14,14 +14,18 @@ public class CardHoverSystem : Singleton<CardHoverSystem>
     {
         hoveredCardView = cardPrefab;
     }
-    public void Show(CardData card, Vector2 position)
+    public void Show(CardData card, Vector2 position, Vector3 rotation)
     {
-        hoveredCardView.gameObject.SetActive(true);
+        hoveredCardView.gameObject.SetActive(true);        
+
+        // hoveredCardView.transform.SetAsLastSibling();
 
         hoveredCardView.CardData = card;
         hoveredCardView.UpdateCardDisplay();
+        
 
         hoveredCardView.GetComponent<RectTransform>().position = position;
+        hoveredCardView.GetComponent<RectTransform>().rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
     }
 
     public void Hide()

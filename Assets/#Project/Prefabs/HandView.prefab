@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6303056667275666546}
   - component: {fileID: -4556314257406285928}
-  m_Layer: 0
+  - component: {fileID: -4212185972699294805}
+  m_Layer: 5
   m_Name: HandView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,6 +60,18 @@ MonoBehaviour:
   fanStrength: 0.961
   maxAngle: 67
   radius: 500
+--- !u!210 &-4212185972699294805
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43968316627027202}
+  m_Enabled: 1
+  m_SortingLayerID: 10000797
+  m_SortingLayer: 1
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &3091691248570656884
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +83,7 @@ GameObject:
   - component: {fileID: 4267789435339740503}
   - component: {fileID: 6012074496206225498}
   - component: {fileID: 1784439560330956498}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StackPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +158,7 @@ GameObject:
   - component: {fileID: 2202417972529306584}
   - component: {fileID: 8500872318261525227}
   - component: {fileID: 5980737449880316097}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DiscardPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
