@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1696237106644993086}
   - component: {fileID: 7974984509929566278}
   - component: {fileID: 6134232452743814596}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MovementRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7843194905144290594}
   - component: {fileID: 5574608869954623130}
   - component: {fileID: 7391487053815843293}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RarityLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 3222290174316342297}
   - component: {fileID: 7995691339805354535}
   - component: {fileID: 583435843627862385}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: AttackIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 8562247118751582283}
   - component: {fileID: 1755112498968221852}
   - component: {fileID: 4149216518285310505}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HoveredCardPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: -502270305
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_SortAtRoot: 0
 --- !u!1 &2806504288832427528
 GameObject:
@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 5760714007309509855}
   - component: {fileID: 660687591949740838}
   - component: {fileID: 1717661565146183726}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -568,7 +568,7 @@ GameObject:
   - component: {fileID: 9031583270037767869}
   - component: {fileID: 7692953742180403364}
   - component: {fileID: 3187196864465427005}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RarityFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,7 +641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8419758560571593971}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 5990589221388449384}
   - component: {fileID: 5087821672843976255}
   - component: {fileID: 2866665144773297509}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CardImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -755,7 +755,7 @@ GameObject:
   - component: {fileID: 8477420657504278577}
   - component: {fileID: 3214983983425300875}
   - component: {fileID: 7572092807028272905}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +891,7 @@ GameObject:
   - component: {fileID: 3994705995057330096}
   - component: {fileID: 4351119313592974556}
   - component: {fileID: 5842387414864893827}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cardillustration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -966,7 +966,7 @@ GameObject:
   - component: {fileID: 668969928970769307}
   - component: {fileID: 2341571823187276960}
   - component: {fileID: 964984659658223123}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SpecialIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1039,7 +1039,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6939156730768599241}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Traits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1081,7 +1081,7 @@ GameObject:
   - component: {fileID: 1641702339090996477}
   - component: {fileID: 3211323197047725665}
   - component: {fileID: 2765679982514183887}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MovementIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1154,7 +1154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5319170055499992445}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Types
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1192,7 +1192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2008764425926282346}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Rarity
   m_TagString: Untagged
   m_Icon: {fileID: 0}

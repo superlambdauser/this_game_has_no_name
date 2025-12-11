@@ -3,8 +3,8 @@ using UnityEngine;
 [System.Serializable]
 public  class BasicMovement : IMovementBehaviour
 {
-    private Movable target; // Temp to not forget we need this
-    public Movable Target => target;
+    private Figure target; // Temp to not forget we need this
+    public Figure Target => target;
 
     private Vector2Int position;
     public Vector2Int Position => position;
@@ -23,6 +23,6 @@ public  class BasicMovement : IMovementBehaviour
         // TO DO : Check if in range
 
         // Then :
-        target.MoveTo(position);
+        target.SetPosition(position);
     }
 }

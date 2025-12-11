@@ -19,6 +19,10 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
 
     private Vector2Int previousMousePos = new Vector2Int(int.MinValue, int.MinValue); // Making sure value is not insade grid bounds
 
+    // Figures :
+    public Figure[,] FiguresPositions {get; set;} // Array holding info about position of figures on the grid
+    private Figure player;
+    // + private EnemyAi ai later on day or never lol
 
     // --- HARDCODED VARS THAT DEPEND ON THE CARDS ---
     private int range = 3;
@@ -65,6 +69,8 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
         // Debug.Log("gridView.tilemap: " + (gridView != null ? gridView.MainTilemap : "gridView null"));
         // Debug.Log("gridData: " + gridData);
         // Debug.Log("actions: " + actions);
+
+        FiguresPositions = new Figure[gridData.rows, gridData.columns];
 
         actionMap = actions.FindActionMap(INPUT_ACTION_MAP);
         // Debug.Log("actionmap: " + actionMap);
@@ -164,6 +170,14 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
         return pos.x >= 0 && pos.y >= 0 &&
                pos.x < gridData.rows &&
                pos.y < gridData.columns;
+    }
+
+    private void SpawnFigureAt(Figure figure, Vector2Int cell)
+    {
+        Vector3 position = gridData.GetTile(cell).Position;
+        Figure figureInstance = Instantiate(figure, position, Quaternion.identity);
+
+        FiguresPositions[cell.x, cell.y] = figureInstance; // Set figure inside array representing board
     }
     #endregion
 }
