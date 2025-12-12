@@ -29,11 +29,13 @@ public abstract class FigureData : ScriptableObject
         CurrentY = position.y;
     }
 
-    public virtual bool[,] PossibleMove()
+    protected virtual bool[,] PossibleMove()
     {
+        CustomInstructions();
         return new bool[grid.rows, grid.columns]; // Returns an array of rows x columns of booleans that corresponds to the cells of the grid
     }
 
+    protected abstract void CustomInstructions();
 
     public void SetHealth(uint amount)
     {
