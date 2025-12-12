@@ -15,7 +15,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         get => cardData;
         set => cardData = value;
     }
-    
+
     [SerializeField] private Image cardImage;
     [SerializeField] private Image rarityLevelFrameImage;
     [SerializeField] private Image[] typeIconImages;
@@ -48,8 +48,8 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         Debug.Log($"Mouse entered {gameObject.name} + Pointer already entered : {pointerAlreadyEntered}");
 
-        if (!pointerAlreadyEntered)
-        {   
+        if (!CompareTag("Hover"))
+        {
             Vector2 hoverPos = new Vector2(transform.position.x, transform.position.y);
             Vector3 hoverRot = transform.rotation.eulerAngles;
             CardHoverSystem.Instance.Show(CardData, hoverPos, hoverRot);
@@ -59,9 +59,12 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("The cursor exited the selectable UI element.");
-        pointerAlreadyEntered = false;
-        CardHoverSystem.Instance.Hide();
+        if (CompareTag("Hover"))
+        {
+            Debug.Log($"The cursor exited {gameObject.name}.");
+            pointerAlreadyEntered = false;
+            CardHoverSystem.Instance.Hide();
+        }
     }
 
     public void UpdateCardDisplay()

@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 4149216518285310505}
   m_Layer: 5
   m_Name: HoveredCardPrefab
-  m_TagString: Untagged
+  m_TagString: Hover
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
