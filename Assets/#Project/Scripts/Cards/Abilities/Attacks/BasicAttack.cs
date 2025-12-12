@@ -3,8 +3,8 @@ using UnityEngine;
 [System.Serializable]
 public class BasicAttack : IAttackBehaviour // NB : All attacks have to inherit from BasicAttack !
 {
-    private HealthSystem target;
-    public HealthSystem Target { get; }
+    private FigureData target;
+    public FigureData Target { get; }
 
     [SerializeField] private uint damages;
     public uint Damages { get; }

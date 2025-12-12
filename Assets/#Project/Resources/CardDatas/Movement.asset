@@ -15,18 +15,13 @@ MonoBehaviour:
   cardName: Move2
   cardRarityLevel: 2
   typeFlags: 2
-  specialAbilities:
-  - rid: 6566287294189011036
-  movementBehaviour:
-    rid: 6566287199169151051
+  specialAbilities: []
+  movementSpecs:
+    rid: 8207277338647068770
   references:
     version: 2
     RefIds:
-    - rid: 6566287199169151051
+    - rid: 8207277338647068770
       type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
       data:
         movementRange: 0
-    - rid: 6566287294189011036
-      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
-      data:
-        healAmount: 0

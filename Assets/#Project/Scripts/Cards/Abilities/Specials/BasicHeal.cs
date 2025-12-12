@@ -5,8 +5,8 @@ public class BasicHealing : SpecialAbility
 {
     [SerializeField] private uint healAmount;
     public uint HealAmount => healAmount;
-    private HealthSystem targetToHeal;
-    public HealthSystem TargetToHeal => targetToHeal;
+    private FigureData targetToHeal;
+    public FigureData TargetToHeal => targetToHeal;
 
 
     public override void Perform()
@@ -14,7 +14,7 @@ public class BasicHealing : SpecialAbility
         Heal(targetToHeal);
     }
     
-    private void Heal(HealthSystem target)
+    private void Heal(FigureData target)
     {
         target.GainHP(healAmount);
     }

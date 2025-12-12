@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MovementCard
   cardName: Movement Card
   cardRarityLevel: 4
-  cardTypes: 01000000
+  typeFlags: 2
   specialAbilities: []
-  movementBehaviour:
-    rid: 6566287206994935885
+  movementSpecs:
+    rid: 8207277338647068772
   references:
     version: 2
     RefIds:
-    - rid: 6566287206994935885
+    - rid: 8207277338647068772
       type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
       data:
-        movementRange: 5
+        movementRange: 0

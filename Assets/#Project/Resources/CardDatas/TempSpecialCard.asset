@@ -16,9 +16,9 @@ MonoBehaviour:
   cardRarityLevel: 2
   typeFlags: 4
   specialAbilities:
-  - rid: -2
-  movementBehaviour:
-    rid: 6566287199169151089
+  - rid: 8207277338647068768
+  movementSpecs:
+    rid: -2
   attackBehaviour:
     rid: 6566287199169151088
   references:
@@ -31,7 +31,7 @@ MonoBehaviour:
       data:
         damages: 2
         attackRange: 5
-    - rid: 6566287199169151089
-      type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
+    - rid: 8207277338647068768
+      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
       data:
-        movementRange: 2
+        healAmount: 0

@@ -16,16 +16,16 @@ public class CardsCustomEditor : Editor
 {
     private SerializedProperty typeFlags; // Flags field (Card.types)
     private int previousFlags;
-    private SerializedProperty attackBehaviour;
-    private SerializedProperty movementBehaviour;
+    private SerializedProperty attackSpecs;
+    private SerializedProperty movementSpecs;
     private SerializedProperty specialAbilities;
 
 
     private void OnEnable()
     {
         typeFlags = serializedObject.FindProperty("typeFlags");
-        attackBehaviour = serializedObject.FindProperty("attackBehaviour");
-        movementBehaviour = serializedObject.FindProperty("movementBehaviour");
+        attackSpecs = serializedObject.FindProperty("attackSpecs");
+        movementSpecs = serializedObject.FindProperty("movementSpecs");
         specialAbilities = serializedObject.FindProperty("specialAbilities");
 
         if (typeFlags != null) previousFlags = typeFlags.intValue;
@@ -37,7 +37,7 @@ public class CardsCustomEditor : Editor
         serializedObject.Update(); // Always start with the Update() inside OnInspectorGUI()
 
         // Draw all default properties except the custom ones :
-        DrawPropertiesExcluding(serializedObject, "m_Script", "typeFlags", "attackBehaviour", "movementBehaviour", "specialAbilities");
+        DrawPropertiesExcluding(serializedObject, "m_Script", "typeFlags", "attackSpecs", "movementSpecs", "specialAbilities");
 
         CardData inspectedCard = (CardData)target; // Current instance of Card type inspected
 
@@ -175,16 +175,16 @@ public class CardsCustomEditor : Editor
 
         if (hasAttackType)
         {
-            EditorGUILayout.PropertyField(attackBehaviour);
+            EditorGUILayout.PropertyField(attackSpecs);
 
-            if (attackBehaviour.managedReferenceValue == null) EditorGUILayout.HelpBox("Attack Behaviour is required when Attack type is assigned.", MessageType.Error); // Null-check
+            if (attackSpecs.managedReferenceValue == null) EditorGUILayout.HelpBox("Attack Behaviour is required when Attack type is assigned.", MessageType.Error); // Null-check
         }
 
         if (hasMovementType)
         {
-            EditorGUILayout.PropertyField(movementBehaviour);
+            EditorGUILayout.PropertyField(movementSpecs);
 
-            if (movementBehaviour.managedReferenceValue == null) EditorGUILayout.HelpBox("Movement Behaviour is required when Movement type is assigned.", MessageType.Error); // Null-check
+            if (movementSpecs.managedReferenceValue == null) EditorGUILayout.HelpBox("Movement Behaviour is required when Movement type is assigned.", MessageType.Error); // Null-check
         }
 
         if (hasSpecialType && specialAbilities != null)

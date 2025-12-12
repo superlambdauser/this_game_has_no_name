@@ -4,15 +4,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New card", menuName = "Card/Special Card")]
 public class SpecialCard : CardData
 {
-    [SerializeReference] [SR] protected IMovementBehaviour movementBehaviour;
-    public IMovementBehaviour MovementBehaviour => movementBehaviour;
+    [SerializeReference] [SR] protected IMovementBehaviour movementSpecs;
+    public IMovementBehaviour MovementSpecs => movementSpecs;
     [SerializeReference] [SR] protected IAttackBehaviour attackBehaviour;
     public IAttackBehaviour AttackBehaviour => attackBehaviour;
 
 
     public override void Play()
     {
-        movementBehaviour?.Perform();
+        movementSpecs?.Perform();
         attackBehaviour?.Perform();
 
         foreach (SpecialAbility specialAbility in SpecialAbilities)

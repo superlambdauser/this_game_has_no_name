@@ -3,8 +3,8 @@ using UnityEngine;
 [System.Serializable]
 public  class BasicMovement : IMovementBehaviour
 {
-    private Figure target; // Temp to not forget we need this
-    public Figure Target => target;
+    private FigureData target; // Temp to not forget we need this
+    public FigureData Target => target;
 
     private Vector2Int position;
     public Vector2Int Position => position;
