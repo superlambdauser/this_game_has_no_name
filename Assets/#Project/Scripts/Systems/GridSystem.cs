@@ -20,8 +20,8 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
     private Vector2Int previousMousePos = new Vector2Int(int.MinValue, int.MinValue); // Making sure value is not insade grid bounds
 
     // Figures :
-    public Figure[,] FiguresPositions {get; set;} // Array holding info about position of figures on the grid
-    private Figure player;
+    public FigureData[,] FiguresPositions {get; set;} // Array holding info about position of figures on the grid
+    private FigureData player;
     // + private EnemyAi ai later on day or never lol
 
     // --- HARDCODED VARS THAT DEPEND ON THE CARDS ---
@@ -70,7 +70,7 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
         // Debug.Log("gridData: " + gridData);
         // Debug.Log("actions: " + actions);
 
-        FiguresPositions = new Figure[gridData.rows, gridData.columns];
+        FiguresPositions = new FigureData[gridData.rows, gridData.columns];
 
         actionMap = actions.FindActionMap(INPUT_ACTION_MAP);
         // Debug.Log("actionmap: " + actionMap);
@@ -172,10 +172,10 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
                pos.y < gridData.columns;
     }
 
-    private void SpawnFigureAt(Figure figure, Vector2Int cell)
+    private void SpawnFigureAt(FigureData figure, Vector2Int cell)
     {
         Vector3 position = gridData.GetTile(cell).Position;
-        Figure figureInstance = Instantiate(figure, position, Quaternion.identity);
+        FigureData figureInstance = Instantiate(figure, position, Quaternion.identity);
 
         FiguresPositions[cell.x, cell.y] = figureInstance; // Set figure inside array representing board
     }

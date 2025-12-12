@@ -12,3 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b621d15b797884f9434ad7d28566c1, type: 3}
   m_Name: TempPlayer
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
+  attackSpecs:
+    rid: 8207277340817621068
+  movementSpecs:
+    rid: 8207277340817621069
+  specialAbilities:
+  - rid: 8207277340817621070
+  references:
+    version: 2
+    RefIds:
+    - rid: 8207277340817621068
+      type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
+      data:
+        damages: 0
+        attackRange: 0
+    - rid: 8207277340817621069
+      type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
+      data:
+        movementRange: 0
+    - rid: 8207277340817621070
+      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
+      data:
+        healAmount: 0

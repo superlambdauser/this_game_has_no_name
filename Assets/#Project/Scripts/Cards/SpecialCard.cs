@@ -6,14 +6,14 @@ public class SpecialCard : CardData
 {
     [SerializeReference] [SR] protected IMovementBehaviour movementSpecs;
     public IMovementBehaviour MovementSpecs => movementSpecs;
-    [SerializeReference] [SR] protected IAttackBehaviour attackBehaviour;
-    public IAttackBehaviour AttackBehaviour => attackBehaviour;
+    [SerializeReference] [SR] protected IAttackBehaviour attackSpecs;
+    public IAttackBehaviour AttackSpecs => attackSpecs;
 
 
     public override void Play()
     {
         movementSpecs?.Perform();
-        attackBehaviour?.Perform();
+        attackSpecs?.Perform();
 
         foreach (SpecialAbility specialAbility in SpecialAbilities)
         {

@@ -19,19 +19,19 @@ MonoBehaviour:
   - rid: 8207277338647068768
   movementSpecs:
     rid: -2
-  attackBehaviour:
-    rid: 6566287199169151088
+  attackSpecs:
+    rid: 8207277340817621064
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6566287199169151088
-      type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
-      data:
-        damages: 2
-        attackRange: 5
     - rid: 8207277338647068768
       type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
       data:
         healAmount: 0
+    - rid: 8207277340817621064
+      type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
+      data:
+        damages: 0
+        attackRange: 0

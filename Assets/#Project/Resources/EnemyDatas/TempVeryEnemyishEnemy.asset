@@ -12,3 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739116ef44f69244f8d196e0c6963646, type: 3}
   m_Name: TempVeryEnemyishEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  attackSpecs:
+    rid: 8207277340817621065
+  movementSpecs:
+    rid: 8207277340817621066
+  specialAbilities:
+  - rid: 8207277340817621067
+  references:
+    version: 2
+    RefIds:
+    - rid: 8207277340817621065
+      type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
+      data:
+        damages: 0
+        attackRange: 0
+    - rid: 8207277340817621066
+      type: {class: BasicMovement, ns: , asm: Assembly-CSharp}
+      data:
+        movementRange: 0
+    - rid: 8207277340817621067
+      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
+      data:
+        healAmount: 0

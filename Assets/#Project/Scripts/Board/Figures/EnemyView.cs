@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class EnemyBehaviour : HealthSystem
+public class EnemyView : MonoBehaviour
 {
-    public 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

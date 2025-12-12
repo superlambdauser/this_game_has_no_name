@@ -14,6 +14,7 @@ public class CardHoverSystem : Singleton<CardHoverSystem>
     {
         hoveredCardView = hoveredCardPrefab;
     }
+    
     public void Show(CardData card, Vector2 position, Vector3 rotation)
     {
         hoveredCardView.gameObject.SetActive(true);        

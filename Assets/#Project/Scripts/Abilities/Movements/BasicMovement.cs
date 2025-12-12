@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public  class BasicMovement : IMovementBehaviour
+public  class BasicMovement : IMovementBehaviour // All movements need to inherit from this
 {
     private FigureData target; // Temp to not forget we need this
     public FigureData Target => target;

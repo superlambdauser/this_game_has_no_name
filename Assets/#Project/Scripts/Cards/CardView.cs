@@ -85,12 +85,12 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         if (CardData is SpecialCard specialCard)
         {
-            bool hasAttack = specialCard.AttackBehaviour != null; // Set bool to true if Attack Behaviour not null
+            bool hasAttack = specialCard.AttackSpecs != null; // Set bool to true if Attack Behaviour not null
             bool hasMovement = specialCard.MovementSpecs != null; // Idem with Movement Behaviour
 
-            if (hasAttack && specialCard.AttackBehaviour.AttackRange > 0)
+            if (hasAttack && specialCard.AttackSpecs.AttackRange > 0)
             {
-                cardAttackRangeText.text = specialCard.AttackBehaviour.AttackRange.ToString();
+                cardAttackRangeText.text = specialCard.AttackSpecs.AttackRange.ToString();
                 cardAttackRangeText.gameObject.SetActive(true);
             }
 
