@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerView : Singleton<PlayerView>
 {
     [SerializeField] PlayerData data; // To init later
+    public PlayerData PlayerData => data;
+
 
     protected override void Awake() // Protected because Singleton<> inheritance
     {

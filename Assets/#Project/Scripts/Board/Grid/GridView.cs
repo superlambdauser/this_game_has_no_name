@@ -9,15 +9,19 @@ public class GridView : Singleton<GridView>
     public Tilemap MainTilemap => mainTilemap;
     private Tilemap highlightMap;
     public Tilemap HighlightMap => highlightMap;
+    private Tilemap figuresMap;
+    public Tilemap FiguresMap => figuresMap;
     private Tilemap[] tilemaps;
     private TileBase tile;
     private TileBase highlightTile;
+    private TileBase player;
+    private Vector2 playerStartingCell;
 
     private void Start()
     {
         Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
     }
-    public void Initiate(GridData gridData, TileBase tile, TileBase highlightTile)
+    public void Initiate(GridData gridData, TileBase tile, TileBase highlightTile, TileBase player, Vector2Int playerStartingCell)
     {
         tilemaps = GetComponentsInChildren<Tilemap>();
 
@@ -25,12 +29,15 @@ public class GridView : Singleton<GridView>
         {
             if (map.gameObject.name.Contains("Main")) mainTilemap = map;
             else if (map.gameObject.name.Contains("Highlight")) highlightMap = map;
+            else if (map.gameObject.name.Contains("Figures")) figuresMap = map;
         }
 
-        Debug.Log("Tilemap count: " + tilemaps.Length);
+        Debug.Log("Tilemaps count: " + tilemaps.Length);
 
         this.tile = tile;
         this.highlightTile = highlightTile;
+        this.player = player;
+        this.playerStartingCell = playerStartingCell;
 
         Debug.Log($"GridView.Initiate -> mainTilemap: {(mainTilemap != null ? mainTilemap.gameObject.name : "null")}, highlightMap: {(highlightMap != null ? highlightMap.gameObject.name : "null")}, tile: {(tile != null)}, highlightTile: {(highlightTile != null)}");
 
@@ -54,6 +61,8 @@ public class GridView : Singleton<GridView>
         {
             highlightMap.ClearAllTiles();
         }
+
+        SetFigurePosition(player, new Vector3Int(playerStartingCell.x, playerStartingCell.y, 0));
     }
 
     private int CountTiles(Tilemap tilemap) // For debugging 
@@ -95,5 +104,10 @@ public class GridView : Singleton<GridView>
             Vector3Int pos = new Vector3Int(cellPosition.x, cellPosition.y, 0);
             highlightMap.SetTile(pos, highlightTile); // Set a visible tile
         }
+    }
+
+    private void SetFigurePosition(TileBase figure, Vector3Int position)
+    {
+        figuresMap.SetTile(position, figure);
     }
 }

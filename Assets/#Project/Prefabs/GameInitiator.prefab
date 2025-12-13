@@ -56,5 +56,7 @@ MonoBehaviour:
   gridView: {fileID: 80560492723834189, guid: 25c33ef0cf683a64b8e41f9d09e1b68b, type: 3}
   basicTile: {fileID: 11400000, guid: 7004cb5eedd7b3b488ddc5ed144d72ae, type: 2}
   highlightTile: {fileID: 11400000, guid: a4bb60116d00d2c419391ec95135826a, type: 2}
+  player: {fileID: 11400000, guid: 4d330426b35a0d4439659d13d1a0792b, type: 2}
+  playerStartingCell: {x: 0, y: 5}
   handView: {fileID: -4556314257406285928, guid: c7c2256912155c043bfec4ef9da3f3bb, type: 3}
   hoveredCardViewPrefab: {fileID: 1755112498968221852, guid: 361b35922eda9db48a4e437e9b9d4dd2, type: 3}

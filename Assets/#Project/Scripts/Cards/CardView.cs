@@ -25,7 +25,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private TMP_Text cardMovementRangeText;
     private int cardRarityLevel;
     private CardData.CardType flags;
-    private bool pointerAlreadyEntered = false;
+    private bool pointerAlreadyEntered = false; // May be useless but keeping it atm
 
 
     private Color[] rarityColors =

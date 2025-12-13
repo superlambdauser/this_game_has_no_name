@@ -626,51 +626,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249650421}
   m_CullTransparentMesh: 1
---- !u!1 &1273572750
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1273572752}
-  - component: {fileID: 1273572751}
-  m_Layer: 0
-  m_Name: PlayerPrefab
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1273572751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1273572750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64039104ab76af64fadfdc7a4ad3b357, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerView
-  data: {fileID: 11400000, guid: 33ff4df5b0fe6254fa72191804b7dd19, type: 2}
---- !u!4 &1273572752
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1273572750}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 630.4903, y: 326.06848, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1281807516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -687,6 +642,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 626292884}
+    - target: {fileID: 2433730159794334126, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d330426b35a0d4439659d13d1a0792b, type: 2}
     - target: {fileID: 2433730159794334126, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
       propertyPath: cardHoverSystem
       value: 
@@ -777,7 +736,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 000000009d9998009ff60fe2f9f14940
+  m_ApplyToSortingLayers: 000000009d9998009ff60fe2f9f149408336ff4e
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -914,4 +873,3 @@ SceneRoots:
   - {fileID: 686450486}
   - {fileID: 2100043969}
   - {fileID: 1281807516}
-  - {fileID: 1273572752}
