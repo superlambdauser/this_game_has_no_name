@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,13 +16,15 @@ public class GridView : Singleton<GridView>
     private TileBase tile;
     private TileBase highlightTile;
     private TileBase player;
-    private Vector2 playerStartingCell;
+    private TileBase enemy; // tmp
+    private Vector2Int playerStartingCell; // tmp to define 
+    private Vector2Int enemyStartingCell; // tmp
 
     private void Start()
     {
         Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
     }
-    public void Initiate(GridData gridData, TileBase tile, TileBase highlightTile, TileBase player, Vector2Int playerStartingCell)
+    public void Initiate(GridData gridData, TileBase tile, TileBase highlightTile, TileBase player, Vector2Int playerStartingCell, TileBase enemy, Vector2Int enemyStartingCell)
     {
         tilemaps = GetComponentsInChildren<Tilemap>();
 
@@ -38,6 +41,9 @@ public class GridView : Singleton<GridView>
         this.highlightTile = highlightTile;
         this.player = player;
         this.playerStartingCell = playerStartingCell;
+        this.enemy = enemy;
+        this.enemyStartingCell = enemyStartingCell;
+
 
         Debug.Log($"GridView.Initiate -> mainTilemap: {(mainTilemap != null ? mainTilemap.gameObject.name : "null")}, highlightMap: {(highlightMap != null ? highlightMap.gameObject.name : "null")}, tile: {(tile != null)}, highlightTile: {(highlightTile != null)}");
 
@@ -63,6 +69,7 @@ public class GridView : Singleton<GridView>
         }
 
         SetFigurePosition(player, new Vector3Int(playerStartingCell.x, playerStartingCell.y, 0));
+        SetFigurePosition(enemy, new Vector3Int(enemyStartingCell.x, enemyStartingCell.y, 0));
     }
 
     private int CountTiles(Tilemap tilemap) // For debugging 

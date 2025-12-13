@@ -40,6 +40,8 @@ public class GameInitiator : Singleton<GameInitiator>
     [SerializeField] private TileBase highlightTile;
     [SerializeField] private TileBase player;
     [SerializeField] private Vector2Int playerStartingCell;
+    [SerializeField] private TileBase enemy;
+    [SerializeField] private Vector2Int enemyStartingCell;
     private Tilemap[] tilemaps;
 
     // Cards :
@@ -65,7 +67,7 @@ public class GameInitiator : Singleton<GameInitiator>
         gridData = new GridData(gridRows, gridColumns);
 
         // --- View ---
-        gridView.Initiate(gridData, basicTile, highlightTile, player, playerStartingCell);
+        gridView.Initiate(gridData, basicTile, highlightTile, player, playerStartingCell, enemy, enemyStartingCell);
         handView.Initiate();
 
         // --- Controllers ---
