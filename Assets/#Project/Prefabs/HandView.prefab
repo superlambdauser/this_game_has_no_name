@@ -54,8 +54,8 @@ MonoBehaviour:
   numOfCardsInHand: 8
   maxHandSize: 5
   cardPrefab: {fileID: -1993109365048656754, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-  stackPilePoint: {fileID: 4267789435339740503}
-  discardPilePoint: {fileID: 2202417972529306584}
+  stackPilePoint: {fileID: 2202417972529306584}
+  discardPilePoint: {fileID: 4267789435339740503}
   fanVerticalPosition: 1
   fanStrength: 0.4
   maxAngle: 53
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 6012074496206225498}
   - component: {fileID: 1784439560330956498}
   m_Layer: 5
-  m_Name: StackPile
+  m_Name: DiscardPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 8500872318261525227}
   - component: {fileID: 5980737449880316097}
   m_Layer: 5
-  m_Name: DiscardPile
+  m_Name: StackPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

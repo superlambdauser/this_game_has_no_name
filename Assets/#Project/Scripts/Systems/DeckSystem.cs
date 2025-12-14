@@ -9,7 +9,9 @@ using UnityEngine;
 public class DeckSystem : Singleton<DeckSystem>
 {
     private List<CardData> stackPile = new List<CardData>();
+    private Transform stackPilePos;
     private List<CardData> discardPile = new List<CardData>();
+    private Transform discardPilePos;
     private HandView handView;
     public List<CardData> HandCards { get; set; } = new List<CardData>();
 
@@ -126,7 +128,6 @@ public class DeckSystem : Singleton<DeckSystem>
 
     public IEnumerator DrawCard()
     {
-        Debug.Log("DrawCard() called");
         CardData card = stackPile.DrawRandom();
 
         HandCards.Add(card);

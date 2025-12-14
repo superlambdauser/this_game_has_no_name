@@ -66,20 +66,11 @@ public class HandView : Singleton<HandView>
     /// <param name="cardData"></param>
     public void AddCardToHand(CardData cardData)
     {
-        Debug.Log("AddCardToHand() called with: " + cardData);
-        if (cardsInHand.Count < maxHandSize)
-        {
-            Debug.Log("Instantiating card...");
-            // Card instantiation :
-            CardView newCard = Instantiate(cardPrefab, handPosition.position, Quaternion.identity, handPosition);
+        if (cardsInHand.Count >= maxHandSize) return;
 
-            Debug.Log("Card instantiated: " + newCard);
-            cardsInHand.Add(newCard);
+        CardView card = CardDrawer.Instance.CreateCardView(cardData, stackPilePoint, handPosition);
 
-            newCard.GetComponent<CardView>().CardData = cardData; // Set the given cardData to instantiated card
-        }
-
-        UpdateHandDisplay();
+        cardsInHand.Add(card);
     }
 
     public CardView RemoveCardFromHand(CardData cardData)

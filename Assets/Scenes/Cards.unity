@@ -119,6 +119,77 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &295340849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 295340851}
+  - component: {fileID: 295340850}
+  m_Layer: 0
+  m_Name: CardDrawer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &295340850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295340849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3105a8975cbadc4e90c0c90f126fc3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDrawer
+  cardViewPrefab: {fileID: -1993109365048656754, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
+  movementDuration: 0.29
+  delayBetweenCards: 0.5
+  movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &295340851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295340849}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1745.0786, y: 210.77054, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &476302959
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +427,7 @@ GameObject:
   - component: {fileID: 1043760113}
   - component: {fileID: 1043760112}
   - component: {fileID: 1043760111}
+  - component: {fileID: 1043760114}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -427,7 +499,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1043760114}
         m_TargetAssemblyTypeName: EndTurnButton, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
@@ -477,6 +549,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043760109}
   m_CullTransparentMesh: 1
+--- !u!114 &1043760114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043760109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85eaa2ab8c35d9d4a8a91d66b83c10e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndTurnButton
 --- !u!1 &1249650421
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,3 +944,4 @@ SceneRoots:
   - {fileID: 686450486}
   - {fileID: 2100043969}
   - {fileID: 1281807516}
+  - {fileID: 295340851}
