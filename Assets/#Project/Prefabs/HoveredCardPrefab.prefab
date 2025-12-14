@@ -402,9 +402,12 @@ MonoBehaviour:
   cardImage: {fileID: 2866665144773297509}
   rarityLevelFrameImage: {fileID: 3187196864465427005}
   typeIconImages:
-  - {fileID: 583435843627862385}
-  - {fileID: 2765679982514183887}
-  - {fileID: 964984659658223123}
+  - type: 1
+    icon: {fileID: 583435843627862385}
+  - type: 2
+    icon: {fileID: 2765679982514183887}
+  - type: 4
+    icon: {fileID: 964984659658223123}
   cardNameText: {fileID: 7572092807028272905}
   cardRarityLevelText: {fileID: 7391487053815843293}
   cardAttackRangeText: {fileID: 1717661565146183726}

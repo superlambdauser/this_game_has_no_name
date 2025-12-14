@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpecialCard
   cardName: Special Card
   cardRarityLevel: 2
-  typeFlags: 4
+  typeFlags: 5
   specialAbilities:
   - rid: 8207277338647068768
   movementSpecs:
     rid: -2
   attackSpecs:
-    rid: 8207277340817621064
+    rid: 8207277386650353747
   references:
     version: 2
     RefIds:
@@ -30,8 +30,8 @@ MonoBehaviour:
       type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
       data:
         healAmount: 0
-    - rid: 8207277340817621064
+    - rid: 8207277386650353747
       type: {class: BasicAttack, ns: , asm: Assembly-CSharp}
       data:
-        damages: 0
-        attackRange: 0
+        damages: 5
+        attackRange: 3

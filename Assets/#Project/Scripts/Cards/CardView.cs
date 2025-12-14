@@ -13,20 +13,35 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public CardData CardData
     {
         get => cardData;
-        set => cardData = value;
+        set
+        {
+            cardData = value;
+            UpdateCardDisplay(); // Whenever CardData is assigned (normal card, hover card, pooled cards...), immediately refresh UI
+        }
     }
 
+    [Serializable]
+    private struct CardTypeIcon
+    {
+        public CardData.CardType type; // Flag
+        public Image icon; // UI icon
+    }
+
+    [Header("Main UI :")]
     [SerializeField] private Image cardImage;
     [SerializeField] private Image rarityLevelFrameImage;
-    [SerializeField] private Image[] typeIconImages;
+
+    [Header("Type icons :")]
+    [SerializeField] private CardTypeIcon[] typeIconImages;
+
+    [Header("Texts :")]
     [SerializeField] private TMP_Text cardNameText;
     [SerializeField] private TMP_Text cardRarityLevelText;
     [SerializeField] private TMP_Text cardAttackRangeText;
     [SerializeField] private TMP_Text cardMovementRangeText;
-    private int cardRarityLevel;
-    private CardData.CardType flags;
-    private bool pointerAlreadyEntered = false; // May be useless but keeping it atm
 
+    private int cardRarityLevel;
+    private bool pointerAlreadyEntered = false; // May be useless but keeping it atm
 
     private Color[] rarityColors =
     {
@@ -40,8 +55,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void Start()
     {
-        flags = CardData.TypeFlags;
-        UpdateCardDisplay();
+        if (cardData != null) UpdateCardDisplay();
     }
 
     public void OnPointerEnter(PointerEventData eventData) // For hovering effect
@@ -52,7 +66,9 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             Vector2 hoverPos = new Vector2(transform.position.x, transform.position.y);
             Vector3 hoverRot = transform.rotation.eulerAngles;
+
             CardHoverSystem.Instance.Show(CardData, hoverPos, hoverRot);
+
             pointerAlreadyEntered = true;
         }
     }
@@ -62,14 +78,20 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (CompareTag("Hover"))
         {
             Debug.Log($"The cursor exited {gameObject.name}.");
+
             pointerAlreadyEntered = false;
+
             CardHoverSystem.Instance.Hide();
         }
     }
 
     public void UpdateCardDisplay()
     {
+        if (cardData == null) return;
+
         Debug.Log($"Updating card {cardData?.name ?? "NULL"}");
+        Debug.Log($"{CardData.CardName} flags = {CardData.TypeFlags}");
+
 
         cardNameText.text = CardData.CardName; // Update title
 
@@ -79,11 +101,11 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         rarityLevelFrameImage.color = rarityColors[cardRarityLevel];
         cardRarityLevelText.text = cardRarityLevel.ToString();
 
-        // Update range :
+        // Update range values :
         cardAttackRangeText.gameObject.SetActive(false);
         cardMovementRangeText.gameObject.SetActive(false);
 
-        if (CardData is SpecialCard specialCard)
+        if (CardData is SpecialCard specialCard) // Handling special cards logic
         {
             bool hasAttack = specialCard.AttackSpecs != null; // Set bool to true if Attack Behaviour not null
             bool hasMovement = specialCard.MovementSpecs != null; // Idem with Movement Behaviour
@@ -114,23 +136,15 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
 
         // Resetting all icons to inactive
-        foreach (Image icon in typeIconImages)
+        CardData.CardType flags = CardData.TypeFlags;
+
+        foreach (CardTypeIcon item in typeIconImages)
         {
-            if (icon != null) icon.gameObject.SetActive(false);
-        }
-
-        // Activate only the icons that match card's type(s)
-        foreach (CardData.CardType type in Enum.GetValues(typeof(CardData.CardType))) // For each given type 
-        {
-            if (type == CardData.CardType.None) continue; // Skip bit 0
-
-            if ((flags & type) != 0) // Type is enabled in flags
-            {
-                int index = (int)type; // Getting enum index in my card's list of active type(s)
-
-                if (index >= 0 && index < typeIconImages.Length) typeIconImages[index].gameObject.SetActive(true);
-
-            }
+            if (item.icon == null) continue; // Safety check -> skip item
+            
+            // Else if the card has this flag, show the icon
+            bool active = flags.HasFlag(item.type);
+            item.icon.gameObject.SetActive(active); // On if has flag, OFF if not
         }
     }
 }
