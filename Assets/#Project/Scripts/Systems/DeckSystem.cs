@@ -43,7 +43,7 @@ public class DeckSystem : Singleton<DeckSystem>
 
 
     #region Custom Methods
-    public void Initiate()
+    public void Initialize()
     {
         Debug.Log("Deck System Initiation called");
         handView = HandView.Instance;

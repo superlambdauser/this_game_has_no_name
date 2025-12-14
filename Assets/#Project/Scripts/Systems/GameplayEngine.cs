@@ -7,7 +7,7 @@ public class GameplayEngine : Singleton<GameplayEngine>
     public GridData GridData {get; private set; }
 
 
-    public void Initiate(GridData gridData)
+    public void Initialize(GridData gridData)
     {
         GridData = gridData;
     }

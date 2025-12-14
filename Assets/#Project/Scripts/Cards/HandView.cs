@@ -34,7 +34,7 @@ public class HandView : Singleton<HandView>
 
 
     #region Custom Methods
-    public void Initiate()
+    public void Initialize()
     {
         Debug.Log("HandView Initiate() called");
         handPosition = GetComponent<RectTransform>();

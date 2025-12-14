@@ -10,7 +10,7 @@ public class CardHoverSystem : Singleton<CardHoverSystem>
     }
 
 
-    public void Initiate(CardView hoveredCardPrefab)
+    public void Initialize(CardView hoveredCardPrefab)
     {
         hoveredCardView = hoveredCardPrefab;
     }

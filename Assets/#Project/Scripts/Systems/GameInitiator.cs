@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-using Unity.VisualScripting;
+
 
 public class GameInitiator : Singleton<GameInitiator>
 {
@@ -67,23 +67,23 @@ public class GameInitiator : Singleton<GameInitiator>
         gridData = new GridData(gridRows, gridColumns);
 
         // --- View ---
-        gridView.Initiate(gridData, basicTile, highlightTile, player, playerStartingCell, enemy, enemyStartingCell);
-        handView.Initiate();
+        gridView.Initialize(gridData, basicTile, highlightTile, player, playerStartingCell, enemy, enemyStartingCell);
+        handView.Initialize();
 
         // --- Controllers ---
-        gridSystem.Initiate(mainCamera, gridView, gridData, actions);
+        gridSystem.Initialize(mainCamera, gridView, gridData, actions);
         gridSystem.gameObject.SetActive(true); // Forcing the OnEnable() of the GridControl to access inputs
 
         // --- Systems ---
         gameplayEngine = GameplayEngine.Instance;
-        deckSystem.Initiate();
-        cardHoverSystem.Initiate(hoveredCardViewPrefab);
-        gameplayEngine.Initiate(gridData);
+        deckSystem.Initialize();
+        cardHoverSystem.Initialize(hoveredCardViewPrefab);
+        gameplayEngine.Initialize(gridData);
             // later : register all systems viar RegisterSystem(new ...System()) method
         gameplayEngine.RegisterSystem(gridSystem);
 
         // --- Game Manager ---
-        gameManager.Initiate(gameplayEngine);
+        gameManager.Initialize(gameplayEngine);
 
         // --- will have to init camera too but rn it doesnt need args ---
     }

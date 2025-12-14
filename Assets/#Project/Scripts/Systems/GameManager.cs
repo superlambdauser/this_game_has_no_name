@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void Initiate(GameplayEngine gameplayEngine)
+    public void Initialize(GameplayEngine gameplayEngine)
     {
         instance = gameplayEngine;
     }

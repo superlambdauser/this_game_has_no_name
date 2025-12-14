@@ -24,7 +24,7 @@ public class GridView : Singleton<GridView>
     {
         Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
     }
-    public void Initiate(GridData gridData, TileBase tile, TileBase highlightTile, TileBase player, Vector2Int playerStartingCell, TileBase enemy, Vector2Int enemyStartingCell)
+    public void Initialize(GridData gridData, TileBase tile, TileBase highlightTile, TileBase player, Vector2Int playerStartingCell, TileBase enemy, Vector2Int enemyStartingCell)
     {
         tilemaps = GetComponentsInChildren<Tilemap>();
 
@@ -70,6 +70,8 @@ public class GridView : Singleton<GridView>
 
         SetFigurePosition(player, new Vector3Int(playerStartingCell.x, playerStartingCell.y, 0));
         SetFigurePosition(enemy, new Vector3Int(enemyStartingCell.x, enemyStartingCell.y, 0));
+
+        transform.position = new UnityEngine.Vector3(-3, -0.8f, 0);
     }
 
     private int CountTiles(Tilemap tilemap) // For debugging 

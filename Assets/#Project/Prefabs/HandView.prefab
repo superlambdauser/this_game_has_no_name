@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 840.99493, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &-4556314257406285928
@@ -57,9 +57,9 @@ MonoBehaviour:
   stackPilePoint: {fileID: 4267789435339740503}
   discardPilePoint: {fileID: 2202417972529306584}
   fanVerticalPosition: 1
-  fanStrength: 0.5
-  maxAngle: 85
-  radius: 1000
+  fanStrength: 0.4
+  maxAngle: 53
+  radius: 2000
 --- !u!210 &-4212185972699294805
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -106,7 +106,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 750, y: 181}
+  m_AnchoredPosition: {x: 750, y: 802}
   m_SizeDelta: {x: 240, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6012074496206225498
@@ -181,7 +181,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -750, y: 181}
+  m_AnchoredPosition: {x: -750, y: 802}
   m_SizeDelta: {x: 240, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8500872318261525227

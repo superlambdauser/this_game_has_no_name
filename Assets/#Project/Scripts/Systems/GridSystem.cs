@@ -57,7 +57,7 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
     #endregion
 
     #region Custom methods :
-    public void Initiate(Camera cam, GridView gridView, GridData gridData, InputActionAsset actions)
+    public void Initialize(Camera cam, GridView gridView, GridData gridData, InputActionAsset actions)
     {
         this.cam = cam;
         this.gridView = gridView;
