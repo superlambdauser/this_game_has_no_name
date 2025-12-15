@@ -20,10 +20,8 @@ public class GridView : Singleton<GridView>
     private Vector2Int playerStartingCell; // tmp to define 
     private Vector2Int enemyStartingCell; // tmp
 
-    private void Start()
-    {
-        Debug.Log("Highlight instance ID = " + highlightMap.GetInstanceID());
-    }
+
+    #region Custom Methods :
     public void Initialize(GridData gridData, TileBase tile, TileBase highlightTile, TileBase player, Vector2Int playerStartingCell, TileBase enemy, Vector2Int enemyStartingCell)
     {
         tilemaps = GetComponentsInChildren<Tilemap>();
@@ -119,4 +117,5 @@ public class GridView : Singleton<GridView>
     {
         figuresMap.SetTile(position, figure);
     }
+    #endregion
 }

@@ -150,6 +150,7 @@ public class DeckSystem : Singleton<DeckSystem>
     {
         HandCards.Remove(gameAction.Card);
         CardView cardView = handView.RemoveCard(gameAction.Card);
+        InteractionsControl.Instance.CancelCardSelection();
 
         yield return DiscardCard(cardView);
 

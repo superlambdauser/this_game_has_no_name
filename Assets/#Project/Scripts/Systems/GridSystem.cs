@@ -20,7 +20,7 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
     private Vector2Int previousMousePos = new Vector2Int(int.MinValue, int.MinValue); // Making sure value is not insade grid bounds
 
     // Figures :
-    public FigureData[,] FiguresPositions {get; set;} // Array holding info about position of figures on the grid
+    public FigureData[,] FiguresPositions { get; set; } // Array holding info about position of figures on the grid
     private FigureData player;
     // + private EnemyAi ai later on day or never lol
 
@@ -96,20 +96,29 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
 
     private void HandleClick(Vector2Int position)
     {
+        if (!InteractionsControl.Instance.CardIsSelected) return; // Clickable only if a card is selected
+
+        // Handle out-of-grid clicks :
         if (!IsInGrid(position))
         {
-            Debug.Log("Tile is missing");
+            Debug.Log("Clicked outside grid → cancel card");
+            InteractionsControl.Instance.CancelCardSelection();
             gridView.HighlightMap.ClearAllTiles();
-            return; //Handle out-of-grid clicks
+            return;
         }
 
         // things to do when clicked (ex : change color to begin with)
-        List<Vector2Int> area = GetArea(position, range);
-        gridView.Highlight(area);
+        ActionSystem.Instance.Perform(new PlayCardGA(InteractionsControl.Instance.SelectedCard.Card));
     }
 
     private void HandleHover(Vector2Int position)
     {
+        if (!InteractionsControl.Instance.CardIsSelected) // Hover highlight effect only when a card is selected
+        {
+            gridView.HighlightMap.ClearAllTiles();
+            return;
+        }
+
         if (!IsInGrid(position))
         {
             gridView.HighlightMap.ClearAllTiles();

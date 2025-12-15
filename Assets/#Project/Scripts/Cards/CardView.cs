@@ -43,6 +43,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private int cardRarityLevel;
     private bool pointerAlreadyEntered = false; // May be useless but keeping it atm
 
+    public bool IsSelected { get; set; }
 
     private Color[] rarityColors =
     {
@@ -98,14 +99,16 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void Select()
     {
-        InteractionsControl.Instance.CardIsSelected = true;
+        IsSelected = true;
+        InteractionsControl.Instance.SelectCard(this);
 
         Debug.Log($"{name} selected.");
     }
 
     private void Deselect()
     {
-        InteractionsControl.Instance.CardIsSelected = false;
+        IsSelected = false;
+        InteractionsControl.Instance.CancelCardSelection();
 
         Debug.Log($"{name} deselected.");
     }
