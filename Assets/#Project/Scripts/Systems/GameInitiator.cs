@@ -76,9 +76,9 @@ public class GameInitiator : Singleton<GameInitiator>
 
         // --- Systems ---
         gameplayEngine = GameplayEngine.Instance;
-        deckSystem.Initialize();
+        deckSystem.Initialize(deck);
         testSystem.Initialize(deck);
-        cardHoverSystem.Initialize(hoveredCardViewPrefab);
+        cardHoverSystem.Initialize(hoveredCardViewPrefab, handView.transform);
         gameplayEngine.Initialize(gridData);
             // later : register all systems viar RegisterSystem(new ...System()) method
         gameplayEngine.RegisterSystem(gridSystem);

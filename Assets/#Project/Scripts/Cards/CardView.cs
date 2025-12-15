@@ -52,12 +52,6 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Color.yellow // Unique
     };
 
-
-    private void Start()
-    {
-        if (card != null) UpdateCardDisplay(card);
-    }
-
     public void OnPointerEnter(PointerEventData eventData) // For hovering effect
     {
         Debug.Log($"Mouse entered {gameObject.name} + Pointer already entered : {pointerAlreadyEntered}");
@@ -87,7 +81,9 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void UpdateCardDisplay(Card card)
     {
-        if (this.card == null) return;
+        Debug.Log($"{name} CardView updating. card = {card?.Name}, cardImage = {(cardImage == null ? "NULL" : "OK")}");
+
+        if (card == null) return;
 
         Debug.Log($"Updating card {this.card?.Name ?? "NULL"}");
         Debug.Log($"{Card.Name} flags = {Card.Type}");
@@ -105,33 +101,30 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         cardAttackRangeText.gameObject.SetActive(false);
         cardMovementRangeText.gameObject.SetActive(false);
 
-        if (Card.Data is SpecialCard specialCard) // Handling special cards logic
+        if (Card.HasSpecial) // Handling special cards logic
         {
-            bool hasAttack = specialCard.AttackSpecs != null; // Set bool to true if Attack Behaviour not null
-            bool hasMovement = specialCard.MovementSpecs != null; // Idem with Movement Behaviour
-
-            if (hasAttack && specialCard.AttackSpecs.AttackRange > 0)
+            if (Card.HasAttack && Card.AttackRange > 0)
             {
-                cardAttackRangeText.text = specialCard.AttackSpecs.AttackRange.ToString();
+                cardAttackRangeText.text = Card.AttackRange.ToString();
                 cardAttackRangeText.gameObject.SetActive(true);
             }
 
-            if (hasMovement && specialCard.MovementSpecs.MovementRange > 0)
+            if (Card.HasMovement && Card.MovementRange > 0)
             {
-                cardMovementRangeText.text = specialCard.MovementSpecs.MovementRange.ToString();
+                cardMovementRangeText.text = Card.MovementRange.ToString();
                 cardMovementRangeText.gameObject.SetActive(true);
             }
         }
 
-        else if (Card.Data is AttackCard attackCard && attackCard.AttackRange > 0)
+        else if (Card.HasAttack && Card.AttackRange > 0)
         {
-            cardAttackRangeText.text = attackCard.AttackRange.ToString();
+            cardAttackRangeText.text = Card.AttackRange.ToString();
             cardAttackRangeText.gameObject.SetActive(true);
         }
 
-        else if (Card.Data is MovementCard movementCard && movementCard.MovementRange > 0)
+        else if (Card.HasMovement && Card.MovementRange > 0)
         {
-            cardMovementRangeText.text = movementCard.MovementRange.ToString();
+            cardMovementRangeText.text = Card.MovementRange.ToString();
             cardMovementRangeText.gameObject.SetActive(true);
         }
 

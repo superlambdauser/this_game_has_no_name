@@ -20,8 +20,6 @@ public class CardDrawer : Singleton<CardDrawer>
         cardView.transform.localScale = Vector3.zero;
         cardView.transform.DOScale(Vector3.one, duration);
 
-        cardView.UpdateCardDisplay(card);
-
         return cardView;
     }
 }

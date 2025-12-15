@@ -46,7 +46,7 @@ public class DeckSystem : Singleton<DeckSystem>
 
 
     #region Custom Methods
-    public void Initialize()
+    public void Initialize(CardsCollection deck)
     {
         Debug.Log("Deck System Initiation called");
         handView = HandView.Instance;
@@ -63,6 +63,8 @@ public class DeckSystem : Singleton<DeckSystem>
 
         // stackPile.AddRange(deck); // Adds all cards scriptable objects from the ressource folder to draw pile
         // // Debug.Log($"Stackpile : {(deck != null ? stackPile.Count : "null")}");
+
+        DeckSystem.Instance.Setup(deck);
 
         StartCoroutine(DrawHand(handView.maxHandSize)); // Draw initial hand
     }
@@ -159,10 +161,13 @@ public class DeckSystem : Singleton<DeckSystem>
     public IEnumerator DrawCard()
     {
         Card card = stackPile.DrawRandom();
+        Debug.Log($"DrawCard() got card: {(card == null ? "NULL" : card.Name)}");
+
 
         HandCards.Add(card);
         // handView.AddCardToHand(card);
         CardView cardView = CardDrawer.Instance.CreateCardView(card, stackPilePos.position, stackPilePos.rotation, handView.transform);
+        cardView.Card = card;
 
         yield return handView.AddCard(cardView);
     }

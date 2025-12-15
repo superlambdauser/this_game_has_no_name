@@ -398,7 +398,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ebdd1708068484db67dd8dd9cd4c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
-  cardData: {fileID: 11400000, guid: e8c84d7d62c574d4fb00c3b4f5bd2502, type: 2}
   cardImage: {fileID: 2866665144773297509}
   rarityLevelFrameImage: {fileID: 3187196864465427005}
   typeIconImages:

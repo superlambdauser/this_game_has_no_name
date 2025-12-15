@@ -10,23 +10,25 @@ public class CardHoverSystem : Singleton<CardHoverSystem>
     }
 
 
-    public void Initialize(CardView hoveredCardPrefab)
+    public void Initialize(CardView hoveredCardPrefab, Transform parent)
     {
-        hoveredCardView = hoveredCardPrefab;
+        hoveredCardView = Instantiate(hoveredCardPrefab, parent);
+        hoveredCardView.gameObject.SetActive(false);
     }
     
     public void Show(Card card, Vector2 position, Vector3 rotation)
     {
         hoveredCardView.gameObject.SetActive(true);        
 
-        // hoveredCardView.transform.SetAsLastSibling();
-
         hoveredCardView.Card = card;
-        hoveredCardView.UpdateCardDisplay(card);
         
+        RectTransform rt = hoveredCardView.GetComponent<RectTransform>();
 
-        hoveredCardView.GetComponent<RectTransform>().position = position;
-        hoveredCardView.GetComponent<RectTransform>().rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
+        rt.position = position;
+        rt.rotation = Quaternion.Euler(rotation);
+
+        hoveredCardView.transform.SetAsLastSibling();
+
     }
 
     public void Hide()
