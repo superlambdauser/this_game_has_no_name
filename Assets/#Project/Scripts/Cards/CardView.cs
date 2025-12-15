@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Updates dynamically the visuals of each card depending on given data.
 /// </summary>
-public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler // Required interfaces when using the OnPointer[...] methods
+public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler // Required interfaces when using the OnPointer[...] methods
 {
     [SerializeField] private Card card;
     public Card Card
@@ -43,6 +43,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private int cardRarityLevel;
     private bool pointerAlreadyEntered = false; // May be useless but keeping it atm
 
+
     private Color[] rarityColors =
     {
         Color.grey, // Common
@@ -52,9 +53,12 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Color.yellow // Unique
     };
 
-    public void OnPointerEnter(PointerEventData eventData) // For hovering effect
+
+    #region Hovering effect
+    public void OnPointerEnter(PointerEventData eventData) 
     {
-        Debug.Log($"Mouse entered {gameObject.name} + Pointer already entered : {pointerAlreadyEntered}");
+        // Debug.Log($"Mouse entered {gameObject.name} + Pointer already entered : {pointerAlreadyEntered}");
+        if (!InteractionsControl.Instance.PlayerCanHover()) return;
 
         if (!CompareTag("Hover"))
         {
@@ -69,15 +73,43 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (!InteractionsControl.Instance.PlayerCanHover()) return;
+
         if (CompareTag("Hover"))
         {
-            Debug.Log($"The cursor exited {gameObject.name}.");
+            // Debug.Log($"The cursor exited {gameObject.name}.");
 
             pointerAlreadyEntered = false;
 
             CardHoverSystem.Instance.Hide();
         }
     }
+    #endregion
+
+    #region Click logic :
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!InteractionsControl.Instance.PlayerCanInteract()) return;
+        Debug.Log($"{name} CardView clicked.");
+
+        if (InteractionsControl.Instance.CardIsSelected) Deselect();
+        else Select();
+    }
+
+    private void Select()
+    {
+        InteractionsControl.Instance.CardIsSelected = true;
+
+        Debug.Log($"{name} selected.");
+    }
+
+    private void Deselect()
+    {
+        InteractionsControl.Instance.CardIsSelected = false;
+
+        Debug.Log($"{name} deselected.");
+    }
+    #endregion
 
     public void UpdateCardDisplay(Card card)
     {

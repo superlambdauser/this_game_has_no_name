@@ -24,6 +24,7 @@ public class DeckSystem : Singleton<DeckSystem>
         ActionSystem.AttachPerformer<DiscardCardsGA>(DiscardCardsPerformer);
         ActionSystem.AttachPerformer<DiscardSingleCardGA>(DiscardSingleCardPerformer);
         ActionSystem.AttachPerformer<DiscardAllCardsGA>(DiscardAllCardsPerformer);
+        ActionSystem.AttachPerformer<PlayCardGA>(PlayCardPerformer);
 
         // Subscribing reactions :
         ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ActionSystem.ReactionTiming.Pre);
@@ -37,6 +38,7 @@ public class DeckSystem : Singleton<DeckSystem>
         ActionSystem.DetachPerformer<DiscardCardsGA>();
         ActionSystem.DetachPerformer<DiscardSingleCardGA>();
         ActionSystem.DetachPerformer<DiscardAllCardsGA>();
+        ActionSystem.DetachPerformer<PlayCardGA>();
 
         // Unsubscribing reactions :
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ActionSystem.ReactionTiming.Pre);
@@ -66,7 +68,7 @@ public class DeckSystem : Singleton<DeckSystem>
 
         DeckSystem.Instance.Setup(deck);
 
-        StartCoroutine(DrawHand(handView.maxHandSize)); // Draw initial hand
+        // StartCoroutine(DrawHand(handView.maxHandSize)); // Draw initial hand
     }
 
     public void Setup(CardsCollection deck)
@@ -142,6 +144,16 @@ public class DeckSystem : Singleton<DeckSystem>
         }
 
         HandCards.Clear();
+    }
+
+    private IEnumerator PlayCardPerformer(PlayCardGA gameAction)
+    {
+        HandCards.Remove(gameAction.Card);
+        CardView cardView = handView.RemoveCard(gameAction.Card);
+
+        yield return DiscardCard(cardView);
+
+        // Later : perform card effects.
     }
     #endregion
 

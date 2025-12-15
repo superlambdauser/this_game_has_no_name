@@ -65,7 +65,7 @@ public class HandView : Singleton<HandView>
     {
         if (cardsInHand.Count == 0) yield break;
 
-        float cardSpacing = 1f / maxHandSize; // Splines are always of 1f length
+        float cardSpacing = 1f / cardsInHand.Count; // Splines are always of 1f length
         // Placing cards depending on center of the spline :
         float firstCardPosition = 0.5f - (cardsInHand.Count - 1) * cardSpacing / 2;
 

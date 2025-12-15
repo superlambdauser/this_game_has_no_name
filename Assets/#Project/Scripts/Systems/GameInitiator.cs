@@ -18,7 +18,7 @@ public class GameInitiator : Singleton<GameInitiator>
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GridSystem gridSystem;
     [SerializeField] private DeckSystem deckSystem;
-    [SerializeField] private TestSystem testSystem;
+    [SerializeField] private MatchSetupSystem testSystem;
     [SerializeField] private CardHoverSystem cardHoverSystem;
     private GameplayEngine gameplayEngine;
 

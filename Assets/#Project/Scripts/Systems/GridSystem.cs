@@ -160,7 +160,7 @@ public class GridSystem : Singleton<GridSystem>, ISystem // bridge between logic
             }
         }
 
-        foreach (Vector2Int v in area) Debug.Log($"cell : {v}");
+        // foreach (Vector2Int v in area) Debug.Log($"cell : {v}");
 
         return area;
     }

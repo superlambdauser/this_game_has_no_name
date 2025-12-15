@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSystem : MonoBehaviour
+public class MatchSetupSystem : MonoBehaviour
 {
     private CardsCollection deck;
 
@@ -9,5 +9,8 @@ public class TestSystem : MonoBehaviour
     {
         this.deck = deck;
         DeckSystem.Instance.Setup(deck);
+
+        DrawCardsGA drawCardsGA = new(5);
+        ActionSystem.Instance.Perform(drawCardsGA);
     }
 }
