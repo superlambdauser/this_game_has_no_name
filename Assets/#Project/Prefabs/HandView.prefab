@@ -32,11 +32,12 @@ RectTransform:
   m_Children:
   - {fileID: 4267789435339740503}
   - {fileID: 2202417972529306584}
+  - {fileID: 2864248590166045972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -600}
+  m_AnchoredPosition: {x: 0, y: 66}
   m_SizeDelta: {x: 840.99493, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &-4556314257406285928
@@ -51,15 +52,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115ea3f58ba10e94a89d2ded4b99f925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandView
+  splineContainer: {fileID: 179373953318581360}
   numOfCardsInHand: 8
   maxHandSize: 5
   cardPrefab: {fileID: -1993109365048656754, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
   stackPilePoint: {fileID: 2202417972529306584}
   discardPilePoint: {fileID: 4267789435339740503}
-  fanVerticalPosition: 1
-  fanStrength: 0.4
-  maxAngle: 53
-  radius: 2000
 --- !u!210 &-4212185972699294805
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -106,7 +104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 750, y: 802}
+  m_AnchoredPosition: {x: 750, y: 126}
   m_SizeDelta: {x: 240, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6012074496206225498
@@ -147,6 +145,138 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3966559191784928077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2864248590166045972}
+  - component: {fileID: 179373953318581360}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2864248590166045972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966559191784928077}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 6303056667275666546}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &179373953318581360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966559191784928077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineContainer
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: -250
+        y: 0
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -25.516502
+      TangentOut:
+        x: 0
+        y: 0
+        z: 25.516502
+      Rotation:
+        value:
+          x: 0.54947907
+          y: -0.44505364
+          z: 0.4450538
+          w: -0.54947895
+    - Position:
+        x: -0.39996338
+        y: 53
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: -214
+      TangentOut:
+        x: 0
+        y: 0
+        z: 214
+      Rotation:
+        value:
+          x: 0.5000013
+          y: -0.4999987
+          z: 0.5000013
+          w: -0.4999987
+    - Position:
+        x: 250
+        y: 0
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -25.594753
+      TangentOut:
+        x: 0
+        y: 0
+        z: 25.594753
+      Rotation:
+        value:
+          x: 0.44523212
+          y: -0.5493345
+          z: 0.5493346
+          w: -0.445232
+    m_MetaData:
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 2
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []
 --- !u!1 &6377875170353666188
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +311,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -750, y: 802}
+  m_AnchoredPosition: {x: -750, y: 126}
   m_SizeDelta: {x: 240, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8500872318261525227

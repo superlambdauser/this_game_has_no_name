@@ -149,8 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardDrawer
   cardViewPrefab: {fileID: -1993109365048656754, guid: 17c58e726c6ead049b81abe6c2645b43, type: 3}
-  movementDuration: 0.29
-  delayBetweenCards: 0.5
+  duration: 0.15
   movementCurve:
     serializedVersion: 2
     m_Curve:
@@ -710,6 +709,10 @@ PrefabInstance:
       value: GameInitiator
       objectReference: {fileID: 0}
     - target: {fileID: 2433730159794334126, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
+      propertyPath: deck
+      value: 
+      objectReference: {fileID: 11400000, guid: 4209a29682a301e48a1b10e15f869b7a, type: 2}
+    - target: {fileID: 2433730159794334126, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
       propertyPath: canvas
       value: 
       objectReference: {fileID: 626292884}
@@ -717,6 +720,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 11400000, guid: 4d330426b35a0d4439659d13d1a0792b, type: 2}
+    - target: {fileID: 2433730159794334126, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
+      propertyPath: testSystem
+      value: 
+      objectReference: {fileID: 4480357242007877192, guid: 28a17dd69b849b341991d36d7dbfb1d2, type: 3}
     - target: {fileID: 2433730159794334126, guid: 4b28bf19da68ed04ba798d1f7a82e2b2, type: 3}
       propertyPath: cardHoverSystem
       value: 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 /// <summary>
@@ -8,12 +9,12 @@ using UnityEngine;
 /// </summary>
 public class DeckSystem : Singleton<DeckSystem>
 {
-    private List<CardData> stackPile = new List<CardData>();
+    private List<Card> stackPile = new List<Card>();
     private Transform stackPilePos;
-    private List<CardData> discardPile = new List<CardData>();
+    private List<Card> discardPile = new List<Card>();
     private Transform discardPilePos;
     private HandView handView;
-    public List<CardData> HandCards { get; set; } = new List<CardData>();
+    public List<Card> HandCards { get; set; } = new List<Card>();
 
     #region Unity Events :
     private void OnEnable()
@@ -49,19 +50,32 @@ public class DeckSystem : Singleton<DeckSystem>
     {
         Debug.Log("Deck System Initiation called");
         handView = HandView.Instance;
+
+        stackPilePos = handView.StackPilePoint;
+        discardPilePos = handView.DiscardPilePoint;
         // Debug.Log($"Deck : {(handView != null ? handView.gameObject.name : "null")}");
 
-        // Load all card assets from Ressources folder :
-        CardsCollection cardsCollection = Resources.Load<CardsCollection>("Cards Collections/TempDeckTest"); // !!! The given path MUST be within a folder named "Resources" 
-        CardData[] deck = cardsCollection.CardsInCollection.ToArray();
+        // // Load all card assets from Ressources folder :
+        // CardsCollection cardsCollection = Resources.Load<CardsCollection>("Cards Collections/TempDeckTest"); // !!! The given path MUST be within a folder named "Resources" 
+        // Card[] deck = cardsCollection.CardsInCollection.ToArray();
 
-        // Debug.Log($"Deck : {(deck != null ? "not null" : "null")}");
+        // // Debug.Log($"Deck : {(deck != null ? "not null" : "null")}");
 
-        stackPile.AddRange(deck); // Adds all cards scriptable objects from the ressource folder to draw pile
-        // Debug.Log($"Stackpile : {(deck != null ? stackPile.Count : "null")}");
+        // stackPile.AddRange(deck); // Adds all cards scriptable objects from the ressource folder to draw pile
+        // // Debug.Log($"Stackpile : {(deck != null ? stackPile.Count : "null")}");
 
         StartCoroutine(DrawHand(handView.maxHandSize)); // Draw initial hand
     }
+
+    public void Setup(CardsCollection deck)
+    {
+        foreach (CardData cardData in deck.CardsInCollection)
+        {
+            Card card = new Card(cardData);
+            stackPile.Add(card);
+        }
+    }
+
 
     #region Performers
     // Performers :
@@ -94,11 +108,19 @@ public class DeckSystem : Singleton<DeckSystem>
         int actualAmount = Mathf.Min(gameAction.Amount, HandCards.Count); // Discard a maximum of all cards in hand amount
 
         // Create a copy of the 1st N cards :
-        List<CardData> cardsToDiscard = HandCards.Take(actualAmount).ToList();
+        List<Card> cardsToDiscard = HandCards.Take(actualAmount).ToList();
 
-        foreach (CardData card in cardsToDiscard)
+        foreach (Card card in cardsToDiscard)
         {
-            yield return DiscardCard(card);
+            discardPile.Add(card);
+
+            CardView cardView = handView.RemoveCard(card);
+            yield return DiscardCard(cardView);
+        }
+
+        foreach (Card card in cardsToDiscard)
+        {
+            HandCards.Remove(card);
         }
     }
 
@@ -109,7 +131,15 @@ public class DeckSystem : Singleton<DeckSystem>
 
     private IEnumerator DiscardAllCardsPerformer(DiscardAllCardsGA gameAction)
     {
-        yield return DiscardCardsPerformer(gameAction);
+        foreach (Card card in HandCards)
+        {
+            discardPile.Add(card);
+
+            CardView cardView = handView.RemoveCard(card);
+            yield return DiscardCard(cardView);
+        }
+
+        HandCards.Clear();
     }
     #endregion
 
@@ -128,26 +158,23 @@ public class DeckSystem : Singleton<DeckSystem>
 
     public IEnumerator DrawCard()
     {
-        CardData card = stackPile.DrawRandom();
+        Card card = stackPile.DrawRandom();
 
         HandCards.Add(card);
-        handView.AddCardToHand(card);
+        // handView.AddCardToHand(card);
+        CardView cardView = CardDrawer.Instance.CreateCardView(card, stackPilePos.position, stackPilePos.rotation, handView.transform);
 
-        yield return HandCards;
+        yield return handView.AddCard(cardView);
     }
 
-    public IEnumerator DiscardCard(CardData card)
+    public IEnumerator DiscardCard(CardView cardView)
     {
-        if (HandCards.Contains(card))
-        {
-            HandCards.Remove(card);
-        }
+        cardView.transform.DOScale(Vector3.zero, 0.15f);
 
-        handView.RemoveCardFromHand(card);
+        Tween tween = cardView.transform.DOMove(discardPilePos.position, 0.15f);
+        yield return tween.WaitForCompletion();
 
-        discardPile.Add(card);
-
-        yield break;
+        Destroy(cardView.gameObject);
     }
 
     public IEnumerator DrawHand(int amount = 5)
@@ -164,7 +191,7 @@ public class DeckSystem : Singleton<DeckSystem>
         for (int i = stackPile.Count - 1; i > 0; i--)
         {
             int rnd = Random.Range(0, stackPile.Count);
-            CardData temp = stackPile[i];
+            Card temp = stackPile[i];
             stackPile[i] = stackPile[rnd];
             stackPile[rnd] = temp;
         }

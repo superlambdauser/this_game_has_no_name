@@ -1,8 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-
 
 public class GameInitiator : Singleton<GameInitiator>
 {
@@ -20,12 +18,14 @@ public class GameInitiator : Singleton<GameInitiator>
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GridSystem gridSystem;
     [SerializeField] private DeckSystem deckSystem;
+    [SerializeField] private TestSystem testSystem;
     [SerializeField] private CardHoverSystem cardHoverSystem;
     private GameplayEngine gameplayEngine;
 
 
     [Header("Data :")]
     private GridData gridData;
+    [SerializeField] private CardsCollection deck;
     
 
     [Header("UI :")]
@@ -77,6 +77,7 @@ public class GameInitiator : Singleton<GameInitiator>
         // --- Systems ---
         gameplayEngine = GameplayEngine.Instance;
         deckSystem.Initialize();
+        testSystem.Initialize(deck);
         cardHoverSystem.Initialize(hoveredCardViewPrefab);
         gameplayEngine.Initialize(gridData);
             // later : register all systems viar RegisterSystem(new ...System()) method
@@ -101,6 +102,8 @@ public class GameInitiator : Singleton<GameInitiator>
 
         handView = Instantiate(handView, canvas.transform, false);
         deckSystem = Instantiate(deckSystem);
+
+        testSystem = Instantiate(testSystem);
 
 
         hoveredCardViewPrefab = Instantiate(hoveredCardViewPrefab, canvas.transform, false);

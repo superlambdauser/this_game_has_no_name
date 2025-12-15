@@ -7,7 +7,7 @@ public class BasicAttack : IAttackBehaviour // NB : All attacks have to inherit 
     public FigureData Target { get; }
 
     [SerializeField] private uint damages;
-    public uint Damages { get; }
+    public uint Damages => damages;
 
     [SerializeField] private uint attackRange;
     public uint AttackRange => attackRange;
