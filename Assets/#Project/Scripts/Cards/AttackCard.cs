@@ -8,6 +8,7 @@ public class AttackCard : CardData
     public IAttackBehaviour AttackSpecs => attackSpecs;
 
     public uint AttackRange => attackSpecs.AttackRange;
+    public uint Damage => attackSpecs.Damages;
 
 
     public override void Play()

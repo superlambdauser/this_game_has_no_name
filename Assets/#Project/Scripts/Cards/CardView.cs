@@ -9,14 +9,14 @@ using UnityEngine.UI;
 /// </summary>
 public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler // Required interfaces when using the OnPointer[...] methods
 {
-    [SerializeField] private CardData cardData;
-    public CardData CardData
+    [SerializeField] private Card card;
+    public Card Card
     {
-        get => cardData;
+        get => card;
         set
         {
-            cardData = value;
-            UpdateCardDisplay(); // Whenever CardData is assigned (normal card, hover card, pooled cards...), immediately refresh UI
+            card = value;
+            UpdateCardDisplay(card); // Whenever CardData is assigned (normal card, hover card, pooled cards...), immediately refresh UI
         }
     }
 
@@ -55,7 +55,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void Start()
     {
-        if (cardData != null) UpdateCardDisplay();
+        if (card != null) UpdateCardDisplay(card);
     }
 
     public void OnPointerEnter(PointerEventData eventData) // For hovering effect
@@ -67,7 +67,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             Vector2 hoverPos = new Vector2(transform.position.x, transform.position.y);
             Vector3 hoverRot = transform.rotation.eulerAngles;
 
-            CardHoverSystem.Instance.Show(CardData, hoverPos, hoverRot);
+            CardHoverSystem.Instance.Show(Card, hoverPos, hoverRot);
 
             pointerAlreadyEntered = true;
         }
@@ -85,18 +85,18 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    public void UpdateCardDisplay()
+    public void UpdateCardDisplay(Card card)
     {
-        if (cardData == null) return;
+        if (this.card == null) return;
 
-        Debug.Log($"Updating card {cardData?.name ?? "NULL"}");
-        Debug.Log($"{CardData.CardName} flags = {CardData.TypeFlags}");
+        Debug.Log($"Updating card {this.card?.Name ?? "NULL"}");
+        Debug.Log($"{Card.Name} flags = {Card.Type}");
 
 
-        cardNameText.text = CardData.CardName; // Update title
+        cardNameText.text = Card.Name; // Update title
 
         // Update frame color & displayed rarity level based on card's rarity level enum index :
-        cardRarityLevel = (int)CardData.CardRarityLevel;
+        cardRarityLevel = (int)Card.RarityLevel;
 
         rarityLevelFrameImage.color = rarityColors[cardRarityLevel];
         cardRarityLevelText.text = cardRarityLevel.ToString();
@@ -105,7 +105,7 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         cardAttackRangeText.gameObject.SetActive(false);
         cardMovementRangeText.gameObject.SetActive(false);
 
-        if (CardData is SpecialCard specialCard) // Handling special cards logic
+        if (Card.Data is SpecialCard specialCard) // Handling special cards logic
         {
             bool hasAttack = specialCard.AttackSpecs != null; // Set bool to true if Attack Behaviour not null
             bool hasMovement = specialCard.MovementSpecs != null; // Idem with Movement Behaviour
@@ -123,20 +123,20 @@ public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
         }
 
-        else if (CardData is AttackCard attackCard && attackCard.AttackRange > 0)
+        else if (Card.Data is AttackCard attackCard && attackCard.AttackRange > 0)
         {
             cardAttackRangeText.text = attackCard.AttackRange.ToString();
             cardAttackRangeText.gameObject.SetActive(true);
         }
 
-        else if (CardData is MovementCard movementCard && movementCard.MovementRange > 0)
+        else if (Card.Data is MovementCard movementCard && movementCard.MovementRange > 0)
         {
             cardMovementRangeText.text = movementCard.MovementRange.ToString();
             cardMovementRangeText.gameObject.SetActive(true);
         }
 
         // Resetting all icons to inactive
-        CardData.CardType flags = CardData.TypeFlags;
+        CardData.CardType flags = Card.Type;
 
         foreach (CardTypeIcon item in typeIconImages)
         {
