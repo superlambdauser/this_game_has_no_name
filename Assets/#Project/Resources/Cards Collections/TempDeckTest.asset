@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardsCollection
   allowsDuplicates: 1
   cardsInCollection:
-  - {fileID: 11400000, guid: e8c84d7d62c574d4fb00c3b4f5bd2502, type: 2}
-  - {fileID: 11400000, guid: e8c84d7d62c574d4fb00c3b4f5bd2502, type: 2}
-  - {fileID: 11400000, guid: f0c3826c5610bb04595814980a3c677b, type: 2}
+  - {fileID: 11400000, guid: b9baf7ed11a60094192854e042c6dbc3, type: 2}
+  - {fileID: 11400000, guid: ade6c8820f9326c4cb266cd577460726, type: 2}
+  - {fileID: 11400000, guid: ade6c8820f9326c4cb266cd577460726, type: 2}
   - {fileID: 11400000, guid: f0c3826c5610bb04595814980a3c677b, type: 2}
   - {fileID: 11400000, guid: ddce714542a008843a49b4315089352c, type: 2}
-  - {fileID: 11400000, guid: ddce714542a008843a49b4315089352c, type: 2}
+  - {fileID: 11400000, guid: b9baf7ed11a60094192854e042c6dbc3, type: 2}
   - {fileID: 11400000, guid: ddce714542a008843a49b4315089352c, type: 2}
   - {fileID: 11400000, guid: c3bcfa3a4dc3d37438a941ba7c6cdcf3, type: 2}
   - {fileID: 11400000, guid: c3bcfa3a4dc3d37438a941ba7c6cdcf3, type: 2}

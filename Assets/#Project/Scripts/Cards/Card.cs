@@ -13,7 +13,8 @@ public class Card
     public string Name => data.CardName;
     public CardData.CardRarity RarityLevel => data.CardRarityLevel;
     public CardData.CardType Type => data.TypeFlags;
-    public List<SpecialAbility> specialAbilities => data.SpecialAbilities;
+    public List<SpecialAbility> SpecialAbilities => data.SpecialAbilities;
+    public List<Effect> Effects => data.Effects;
 
     // Specs :
     public uint AttackDamage { get; private set; }

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d5ed7dc4d4104488fc0ecb92d381b5, type: 3}
+  m_Name: DrawCards
+  m_EditorClassIdentifier: Assembly-CSharp::SpecialCard
+  cardName: Draw 3 Heal
+  cardRarityLevel: 4
+  typeFlags: 4
+  specialAbilities:
+  - rid: 1278649930499752008
+  effects:
+  - rid: 1278649930499752007
+  movementSpecs:
+    rid: -2
+  attackSpecs:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1278649930499752007
+      type: {class: DrawCardsEffect, ns: , asm: Assembly-CSharp}
+      data:
+        drawAmount: 3
+    - rid: 1278649930499752008
+      type: {class: BasicHealing, ns: , asm: Assembly-CSharp}
+      data:
+        healAmount: 5

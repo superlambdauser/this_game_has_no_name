@@ -17,6 +17,8 @@ public abstract class CardData : ScriptableObject
     public CardType TypeFlags => typeFlags;
     [SerializeReference] [SR] protected List<SpecialAbility> specialAbilities = new List<SpecialAbility>();
     public List<SpecialAbility> SpecialAbilities => specialAbilities;
+    [SerializeReference] [SR] protected List<Effect> effects;
+    public List<Effect> Effects => effects;
 
 
     [Flags] public enum CardType // [Flags] attribute indicates that our enum consists of bit fields -> this indicates to the compiler that the enum has to be treated in a way that its values are not exclusive -> Values combinations are possible

@@ -154,7 +154,11 @@ public class DeckSystem : Singleton<DeckSystem>
 
         yield return DiscardCard(cardView);
 
-        // Later : perform card effects.
+        foreach (Effect effect in gameAction.Card.Effects)
+        {
+            PerformEffectGA performEffectGA = new(effect);
+            ActionSystem.Instance.AddReaction(performEffectGA); // AddReaction() because we want to perform a reaction inside an action being perform
+        }
     }
     #endregion
 
