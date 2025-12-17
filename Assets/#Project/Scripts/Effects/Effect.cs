@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Card effect
+/// A consequence
 /// </summary>
 [System.Serializable]
 public abstract class Effect

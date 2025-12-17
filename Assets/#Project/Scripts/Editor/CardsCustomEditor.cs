@@ -23,6 +23,8 @@ public class CardsCustomEditor : Editor
 
     private void OnEnable()
     {
+        if (target == null) return; // Safeguard
+        
         typeFlags = serializedObject.FindProperty("typeFlags");
         attackSpecs = serializedObject.FindProperty("attackSpecs");
         movementSpecs = serializedObject.FindProperty("movementSpecs");
@@ -41,23 +43,27 @@ public class CardsCustomEditor : Editor
 
         CardData inspectedCard = (CardData)target; // Current instance of Card type inspected
 
-        // Determine allowed types :
-        string[] allowedTypes = inspectedCard switch
-        {
-            AttackCard => new string[] { "Attack", "Special" }, // No movement
-            MovementCard => new string[] { "Movement", "Special" }, // No attack
-            SpecialCard => new string[] { "Attack", "Movement", "Special" }, // All allowed
-            _ => Array.Empty<string>() // Empty array otherwise
-        };
+        // Determine allowed types based on flags :
+        List<string> allowedTypesList = new List<string>();
+        if (inspectedCard.TypeFlags.HasFlag(CardData.CardType.Attack)) allowedTypesList.Add("Attack");
+        if (inspectedCard.TypeFlags.HasFlag(CardData.CardType.Movement)) allowedTypesList.Add("Movement");
+        if (inspectedCard.TypeFlags.HasFlag(CardData.CardType.Special)) allowedTypesList.Add("Special");
+        string[] allowedTypes = allowedTypesList.ToArray();
 
         // Determine mandatory (non-removable) type :
-        string mandatoryType = inspectedCard switch
+        string mandatoryType = null;
+        if (inspectedCard.TypeFlags.HasFlag(CardData.CardType.Attack) &&
+            !inspectedCard.TypeFlags.HasFlag(CardData.CardType.Movement) &&
+            !inspectedCard.TypeFlags.HasFlag(CardData.CardType.Special))
         {
-            AttackCard => "Attack",
-            MovementCard => "Movement",
-            SpecialCard => null, // All types optional
-            _ => null
-        };
+            mandatoryType = "Attack";
+        }
+        else if (inspectedCard.TypeFlags.HasFlag(CardData.CardType.Movement) &&
+            !inspectedCard.TypeFlags.HasFlag(CardData.CardType.Attack) &&
+            !inspectedCard.TypeFlags.HasFlag(CardData.CardType.Special))
+        {
+            mandatoryType = "Movement";
+        }
 
         // Ensure mandartory type flag is present :
         if (mandatoryType != null && typeFlags != null)
@@ -85,44 +91,38 @@ public class CardsCustomEditor : Editor
         int currentFlags = (typeFlags != null) ? typeFlags.intValue : 0;
         CardData.CardType flags = (CardData.CardType)currentFlags;
 
-        // If flags changed, sync :
-        if (changed)
+        // First, update serializedObject
+        serializedObject.Update();
+
+        // Store previous flags
+        int previousFlagsCopy = previousFlags;  
+
+        // Detect if only flags changed
+        bool flagsChanged = currentFlags != previousFlagsCopy;
+
+        if (flagsChanged && !EditorApplication.isPlayingOrWillChangePlaymode)
         {
-            int newFlags = (typeFlags != null) ? typeFlags.intValue : 0;
+            // Handle specialAbilities list creation/removal
+            bool hadSpecial = (previousFlagsCopy & (int)CardData.CardType.Special) != 0;
+            bool hasSpecial = (currentFlags & (int)CardData.CardType.Special) != 0;
 
-            // Change dynamically specialAbilities when Special flag added/removed
-            if (!EditorApplication.isPlayingOrWillChangePlaymode) // Edit mode only
+            if (!hadSpecial && hasSpecial && specialAbilities != null && specialAbilities.arraySize == 0)
             {
-                bool hadSpecial = (previousFlags & (int)CardData.CardType.Special) != 0;
-                bool hasSpecial = (newFlags & (int)CardData.CardType.Special) != 0;
-
-                if (!hadSpecial && hasSpecial) // Special just added
-                {
-                    // Create one empty slot if none exist :
-                    if (specialAbilities != null && specialAbilities.arraySize == 0)
-                    {
-                        specialAbilities.arraySize++; // Create slot
-                        SerializedProperty newElement = specialAbilities.GetArrayElementAtIndex(0);
-                        newElement.managedReferenceValue = null; // Empty slot
-                        serializedObject.ApplyModifiedProperties(); // Apply
-                    }
-                }
-
-                if (hadSpecial && !hasSpecial) // Special removed
-                {
-                    if (specialAbilities != null && specialAbilities.arraySize > 0)
-                    {
-                        specialAbilities.ClearArray(); // Empty list
-                        serializedObject.ApplyModifiedProperties(); // Apply
-                    }
-                }
+                specialAbilities.arraySize++;
+                SerializedProperty newElement = specialAbilities.GetArrayElementAtIndex(0);
+                newElement.managedReferenceValue = null;
+            }
+            else if (hadSpecial && !hasSpecial && specialAbilities != null)
+            {
+                specialAbilities.ClearArray();
             }
 
-            previousFlags = newFlags;
+            previousFlags = currentFlags;
 
-            // Force a redraw :
+            // Only reset focus for flags changes
             GUI.FocusControl(null);
-            return; // Stop this frame and redraw updated state
+            serializedObject.ApplyModifiedProperties();
+            return;
         }
 
         if (mandatoryType != null) // Mandatory type (only for attacks and movements)
@@ -152,15 +152,19 @@ public class CardsCustomEditor : Editor
         }
 
         // At least one visible, assigned type for special cards :
-        if (inspectedCard is SpecialCard)
+        if (inspectedCard.TypeFlags.HasFlag(CardData.CardType.Special))
         {
             bool hasAnyType =
-                hasSpecialAbility || // "Special" type check via specialAbilities list
-                flags!= 0; // "Attack" and/or "Movement" type check via CardTypes
+                (inspectedCard.Abilities != null && inspectedCard.Abilities.Count > 0) || // Special abilities
+                inspectedCard.TypeFlags.HasFlag(CardData.CardType.Attack) ||
+                inspectedCard.TypeFlags.HasFlag(CardData.CardType.Movement);
 
             if (!hasAnyType)
             {
-                EditorGUILayout.HelpBox("Special cards must have at least one Card Type assigned.", MessageType.Error);
+                EditorGUILayout.HelpBox(
+                    "Special cards must have at least one type assigned (Attack, Movement, or a Special Ability).",
+                    MessageType.Error
+                );
             }
         }
 

@@ -9,12 +9,12 @@ public abstract class FigureData : ScriptableObject
 {
     [SerializeField] GridData grid; // To initialize later
 
-    [SerializeReference][SR] protected IAttackBehaviour attackSpecs;
-    public IAttackBehaviour AttackSpecs => attackSpecs;
-    [SerializeReference][SR] protected IMovementBehaviour movementSpecs;
-    public IMovementBehaviour MovementSpecs => movementSpecs;
-    [SerializeReference] [SR] protected List<SpecialAbility> specialAbilities = new List<SpecialAbility>();
-    public List<SpecialAbility> SpecialAbilities => specialAbilities;
+    [SerializeReference][SR] protected Attack attackSpecs;
+    public Attack AttackSpecs => attackSpecs;
+    [SerializeReference][SR] protected Movement movementSpecs;
+    public Movement MovementSpecs => movementSpecs;
+    [SerializeReference] [SR] protected List<Ability> specialAbilities = new List<Ability>();
+    public List<Ability> SpecialAbilities => specialAbilities;
 
     public int CurrentX { get; set; }
     public int CurrentY { get; set; }

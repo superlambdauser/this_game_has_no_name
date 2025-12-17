@@ -6,22 +6,30 @@ using UnityEngine;
 /// <summary>
 /// Holds data for each individual card.
 /// </summary>
-public abstract class CardData : ScriptableObject
+[CreateAssetMenu(fileName = "New card", menuName = "Card")]
+public class CardData : ScriptableObject
 {
-    [Header("Basic Cards Traits :")]
+    [Header("Cards Traits :")]
     [SerializeField] private string cardName;
     public string CardName => cardName;
     [SerializeField] private CardRarity cardRarityLevel;
     public CardRarity CardRarityLevel => cardRarityLevel;
     [SerializeField] private CardType typeFlags;
     public CardType TypeFlags => typeFlags;
-    [SerializeReference] [SR] protected List<SpecialAbility> specialAbilities = new List<SpecialAbility>();
-    public List<SpecialAbility> SpecialAbilities => specialAbilities;
-    [SerializeReference] [SR] protected List<Effect> effects;
+
+    [Header("Specs :")]
+    [SerializeReference][SR] protected Attack attackSpecs;
+    public Attack AttackSpecs => attackSpecs;
+    [SerializeReference][SR] protected Movement movementSpecs;
+    public Movement MovementSpecs => movementSpecs;
+    [SerializeReference][SR] protected List<Ability> abilities = new List<Ability>();
+    public List<Ability> Abilities => abilities;
+    [SerializeReference][SR] protected List<Effect> effects;
     public List<Effect> Effects => effects;
 
 
-    [Flags] public enum CardType // [Flags] attribute indicates that our enum consists of bit fields -> this indicates to the compiler that the enum has to be treated in a way that its values are not exclusive -> Values combinations are possible
+    [Flags]
+    public enum CardType // [Flags] attribute indicates that our enum consists of bit fields -> this indicates to the compiler that the enum has to be treated in a way that its values are not exclusive -> Values combinations are possible
     {
         // NB : The enum indexes should always be powers of 2 (for a binary reason that is beyond my comprehension)
         // The using of [Flag] attribute limits the number of elements inside the enum to 32 !
@@ -40,6 +48,15 @@ public abstract class CardData : ScriptableObject
         Unique
     }
 
-    public abstract void Play();
 
+    public void Play()
+    {
+        foreach (Ability ability in abilities) ability?.GetGameAction();
+
+        if (attackSpecs != null) attackSpecs.GetGameAction();
+
+        if (movementSpecs != null) movementSpecs.GetGameAction();
+
+        foreach (Effect effect in effects) effect?.GetGameAction();
+    }
 }
